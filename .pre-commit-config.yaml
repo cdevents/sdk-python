@@ -24,23 +24,16 @@ repos:
     hooks:
       - id: isort
         files: ".*"
-        args: [--profile=black, --project=cdevents]
-
-  - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.26.0
-    hooks:
-      - id: yamllint
-        exclude: "tests|benchmarks"
+        args: [--profile=black, --project=cdevent]
 
   - repo: https://github.com/pycqa/pydocstyle
     rev: 5.1.1
     hooks:
       - id: pydocstyle
         args: [--convention=google]
-        exclude: "docs|tests"
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.812
     hooks:
       - id: mypy
-        files: ".*/cdevents/.*"
+        files: "cdevents/.*"
