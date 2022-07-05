@@ -1,0 +1,17 @@
+---
+configuration:
+  output:
+    directory: ${HOME}/cdevents_client
+    utc_timestamps: false
+    trace_logging: false  # Warning: Trace logging is VERY slow!!
+  client:
+    host: 127.0.0.1
+    port: 30700
+    dcf_version: 4
+    timeout_seconds: 5
+    max_retries: 3
+  process_handling:
+    enable_multiprocessing: false
+    enable_worker_logging: false #  Warning: logging is VERY slow!!
+    number_of_workers: -1  # Default is -1. Auto selects number of processes
+                           # after number of physical cores of the host.
