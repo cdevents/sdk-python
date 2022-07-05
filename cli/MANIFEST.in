@@ -1,0 +1,2 @@
+include cdevents/configuration/configuration.yaml
+include cdevents/configuration/logging-configuration.yaml

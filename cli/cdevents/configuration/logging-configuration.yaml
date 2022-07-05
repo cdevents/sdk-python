@@ -1,0 +1,26 @@
+---
+version: 1
+disable_existing_loggers: false
+formatters:
+  simple:
+    format: "%(asctime)s.%(msecs)03d [%(threadName)s] %(levelname)-s - %(message)-s - %(name)s:%(lineno)d" # yamllint disable-line
+    datefmt: "%Y-%m-%dT%H:%M:%S"
+handlers:
+  console:
+    class: logging.StreamHandler
+    formatter: simple
+    stream: ext://sys.stdout
+  file:
+    class: logging.handlers.RotatingFileHandler
+    formatter: simple
+    filename: cdevents-client.log
+    maxBytes: 10485760  # 10MB
+    backupCount: 20
+    encoding: utf8
+loggers:
+  logger-1:
+    handlers: [console, file]
+    propagate: true
+root:
+  level: INFO
+  handlers: [console, file]
