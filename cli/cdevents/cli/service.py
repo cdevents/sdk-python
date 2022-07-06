@@ -1,4 +1,4 @@
-"""Module for cli build commands."""
+"""Module for cli service commands."""
 from __future__ import annotations
 import os
 
@@ -16,8 +16,8 @@ from cdevents.cli.utils import (
 
 
 # pylint: disable=unused-argument
-def common_build_options(function):
-    """Decorator for common cli options for build."""
+def common_service_options(function):
+    """Decorator for common cli options for service."""
     function = click.option(
         "--cde_sink",
         "-c",
@@ -27,56 +27,55 @@ def common_build_options(function):
         help="CDE_SINK",
     )(function)
     function = click.option(
-        "--id",
-        "-i",
+        "--envid",
+        "-e",
         required=False,
         type=str,
-        help="Build Id.",
+        help="Environment Id where the Service is running.",
     )(function)
     function = click.option(
         "--name",
         "-n",
         required=False,
         type=str,
-        help="Build Name.",
+        help="Service's Name.",
     )(function)
     function = click.option(
-        "--artifact",
-        "-a",
+        "--version",
+        "-v",
         required=False,
         type=str,
-        help="Build's Artifact Id.",
+        help="Service's Version.",
     )(function)
     function = click.option(
         "--data",
         "-d",
         required=False,
-        #type=click.Tuple([str, str]),
         type=(str,str),
         multiple=True,
-        help="Build Data.",
+        help="Service's Data.",
     )(function)
 
     return function
 
 
-@click.command(help=add_disclaimer_text("Build Started CloudEvent."))
-@common_build_options
-def started(
+@click.command(help=add_disclaimer_text("Service Deployed CloudEvent."))
+@common_service_options
+def deployed(
     cde_sink: str,
-    id: str,
+    envid: str,
     name: str = None,
-    artifact: str = None,
+    version: str = None,
     data :List[str] = None,
 ):
     print_function_args()
     attributes = {
-        "type": "cd.build.started.v1",
+        "type": "cd.service.deployed.v1",
         "source": "cde-cli",
         "extensions": {
-            "buildid": id,
-            "buildname": name,
-            "buildartifactid": artifact,
+            "serviceenvid": envid,
+            "servicename": name,
+            "serviceversion": version,
         },
     }
     event = CloudEvent(attributes, dict(data))
@@ -85,24 +84,23 @@ def started(
     # send and print event
     requests.post(cde_sink, headers=headers, data=body)
 
-
-@click.command(help=add_disclaimer_text("Build Finished CloudEvent."))
-@common_build_options
-def finished(
+@click.command(help=add_disclaimer_text("Service Upgraded CloudEvent."))
+@common_service_options
+def upgraded(
     cde_sink: str,
-    id: str,
+    envid: str,
     name: str = None,
-    artifact: str = None,
+    version: str = None,
     data :List[str] = None,
 ):
     print_function_args()
     attributes = {
-        "type": "cd.build.finished.v1",
+        "type": "cd.service.upgraded.v1",
         "source": "cde-cli",
         "extensions": {
-            "buildid": id,
-            "buildname": name,
-            "buildartifactid": artifact,
+            "serviceenvid": envid,
+            "servicename": name,
+            "serviceversion": version,
         },
     }
     event = CloudEvent(attributes, dict(data))
@@ -111,23 +109,48 @@ def finished(
     # send and print event
     requests.post(cde_sink, headers=headers, data=body)
 
-@click.command(help=add_disclaimer_text("PipelineRun Queued CloudEvent."))
-@common_build_options
-def queued(
+@click.command(help=add_disclaimer_text("Service Removed CloudEvent."))
+@common_service_options
+def removed(
     cde_sink: str,
-    id: str,
+    envid: str,
     name: str = None,
-    artifact: str = None,
+    version: str = None,
     data :List[str] = None,
 ):
     print_function_args()
     attributes = {
-        "type": "cd.build.queued.v1",
+        "type": "cd.service.removed.v1",
         "source": "cde-cli",
         "extensions": {
-            "buildid": id,
-            "buildname": name,
-            "buildartifactid": artifact,
+            "serviceenvid": envid,
+            "servicename": name,
+            "serviceversion": version,
+        },
+    }
+    event = CloudEvent(attributes, dict(data))
+    headers, body = to_structured(event)
+
+    # send and print event
+    requests.post(cde_sink, headers=headers, data=body)
+
+@click.command(help=add_disclaimer_text("Service Rolledback CloudEvent."))
+@common_service_options
+def rolledback(
+    cde_sink: str,
+    envid: str,
+    name: str = None,
+    version: str = None,
+    data :List[str] = None,
+):
+    print_function_args()
+    attributes = {
+        "type": "cd.service.rolledback.v1",
+        "source": "cde-cli",
+        "extensions": {
+            "serviceenvid": envid,
+            "servicename": name,
+            "serviceversion": version,
         },
     }
     event = CloudEvent(attributes, dict(data))

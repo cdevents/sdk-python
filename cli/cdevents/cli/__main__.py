@@ -7,8 +7,16 @@ import click
 import yaml
 
 from cdevents.cli.constants import LOGGING_CONFIGURATION_FILE
-from cdevents.cli.build import finished, queued, started
 from cdevents.cli.utils import add_disclaimer_text
+
+from cdevents.cli.build import finished, queued, started
+from cdevents.cli.artifact import packaged, published
+from cdevents.cli.branch import created as branch_created, deleted as branch_deleted
+from cdevents.cli.env import created as env_created, deleted as env_deleted, modified as env_modified
+from cdevents.cli.pipelinerun import started as pipe_started, finished as pipe_finished, queued as pipe_queued
+from cdevents.cli.service import deployed as service_deployed, upgraded as service_upgraded, removed as service_removed, rolledback as service_rolledback
+from cdevents.cli.taskrun import started as taskrun_started, finished as taskrun_finished 
+
 
 def configure_logging():
     """Configures logging from file."""
@@ -26,25 +34,61 @@ build.add_command(queued)
 build.add_command(started)
 
 
-# @click.group(help=add_disclaimer_text("""Commands with no interaction with hostlog."""))
-# def offline():
-#     """Function for command group offline."""
+@click.group(help=add_disclaimer_text("""Commands Artifact related CloudEvent."""))
+def artifact():
+    """Click group for command 'artifact'."""
+
+artifact.add_command(packaged)
+artifact.add_command(published)
 
 
-# offline.add_command(pcap_to_hdf5)
-# TODO: activate line when command is implemented
-# offline.add_command(visualize)
-# offline.add_command(create_dissector)
-# offline.add_command(convert_to_xviz)
-# offline.add_command(topic_configuration)
+@click.group(help=add_disclaimer_text("""Commands Branch related CloudEvent."""))
+def branch():
+    """Click group for command 'branch'."""
+
+branch.add_command(branch_created)
+branch.add_command(branch_deleted)
 
 
-# @click.group(help=add_disclaimer_text("Commands for local web UI."))
-# def web():
-#     """Click group for command 'web'."""
+@click.group(help=add_disclaimer_text("""Commands Environment related CloudEvent."""))
+def env():
+    """Click group for command 'environment'."""
+
+env.add_command(env_created)
+env.add_command(env_deleted)
+env.add_command(env_modified)
 
 
-# web.add_command(web_start)
+
+
+@click.group(help=add_disclaimer_text("""Commands PipelineRun related CloudEvent."""))
+def pipelinerun():
+    """Click group for command 'environment'."""
+
+pipelinerun.add_command(pipe_started)
+pipelinerun.add_command(pipe_finished)
+pipelinerun.add_command(pipe_queued)
+
+
+
+@click.group(help=add_disclaimer_text("""Commands Service related CloudEvent."""))
+def service():
+    """Click group for command 'service'."""
+
+service.add_command(service_deployed)
+service.add_command(service_upgraded)
+service.add_command(service_removed)
+service.add_command(service_rolledback)
+
+
+@click.group(help=add_disclaimer_text("""Commands TaskRun related CloudEvent."""))
+def taskrun():
+    """Click group for command 'taskrun'."""
+
+taskrun.add_command(taskrun_started)
+taskrun.add_command(taskrun_finished)
+
+
 
 
 @click.group(
@@ -60,8 +104,12 @@ def cli():
 
 
 cli.add_command(build)
-# cli.add_command(offline)
-# cli.add_command(web)
+cli.add_command(artifact)
+cli.add_command(branch)
+cli.add_command(env)
+cli.add_command(pipelinerun)
+cli.add_command(service)
+cli.add_command(taskrun)
 
 if __name__ == "__main__":
     cli()
