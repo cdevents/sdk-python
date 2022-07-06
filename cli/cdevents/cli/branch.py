@@ -1,4 +1,4 @@
-"""Module for cli build commands."""
+"""Module for cli branch commands."""
 from __future__ import annotations
 import os
 
@@ -16,8 +16,8 @@ from cdevents.cli.utils import (
 
 
 # pylint: disable=unused-argument
-def common_build_options(function):
-    """Decorator for common cli options for build."""
+def common_branch_options(function):
+    """Decorator for common cli options for branch."""
     function = click.option(
         "--cde_sink",
         "-c",
@@ -31,52 +31,51 @@ def common_build_options(function):
         "-i",
         required=False,
         type=str,
-        help="Build Id.",
+        help="Branch Id.",
     )(function)
     function = click.option(
         "--name",
         "-n",
         required=False,
         type=str,
-        help="Build Name.",
+        help="Branch Name.",
     )(function)
     function = click.option(
-        "--artifact",
-        "-a",
+        "--repoid",
+        "-v",
         required=False,
         type=str,
-        help="Build's Artifact Id.",
+        help="Branch Repository Id.",
     )(function)
     function = click.option(
         "--data",
         "-d",
         required=False,
-        #type=click.Tuple([str, str]),
         type=(str,str),
         multiple=True,
-        help="Build Data.",
+        help="Branch Data.",
     )(function)
 
     return function
 
 
-@click.command(help=add_disclaimer_text("Build Started CloudEvent."))
-@common_build_options
-def started(
+@click.command(help=add_disclaimer_text("Branch Created CloudEvent."))
+@common_branch_options
+def created(
     cde_sink: str,
     id: str,
     name: str = None,
-    artifact: str = None,
+    repoid: str = None,
     data :List[str] = None,
 ):
     print_function_args()
     attributes = {
-        "type": "cd.build.started.v1",
+        "type": "cd.repository.branch.created.v1",
         "source": "cde-cli",
         "extensions": {
-            "buildid": id,
-            "buildname": name,
-            "buildartifactid": artifact,
+            "branchid": id,
+            "branchname": name,
+            "branchrepositoryid": repoid,
         },
     }
     event = CloudEvent(attributes, dict(data))
@@ -86,23 +85,23 @@ def started(
     requests.post(cde_sink, headers=headers, data=body)
 
 
-@click.command(help=add_disclaimer_text("Build Finished CloudEvent."))
-@common_build_options
-def finished(
+@click.command(help=add_disclaimer_text("Branch Deleted CloudEvent."))
+@common_branch_options
+def deleted(
     cde_sink: str,
     id: str,
     name: str = None,
-    artifact: str = None,
+    repoid: str = None,
     data :List[str] = None,
 ):
     print_function_args()
     attributes = {
-        "type": "cd.build.finished.v1",
+        "type": "cd.repository.branch.deleted.v1",
         "source": "cde-cli",
         "extensions": {
-            "buildid": id,
-            "buildname": name,
-            "buildartifactid": artifact,
+            "branchid": id,
+            "branchname": name,
+            "branchrepositoryid": repoid,
         },
     }
     event = CloudEvent(attributes, dict(data))
@@ -111,27 +110,3 @@ def finished(
     # send and print event
     requests.post(cde_sink, headers=headers, data=body)
 
-@click.command(help=add_disclaimer_text("PipelineRun Queued CloudEvent."))
-@common_build_options
-def queued(
-    cde_sink: str,
-    id: str,
-    name: str = None,
-    artifact: str = None,
-    data :List[str] = None,
-):
-    print_function_args()
-    attributes = {
-        "type": "cd.build.queued.v1",
-        "source": "cde-cli",
-        "extensions": {
-            "buildid": id,
-            "buildname": name,
-            "buildartifactid": artifact,
-        },
-    }
-    event = CloudEvent(attributes, dict(data))
-    headers, body = to_structured(event)
-
-    # send and print event
-    requests.post(cde_sink, headers=headers, data=body)
