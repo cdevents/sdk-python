@@ -113,7 +113,8 @@ def is_windows() -> bool:
 def _os_name() -> str:
     return os.name
 
-#TODO: Update disclaimer text
+
+# TODO: Update disclaimer text
 DISCLAIMER_TEXT = """!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     N.B. Due to data privacy regulations, all locally generated cdevents data files
     ,such as hdf5 etc, must be deleted after a logging session is finished.

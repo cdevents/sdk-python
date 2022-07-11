@@ -1,18 +1,14 @@
 """Module for cli pipelinerun commands."""
 from __future__ import annotations
-import os
 
+import os
 from typing import List
 
 import click
 import requests
-
 from cloudevents.http import CloudEvent, to_structured
 
-from cdevents.cli.utils import (
-    add_disclaimer_text,
-    print_function_args,
-)
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
 
 
 # pylint: disable=unused-argument
@@ -65,7 +61,7 @@ def common_pipelinerun_options(function):
         "--data",
         "-d",
         required=False,
-        type=(str,str),
+        type=(str, str),
         multiple=True,
         help="Pipeline Run's Data.",
     )(function)
@@ -82,7 +78,7 @@ def started(
     status: str = None,
     url: str = None,
     errors: str = None,
-    data :List[str] = None,
+    data: List[str] = None,
 ):
     print_function_args()
     attributes = {
@@ -102,6 +98,7 @@ def started(
     # send and print event
     requests.post(cde_sink, headers=headers, data=body)
 
+
 @click.command(help=add_disclaimer_text("PipelineRun Finished CloudEvent."))
 @common_pipelinerun_options
 def finished(
@@ -111,7 +108,7 @@ def finished(
     status: str = None,
     url: str = None,
     errors: str = None,
-    data :List[str] = None,
+    data: List[str] = None,
 ):
     print_function_args()
     attributes = {
@@ -131,6 +128,7 @@ def finished(
     # send and print event
     requests.post(cde_sink, headers=headers, data=body)
 
+
 @click.command(help=add_disclaimer_text("PipelineRun Queued CloudEvent."))
 @common_pipelinerun_options
 def queued(
@@ -140,7 +138,7 @@ def queued(
     status: str = None,
     url: str = None,
     errors: str = None,
-    data :List[str] = None,
+    data: List[str] = None,
 ):
     print_function_args()
     attributes = {
