@@ -1,6 +1,31 @@
 help:
 	@python -c "$$PRINT_HELP_PYSCRIPT" < $(MAKEFILE_LIST)
 
+clean: clean-build clean-pyc clean-test clean-mypy ## remove all build, test, coverage and Python artifacts
+
+clean-build: ## remove build artifacts
+	rm -fr build/
+	rm -fr dist/
+	rm -fr .eggs/
+	# N.B. line below removes editable intallation of package in venv
+	# find . -name '*.egg-info' -exec rm -fr {} +
+	find . -name '*.egg' -exec rm -f {} +
+
+clean-pyc: ## remove Python file artifacts
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f {} +
+	find . -name '__pycache__' -exec rm -fr {} +
+
+clean-test: ## remove test and coverage artifacts
+	rm -f .coverage
+	rm -fr htmlcov/
+	rm -fr .pytest_cache
+
+clean-mypy: ## remove MyPy cache files
+	rm -fr .mypy_cache/
+
+
 init: clean ## install the package in editable mode including dev dependencies
 	pip install -e .[dev]
 	pre-commit install
@@ -32,30 +57,6 @@ lint: ## run pylint
 	if [ "$${exit_code}" != 0 ]; then
 		exit "$${exit_code}"
 	fi
-
-clean: clean-build clean-pyc clean-test clean-mypy ## remove all build, test, coverage and Python artifacts
-
-clean-build: ## remove build artifacts
-	rm -fr build/
-	rm -fr dist/
-	rm -fr .eggs/
-	# N.B. line below removes editable intallation of package in venv
-	# find . -name '*.egg-info' -exec rm -fr {} +
-	find . -name '*.egg' -exec rm -f {} +
-
-clean-pyc: ## remove Python file artifacts
-	find . -name '*.pyc' -exec rm -f {} +
-	find . -name '*.pyo' -exec rm -f {} +
-	find . -name '*~' -exec rm -f {} +
-	find . -name '__pycache__' -exec rm -fr {} +
-
-clean-test: ## remove test and coverage artifacts
-	rm -f .coverage
-	rm -fr htmlcov/
-	rm -fr .pytest_cache
-
-clean-mypy: ## remove MyPy cache files
-	rm -fr .mypy_cache/
 
 bump = patch
 bumpversion: ## Bumps the (default: patch) version of this package. To bump minor or major, add bump=minor or bump=major to the make call.

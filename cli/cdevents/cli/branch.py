@@ -1,18 +1,14 @@
 """Module for cli branch commands."""
 from __future__ import annotations
-import os
 
+import os
 from typing import List
 
 import click
 import requests
-
 from cloudevents.http import CloudEvent, to_structured
 
-from cdevents.cli.utils import (
-    add_disclaimer_text,
-    print_function_args,
-)
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
 
 
 # pylint: disable=unused-argument
@@ -51,7 +47,7 @@ def common_branch_options(function):
         "--data",
         "-d",
         required=False,
-        type=(str,str),
+        type=(str, str),
         multiple=True,
         help="Branch Data.",
     )(function)
@@ -66,7 +62,7 @@ def created(
     id: str,
     name: str = None,
     repoid: str = None,
-    data :List[str] = None,
+    data: List[str] = None,
 ):
     print_function_args()
     attributes = {
@@ -92,7 +88,7 @@ def deleted(
     id: str,
     name: str = None,
     repoid: str = None,
-    data :List[str] = None,
+    data: List[str] = None,
 ):
     print_function_args()
     attributes = {
@@ -109,4 +105,3 @@ def deleted(
 
     # send and print event
     requests.post(cde_sink, headers=headers, data=body)
-

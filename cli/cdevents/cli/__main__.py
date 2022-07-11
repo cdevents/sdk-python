@@ -6,16 +6,24 @@ from pathlib import Path
 import click
 import yaml
 
-from cdevents.cli.constants import LOGGING_CONFIGURATION_FILE
-from cdevents.cli.utils import add_disclaimer_text
-
-from cdevents.cli.build import finished, queued, started
 from cdevents.cli.artifact import packaged, published
-from cdevents.cli.branch import created as branch_created, deleted as branch_deleted
-from cdevents.cli.env import created as env_created, deleted as env_deleted, modified as env_modified
-from cdevents.cli.pipelinerun import started as pipe_started, finished as pipe_finished, queued as pipe_queued
-from cdevents.cli.service import deployed as service_deployed, upgraded as service_upgraded, removed as service_removed, rolledback as service_rolledback
-from cdevents.cli.taskrun import started as taskrun_started, finished as taskrun_finished 
+from cdevents.cli.branch import created as branch_created
+from cdevents.cli.branch import deleted as branch_deleted
+from cdevents.cli.build import finished, queued, started
+from cdevents.cli.constants import LOGGING_CONFIGURATION_FILE
+from cdevents.cli.env import created as env_created
+from cdevents.cli.env import deleted as env_deleted
+from cdevents.cli.env import modified as env_modified
+from cdevents.cli.pipelinerun import finished as pipe_finished
+from cdevents.cli.pipelinerun import queued as pipe_queued
+from cdevents.cli.pipelinerun import started as pipe_started
+from cdevents.cli.service import deployed as service_deployed
+from cdevents.cli.service import removed as service_removed
+from cdevents.cli.service import rolledback as service_rolledback
+from cdevents.cli.service import upgraded as service_upgraded
+from cdevents.cli.taskrun import finished as taskrun_finished
+from cdevents.cli.taskrun import started as taskrun_started
+from cdevents.cli.utils import add_disclaimer_text
 
 
 def configure_logging():
@@ -29,6 +37,7 @@ def configure_logging():
 def build():
     """Click group for command 'build'."""
 
+
 build.add_command(finished)
 build.add_command(queued)
 build.add_command(started)
@@ -38,6 +47,7 @@ build.add_command(started)
 def artifact():
     """Click group for command 'artifact'."""
 
+
 artifact.add_command(packaged)
 artifact.add_command(published)
 
@@ -45,6 +55,7 @@ artifact.add_command(published)
 @click.group(help=add_disclaimer_text("""Commands Branch related CloudEvent."""))
 def branch():
     """Click group for command 'branch'."""
+
 
 branch.add_command(branch_created)
 branch.add_command(branch_deleted)
@@ -54,26 +65,26 @@ branch.add_command(branch_deleted)
 def env():
     """Click group for command 'environment'."""
 
+
 env.add_command(env_created)
 env.add_command(env_deleted)
 env.add_command(env_modified)
-
-
 
 
 @click.group(help=add_disclaimer_text("""Commands PipelineRun related CloudEvent."""))
 def pipelinerun():
     """Click group for command 'environment'."""
 
+
 pipelinerun.add_command(pipe_started)
 pipelinerun.add_command(pipe_finished)
 pipelinerun.add_command(pipe_queued)
 
 
-
 @click.group(help=add_disclaimer_text("""Commands Service related CloudEvent."""))
 def service():
     """Click group for command 'service'."""
+
 
 service.add_command(service_deployed)
 service.add_command(service_upgraded)
@@ -85,10 +96,9 @@ service.add_command(service_rolledback)
 def taskrun():
     """Click group for command 'taskrun'."""
 
+
 taskrun.add_command(taskrun_started)
 taskrun.add_command(taskrun_finished)
-
-
 
 
 @click.group(

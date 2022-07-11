@@ -1,6 +1,6 @@
 include header.mk
 
-PACKAGES = template core web cli
+PACKAGES = cli
 export ABS_ROOT_PATH=$(shell pwd)
 
 .PHONY: packages $(PACKAGES)
@@ -49,13 +49,6 @@ $(LINTPACKAGES):
 format: $(FORMATPACKAGES)
 $(FORMATPACKAGES):
 	$(MAKE) -C $(@:format-%=%) format
-
-install: ## Installs dependencies from requirements.txt
-	pip install -r ./requirements
-	pre-commit install
-
-internal-install: ## Installs VCC-internal dependencies from vcc-requirements.txt
-	pip install --extra-index-url https://TODO -r vccinternal-requirements.txt
 
 check: ## Runs pre-commit hooks on all files
 	pre-commit run --all-files

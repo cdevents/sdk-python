@@ -1,18 +1,14 @@
 """Module for cli taskrun commands."""
 from __future__ import annotations
-import os
 
+import os
 from typing import List
 
 import click
 import requests
-
 from cloudevents.http import CloudEvent, to_structured
 
-from cdevents.cli.utils import (
-    add_disclaimer_text,
-    print_function_args,
-)
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
 
 
 # pylint: disable=unused-argument
@@ -51,7 +47,7 @@ def common_taskrun_options(function):
         "--data",
         "-d",
         required=False,
-        type=(str,str),
+        type=(str, str),
         multiple=True,
         help="Task Run's Data.",
     )(function)
@@ -66,7 +62,7 @@ def started(
     id: str,
     name: str = None,
     pipelineid: str = None,
-    data :List[str] = None,
+    data: List[str] = None,
 ):
     print_function_args()
     attributes = {
@@ -84,6 +80,7 @@ def started(
     # send and print event
     requests.post(cde_sink, headers=headers, data=body)
 
+
 @click.command(help=add_disclaimer_text("TaskRun Finished CloudEvent."))
 @common_taskrun_options
 def finished(
@@ -91,7 +88,7 @@ def finished(
     id: str,
     name: str = None,
     pipelineid: str = None,
-    data :List[str] = None,
+    data: List[str] = None,
 ):
     print_function_args()
     attributes = {
