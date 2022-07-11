@@ -1,18 +1,14 @@
 """Module for cli artifact commands."""
 from __future__ import annotations
-import os
 
+import os
 from typing import List
 
 import click
 import requests
-
 from cloudevents.http import CloudEvent, to_structured
 
-from cdevents.cli.utils import (
-    add_disclaimer_text,
-    print_function_args,
-)
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
 
 
 # pylint: disable=unused-argument
@@ -51,7 +47,7 @@ def common_artifact_options(function):
         "--data",
         "-d",
         required=False,
-        type=(str,str),
+        type=(str, str),
         multiple=True,
         help="Artifact Data.",
     )(function)
@@ -66,7 +62,7 @@ def packaged(
     id: str,
     name: str = None,
     version: str = None,
-    data :List[str] = None,
+    data: List[str] = None,
 ):
     print_function_args()
     attributes = {
@@ -84,6 +80,7 @@ def packaged(
     # send and print event
     requests.post(cde_sink, headers=headers, data=body)
 
+
 @click.command(help=add_disclaimer_text("Artifact Published CloudEvent."))
 @common_artifact_options
 def published(
@@ -91,7 +88,7 @@ def published(
     id: str,
     name: str = None,
     version: str = None,
-    data :List[str] = None,
+    data: List[str] = None,
 ):
     print_function_args()
     attributes = {

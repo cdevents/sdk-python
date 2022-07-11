@@ -1,7 +1,8 @@
-flake8
+flake8==4.0.1
 pep8-naming
 flake8-import-order
 flake8-print
 flake8-strict
-pytest
+pytest==7.1.2
+pytest-mock==3.7.0
 pytest-cov
