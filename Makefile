@@ -54,10 +54,10 @@ check: ## Runs pre-commit hooks on all files
 	pre-commit run --all-files
 
 docker-build: ## Build and package Docker container
-	docker build -t cdevents-client -f Dockerfile .
+	docker build -t cdevents -f Dockerfile .
 
-docker-shell: ## Opens a shell
-	docker run --add-host=host.docker.internal:host-gateway --volume /"$(shell pwd)"/output/:/root/cdevents-client/ -it cdevents-client bash
+docker-shell: ## Opens a bash
+	docker run --rm --network host --volume $(pwd)/output/:/root/cdevents-client/ -it cdevents bash
 
 .PHONY: packages $(PACKAGES)
 .PHONY: packages $(INITPACKAGES)
