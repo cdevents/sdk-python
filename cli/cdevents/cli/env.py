@@ -1,6 +1,7 @@
 """Module for cli environment commands."""
 from __future__ import annotations
 
+import logging
 import os
 from typing import List
 
@@ -10,6 +11,7 @@ from cloudevents.http import CloudEvent, to_structured
 
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 
+_log = logging.getLogger(__name__)
 
 # pylint: disable=unused-argument
 def common_env_options(function):
@@ -78,7 +80,8 @@ def created(
     headers, body = to_structured(event)
 
     # send and print event
-    requests.post(cde_sink, headers=headers, data=body)
+    result = requests.post(cde_sink, headers=headers, data=body)
+    _log.debug(f"Response with state code {result.status_code}")
 
 
 @click.command(help=add_disclaimer_text("Environment Deleted CloudEvent."))
@@ -104,7 +107,8 @@ def deleted(
     headers, body = to_structured(event)
 
     # send and print event
-    requests.post(cde_sink, headers=headers, data=body)
+    result = requests.post(cde_sink, headers=headers, data=body)
+    _log.debug(f"Response with state code {result.status_code}")
 
 
 @click.command(help=add_disclaimer_text("Environment Modified CloudEvent."))
@@ -130,4 +134,5 @@ def modified(
     headers, body = to_structured(event)
 
     # send and print event
-    requests.post(cde_sink, headers=headers, data=body)
+    result = requests.post(cde_sink, headers=headers, data=body)
+    _log.debug(f"Response with state code {result.status_code}")
