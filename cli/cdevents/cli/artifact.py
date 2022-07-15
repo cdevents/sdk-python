@@ -54,14 +54,15 @@ def packaged(
     data: List[str] = None,
 ):
     print_function_args()
-    artifact_packaged_eventV1  = "cd.artifact.packaged.v1"
+    artifact_packaged_event_v1  = "cd.artifact.packaged.v1"
     extensions = {
         "artifactid": id,
         "artifactname": name,
         "artifactversion": version,
     }
+
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(artifact_packaged_eventV1, extensions, data)
+    cdevents_command.run(artifact_packaged_event_v1, extensions, data)
 
 
 @click.command(help=add_disclaimer_text("Artifact Published CloudEvent."))
@@ -73,11 +74,11 @@ def published(
     data: List[str] = None,
 ):
     print_function_args()
-    artifact_published_eventV1  = "cd.artifact.published.v1"
+    artifact_published_event_v1  = "cd.artifact.published.v1"
     extensions = {
         "artifactid": id,
         "artifactname": name,
         "artifactversion": version,
     }
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(artifact_published_eventV1, extensions, data)
+    cdevents_command.run(artifact_published_event_v1, extensions, data)
