@@ -1,6 +1,7 @@
 """Module for cli service commands."""
 from __future__ import annotations
 
+import logging
 import os
 from typing import List
 
@@ -10,6 +11,7 @@ from cloudevents.http import CloudEvent, to_structured
 
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 
+_log = logging.getLogger(__name__)
 
 # pylint: disable=unused-argument
 def common_service_options(function):
@@ -78,7 +80,8 @@ def deployed(
     headers, body = to_structured(event)
 
     # send and print event
-    requests.post(cde_sink, headers=headers, data=body)
+    result = requests.post(cde_sink, headers=headers, data=body)
+    _log.debug(f"Response with state code {result.status_code}")
 
 
 @click.command(help=add_disclaimer_text("Service Upgraded CloudEvent."))
@@ -104,7 +107,8 @@ def upgraded(
     headers, body = to_structured(event)
 
     # send and print event
-    requests.post(cde_sink, headers=headers, data=body)
+    result = requests.post(cde_sink, headers=headers, data=body)
+    _log.debug(f"Response with state code {result.status_code}")
 
 
 @click.command(help=add_disclaimer_text("Service Removed CloudEvent."))
@@ -130,7 +134,8 @@ def removed(
     headers, body = to_structured(event)
 
     # send and print event
-    requests.post(cde_sink, headers=headers, data=body)
+    result = requests.post(cde_sink, headers=headers, data=body)
+    _log.debug(f"Response with state code {result.status_code}")
 
 
 @click.command(help=add_disclaimer_text("Service Rolledback CloudEvent."))
@@ -156,4 +161,5 @@ def rolledback(
     headers, body = to_structured(event)
 
     # send and print event
-    requests.post(cde_sink, headers=headers, data=body)
+    result = requests.post(cde_sink, headers=headers, data=body)
+    _log.debug(f"Response with state code {result.status_code}")
