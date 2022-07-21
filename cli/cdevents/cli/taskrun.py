@@ -9,6 +9,9 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
+from cdevents.core.events import Events
+from cdevents.core import event_type
+
 # pylint: disable=unused-argument
 def common_taskrun_options(function):
     """Decorator for common cli options for taskrun."""
@@ -54,16 +57,10 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    task_run_started_event_v1  = "cd.taskrun.started.v1"
-    extensions = {
-        "taskrunid": id,
-        "taskrunname": name,
-        "taskrunpipelineid": pipelineid,
-    }
-
+    e = Events()
+    new_event = e.create_taskrun_event(event_type.TaskRunStartedEventV1, id, name, pipelineid, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(task_run_started_event_v1, extensions, data)
-
+    cdevents_command.run(new_event)
 
 @click.command(help=add_disclaimer_text("TaskRun Finished CloudEvent."))
 @common_taskrun_options
@@ -74,13 +71,8 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    task_run_finished_event_v1  = "cd.taskrun.finished.v1"
-    extensions = {
-        "taskrunid": id,
-        "taskrunname": name,
-        "taskrunpipelineid": pipelineid,
-    }
-
+    e = Events()
+    new_event = e.create_taskrun_event(event_type.TaskRunFinishedEventV1, id, name, pipelineid, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(task_run_finished_event_v1, extensions, data)
+    cdevents_command.run(new_event)
 

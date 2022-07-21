@@ -9,6 +9,9 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
+from cdevents.core.events import Events
+from cdevents.core import event_type
+
 # pylint: disable=unused-argument
 def common_branch_options(function):
     """Decorator for common cli options for branch."""
@@ -53,16 +56,12 @@ def created(
     repoid: str = None,
     data: List[str] = None,
 ):
-    print_function_args()
-    branch_created_event_v1  = "cd.repository.branch.created.v1"
-    extensions = {
-        "branchid": id,
-        "branchname": name,
-        "branchrepositoryid": repoid,
-    }
-
+    print_function_args() 
+    e = Events()
+    new_event = e.create_branch_event(event_type.BranchCreatedEventV1, id, name, repoid, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(branch_created_event_v1, extensions, data)
+    cdevents_command.run(new_event)
+
 
 @click.command(help=add_disclaimer_text("Branch Deleted CloudEvent."))
 @common_branch_options
@@ -72,13 +71,8 @@ def deleted(
     repoid: str = None,
     data: List[str] = None,
 ):
-    print_function_args()
-    branch_deleted_event_v1 = "cd.repository.branch.deleted.v1"
-    extensions = {
-        "branchid": id,
-        "branchname": name,
-        "branchrepositoryid": repoid,
-    }
-
+    print_function_args() 
+    e = Events()
+    new_event = e.create_branch_event(event_type.BranchDeletedEventV1, id, name, repoid, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(branch_deleted_event_v1, extensions, data)
+    cdevents_command.run(new_event)

@@ -3,9 +3,13 @@ import logging
 from abc import ABC
 import requests
 
+from cloudevents.http import CloudEvent
+
+from cdevents.core.event_sender import EventSender
+
 from cdevents.cli.configuration_handler import ConfigurationHandler
-from cloudevents.http import CloudEvent, to_structured
 from cdevents.cli.configuration_handler import new_default_configuration_handler
+
 
 class CDeventsCommand(ABC):
     """Abstract base class for all Hostlog commands."""
@@ -21,21 +25,24 @@ class CDeventsCommand(ABC):
         if config_handler is None:
             self._config_handler = new_default_configuration_handler()
 
-    def run(self, type, extensions, data):
+    def run(self, event: CloudEvent):
         """run command.
         """
-        attributes = {
-            "type": type,
-            "source": self.config_handler.source.name,
-            "extensions": extensions,
-        }
-        event = CloudEvent(attributes, dict(data))
-        headers, body = to_structured(event)
-        cde_link = self.config_handler.client.host
+        # attributes = {
+        #     "type": type,
+        #     "source": self.config_handler.source.name,
+        #     "extensions": extensions,
+        # }
+        # event = CloudEvent(attributes, dict(data))
+        # headers, body = to_structured(event)
+        # cde_link = self.config_handler.client.host
 
-        # send and print event
-        result = requests.post(cde_link, headers=headers, data=body)
-        self._log.info(f"Response with state code {result.status_code}")
+        # # send and print event
+        # result = requests.post(cde_link, headers=headers, data=body)
+        # self._log.info(f"Response with state code {result.status_code}")
+
+        e = EventSender(cde_link=self.config_handler.client.host)
+        e.send(event)
 
 
     @property
