@@ -6,11 +6,12 @@ from pathlib import Path
 import click
 import yaml
 
+from cdevents.cli.constants import LOGGING_CONFIGURATION_FILE
+
 from cdevents.cli.artifact import packaged, published
 from cdevents.cli.branch import created as branch_created
 from cdevents.cli.branch import deleted as branch_deleted
 from cdevents.cli.build import finished, queued, started
-from cdevents.cli.constants import LOGGING_CONFIGURATION_FILE
 from cdevents.cli.env import created as env_created
 from cdevents.cli.env import deleted as env_deleted
 from cdevents.cli.env import modified as env_modified

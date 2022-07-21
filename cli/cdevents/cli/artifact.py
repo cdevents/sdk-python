@@ -9,6 +9,9 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
+from cdevents.core.events import Events
+from cdevents.core import event_type
+
 # pylint: disable=unused-argument
 def common_artifact_options(function):
     """Decorator for common cli options for artifact."""
@@ -54,15 +57,10 @@ def packaged(
     data: List[str] = None,
 ):
     print_function_args()
-    artifact_packaged_event_v1  = "cd.artifact.packaged.v1"
-    extensions = {
-        "artifactid": id,
-        "artifactname": name,
-        "artifactversion": version,
-    }
-
+    e = Events()
+    new_event = e.create_artifact_event(event_type.ArtifactPackagedEventV1, id, name, version, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(artifact_packaged_event_v1, extensions, data)
+    cdevents_command.run(new_event)
 
 
 @click.command(help=add_disclaimer_text("Artifact Published CloudEvent."))
@@ -74,11 +72,8 @@ def published(
     data: List[str] = None,
 ):
     print_function_args()
-    artifact_published_event_v1  = "cd.artifact.published.v1"
-    extensions = {
-        "artifactid": id,
-        "artifactname": name,
-        "artifactversion": version,
-    }
+
+    e = Events()
+    new_event = e.create_artifact_event(event_type.ArtifactPublishedEventV1, id, name, version, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(artifact_published_event_v1, extensions, data)
+    cdevents_command.run(new_event)

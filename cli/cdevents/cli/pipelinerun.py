@@ -9,6 +9,9 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
+from cdevents.core.events import Events
+from cdevents.core import event_type
+
 # pylint: disable=unused-argument
 def common_pipelinerun_options(function):
     """Decorator for common cli options for pipelinerun."""
@@ -70,17 +73,10 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    pipeline_run_started_event_v1  = "cd.pipelinerun.started.v1"
-    extensions = {
-        "pipelinerunid": id,
-        "pipelinerunname": name,
-        "pipelinerunstatus": status,
-        "pipelinerunurl": url,
-        "pipelinerunerrors": errors,
-    }
-
+    e = Events()
+    new_event = e.create_pipelinerun_event(event_type.PipelineRunStartedEventV1, id, name, status, url, errors, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(pipeline_run_started_event_v1, extensions, data)
+    cdevents_command.run(new_event)
 
 
 @click.command(help=add_disclaimer_text("PipelineRun Finished CloudEvent."))
@@ -94,17 +90,10 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    pipeline_run_finished_event_v1  = "cd.pipelinerun.finished.v1"
-    extensions = {
-        "pipelinerunid": id,
-        "pipelinerunname": name,
-        "pipelinerunstatus": status,
-        "pipelinerunurl": url,
-        "pipelinerunerrors": errors,
-    }
-
+    e = Events()
+    new_event = e.create_pipelinerun_event(event_type.PipelineRunFinishedEventV1, id, name, status, url, errors, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(pipeline_run_finished_event_v1, extensions, data)
+    cdevents_command.run(new_event)
 
 @click.command(help=add_disclaimer_text("PipelineRun Queued CloudEvent."))
 @common_pipelinerun_options
@@ -117,14 +106,8 @@ def queued(
     data: List[str] = None,
 ):
     print_function_args()
-    pipeline_run_queued_event_v1  = "cd.pipelinerun.queued.v1"
-    extensions = {
-        "pipelinerunid": id,
-        "pipelinerunname": name,
-        "pipelinerunstatus": status,
-        "pipelinerunurl": url,
-        "pipelinerunerrors": errors,
-    }
-
+    e = Events()
+    new_event = e.create_pipelinerun_event(event_type.PipelineRunQueuedEventV1, id, name, status, url, errors, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(pipeline_run_queued_event_v1, extensions, data)
+    cdevents_command.run(new_event)
+
