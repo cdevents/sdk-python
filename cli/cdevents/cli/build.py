@@ -9,6 +9,9 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
+from cdevents.core.events import Events
+from cdevents.core import event_type
+
 # pylint: disable=unused-argument
 def common_build_options(function):
     """Decorator for common cli options for build."""
@@ -55,15 +58,10 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    build_started_event_v1 = "cd.build.started.v1"
-    extensions = {
-        "buildid": id,
-        "buildname": name,
-        "buildartifactid": artifact,
-    }
-
+    e = Events()
+    new_event = e.create_build_event(event_type.BuildStartedEventV1, id, name, artifact, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(build_started_event_v1, extensions, data)
+    cdevents_command.run(new_event)
 
 @click.command(help=add_disclaimer_text("Build Finished CloudEvent."))
 @common_build_options
@@ -74,16 +72,10 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    build_finished_event_v1 = "cd.build.finished.v1"
-    extensions = {
-        "buildid": id,
-        "buildname": name,
-        "buildartifactid": artifact,
-    }
-
+    e = Events()
+    new_event = e.create_build_event(event_type.BuildFinishedEventV1, id, name, artifact, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(build_finished_event_v1, extensions, data)
-
+    cdevents_command.run(new_event)
 
 @click.command(help=add_disclaimer_text("PipelineRun Queued CloudEvent."))
 @common_build_options
@@ -94,12 +86,7 @@ def queued(
     data: List[str] = None,
 ):
     print_function_args()
-    build_queued_event_v1 = "cd.build.queued.v1"
-    extensions = {
-        "buildid": id,
-        "buildname": name,
-        "buildartifactid": artifact,
-    }
-
+    e = Events()
+    new_event = e.create_build_event(event_type.BuildQueuedEventV1, id, name, artifact, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(build_queued_event_v1, extensions, data)
+    cdevents_command.run(new_event)

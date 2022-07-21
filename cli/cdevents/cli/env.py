@@ -9,6 +9,9 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
+from cdevents.core.events import Events
+from cdevents.core import event_type
+
 # pylint: disable=unused-argument
 def common_env_options(function):
     """Decorator for common cli options for environment."""
@@ -54,15 +57,10 @@ def created(
     data: List[str] = None,
 ):
     print_function_args()
-    environment_created_event_v1 = "cd.environment.created.v1"
-    extensions = {
-        "envId": id,
-        "envname": name,
-        "envrepourl": repo,
-    }
-
+    e = Events()
+    new_event = e.create_environment_event(event_type.EnvironmentCreatedEventV1, id, name, repo, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(environment_created_event_v1, extensions, data)
+    cdevents_command.run(new_event)
 
 
 @click.command(help=add_disclaimer_text("Environment Deleted CloudEvent."))
@@ -74,16 +72,10 @@ def deleted(
     data: List[str] = None,
 ):
     print_function_args()
-    environment_deleted_event_v1 = "cd.environment.deleted.v1"
-    extensions = {
-        "envId": id,
-        "envname": name,
-        "envrepourl": repo,
-    }
-
+    e = Events()
+    new_event = e.create_environment_event(event_type.EnvironmentDeletedEventV1, id, name, repo, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(environment_deleted_event_v1, extensions, data)
-
+    cdevents_command.run(new_event)
 
 @click.command(help=add_disclaimer_text("Environment Modified CloudEvent."))
 @common_env_options
@@ -94,12 +86,7 @@ def modified(
     data: List[str] = None,
 ):
     print_function_args()
-    environment_modified_event_v1 = "cd.environment.modified.v1"
-    extensions = {
-        "envId": id,
-        "envname": name,
-        "envrepourl": repo,
-    }
-
+    e = Events()
+    new_event = e.create_environment_event(event_type.EnvironmentModifiedEventV1, id, name, repo, data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(environment_modified_event_v1, extensions, data)
+    cdevents_command.run(new_event)
