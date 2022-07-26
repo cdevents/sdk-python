@@ -1,4 +1,3 @@
-
 """Core events sender."""
 
 import requests
