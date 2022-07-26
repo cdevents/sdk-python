@@ -28,19 +28,6 @@ class CDeventsCommand(ABC):
     def run(self, event: CloudEvent):
         """run command.
         """
-        # attributes = {
-        #     "type": type,
-        #     "source": self.config_handler.source.name,
-        #     "extensions": extensions,
-        # }
-        # event = CloudEvent(attributes, dict(data))
-        # headers, body = to_structured(event)
-        # cde_link = self.config_handler.client.host
-
-        # # send and print event
-        # result = requests.post(cde_link, headers=headers, data=body)
-        # self._log.info(f"Response with state code {result.status_code}")
-
         e = EventSender(cde_link=self.config_handler.client.host)
         e.send(event)
 
