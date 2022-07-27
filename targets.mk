@@ -25,13 +25,8 @@ clean-test: ## remove test and coverage artifacts
 clean-mypy: ## remove MyPy cache files
 	rm -fr .mypy_cache/
 
-
-init: clean ## install the package in editable mode including dev dependencies
-	pip install -e .[dev]
-	pre-commit install
-
 package-install: ## install the package without dev dependencies
-	pip install .
+	pip install -e .
 
 test: ## run tests quickly with the default Python
 	python -m pytest -m unit

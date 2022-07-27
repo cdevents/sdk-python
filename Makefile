@@ -1,6 +1,6 @@
 include header.mk
 
-PACKAGES = cli
+PACKAGES = core cli
 export ABS_ROOT_PATH=$(shell pwd)
 
 .PHONY: packages $(PACKAGES)
@@ -21,10 +21,6 @@ BUMPVERSIONPACKAGES = $(PACKAGES:%=bumpversion-%)
 
 help: ## Prints this help text
 	@python -c "$$PRINT_HELP_PYSCRIPT" < Makefile
-
-init: $(INITPACKAGES) ## Installs all packages in editable mode including dev dependencies
-$(INITPACKAGES):
-	$(MAKE) -C $(@:init-%=%) init
 
 package-install: $(INSTALLPACKAGES) ## Installs all packages without dev dependencies
 $(INSTALLPACKAGES):
