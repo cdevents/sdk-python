@@ -12,7 +12,7 @@ from cdevents.cli.configuration_handler import new_default_configuration_handler
 
 
 class CDeventsCommand(ABC):
-    """Abstract base class for all Hostlog commands."""
+    """Abstract base class for all CDevents commands."""
 
     def __init__(self, config_handler: ConfigurationHandler = None):
         """Initializes base class.

@@ -29,7 +29,7 @@ package-install: ## install the package without dev dependencies
 	pip install -e .
 
 test: ## run tests quickly with the default Python
-	python -m pytest -m unit
+	python -m pytest -m unit -vv
 
 dist: clean ## builds source and wheel package
 	python setup.py sdist
