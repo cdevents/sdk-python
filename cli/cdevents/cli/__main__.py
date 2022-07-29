@@ -18,6 +18,9 @@ from cdevents.cli.env import modified as env_modified
 from cdevents.cli.pipelinerun import finished as pipe_finished
 from cdevents.cli.pipelinerun import queued as pipe_queued
 from cdevents.cli.pipelinerun import started as pipe_started
+from cdevents.cli.repository import created as repo_created
+from cdevents.cli.repository import deleted as repo_deleted
+from cdevents.cli.repository import modified as repo_modified
 from cdevents.cli.service import deployed as service_deployed
 from cdevents.cli.service import removed as service_removed
 from cdevents.cli.service import rolledback as service_rolledback
@@ -81,6 +84,14 @@ pipelinerun.add_command(pipe_started)
 pipelinerun.add_command(pipe_finished)
 pipelinerun.add_command(pipe_queued)
 
+@click.group(help=add_disclaimer_text("""Commands Repository related CloudEvent."""))
+def repository():
+    """Click group for command 'repository'."""
+
+repository.add_command(repo_created)
+repository.add_command(repo_modified)
+repository.add_command(repo_deleted)
+
 
 @click.group(help=add_disclaimer_text("""Commands Service related CloudEvent."""))
 def service():
@@ -119,6 +130,7 @@ cli.add_command(artifact)
 cli.add_command(branch)
 cli.add_command(env)
 cli.add_command(pipelinerun)
+cli.add_command(repository)
 cli.add_command(service)
 cli.add_command(taskrun)
 
