@@ -8,13 +8,13 @@ from pathlib import Path
 from typing import Union
 
 from cdevents.cli.configuration_reader import ConfigurationReader
-from cdevents.cli.constants import DEAFULT_CONFIGURATION_FILE
+from cdevents.cli.constants import DEFAULT_CONFIGURATION_FILE
 from cdevents.cli.utils import DictUtils
 
 
 def get_default_configuration_file() -> str:
     """Returns the default configuration file path."""
-    return DEAFULT_CONFIGURATION_FILE
+    return DEFAULT_CONFIGURATION_FILE
 
 def new_default_configuration_handler() -> ConfigurationHandler:
     """Returnes a configuration handler with the default configuration file"""
