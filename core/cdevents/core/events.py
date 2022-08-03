@@ -22,19 +22,6 @@ class Events():
 
         return event
 
-    def create_repository_event(self, event_type: str , id: str, name: str, url: str, data = {}) -> CloudEvent:
-        """Create repository event.
-        """
-            
-        extensions = {
-            "repositoryid": id,
-            "repositoryname": name,
-            "repositoryurl": url,
-        }
-
-        event = self.create_event(event_type, extensions, data)
-
-        return event
 
 
     def create_service_event(self, event_type: str , envid: str, name: str, version: str, data = {}) -> CloudEvent:
