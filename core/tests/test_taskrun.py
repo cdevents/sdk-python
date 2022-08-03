@@ -1,20 +1,22 @@
-from cdevents.core import event_type
 import pytest
 
-from cdevents.core.events import Events
+from cdevents.core.taskrun import TaskRun, TaskRunType
 
 @pytest.mark.unit
 def test_taskrun_started():
-    event = Events().create_taskrun_event(event_type.TaskRunStartedEventV1, id="_id", name="_name", pipelineid="_pipelineid", data={"taskrun": "_taskrun"})
-    assert event is not None
-    assert event._attributes["type"] == event_type.TaskRunStartedEventV1
-    assert event._attributes["extensions"] == {"taskrunid": "_id", "taskrunname": "_name", "taskrunpipelineid": "_pipelineid"}
-    assert event.data == {"taskrun": "_taskrun"}
+    taskrun = TaskRun(taskrun_type=TaskRunType.TaskRunStartedEventV1,id="_id", name="_name", pipelineid="_pipelineid")
+    taskrun_event = taskrun.create_event(data={"key1": "value1"})
+    assert taskrun_event is not None
+    assert taskrun_event._attributes["type"] == TaskRunType.TaskRunStartedEventV1.value
+    assert taskrun_event._attributes["extensions"] == {"taskrunid": "_id", "taskrunname": "_name", "taskrunpipelineid": "_pipelineid"}
+    assert taskrun_event.data == {"key1": "value1"}
+
 
 @pytest.mark.unit
 def test_taskrun_finished():
-    event = Events().create_taskrun_event(event_type.TaskRunFinishedEventV1, id="_id", name="_name", pipelineid="_pipelineid", data={"taskrun": "_taskrun"})
-    assert event is not None
-    assert event._attributes["type"] == event_type.TaskRunFinishedEventV1
-    assert event._attributes["extensions"] == {"taskrunid": "_id", "taskrunname": "_name", "taskrunpipelineid": "_pipelineid"}
-    assert event.data == {"taskrun": "_taskrun"}
+    taskrun = TaskRun(taskrun_type=TaskRunType.TaskRunFinishedEventV1,id="_id", name="_name", pipelineid="_pipelineid")
+    taskrun_event = taskrun.create_event(data={"key1": "value1"})
+    assert taskrun_event is not None
+    assert taskrun_event._attributes["type"] == TaskRunType.TaskRunFinishedEventV1.value
+    assert taskrun_event._attributes["extensions"] == {"taskrunid": "_id", "taskrunname": "_name", "taskrunpipelineid": "_pipelineid"}
+    assert taskrun_event.data == {"key1": "value1"}
