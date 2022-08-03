@@ -9,8 +9,7 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.events import Events
-from cdevents.core import event_type
+from cdevents.core.env import Env, EnvType
 
 # pylint: disable=unused-argument
 def common_env_options(function):
@@ -57,10 +56,10 @@ def created(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_environment_event(event_type.EnvironmentCreatedEventV1, id, name, repo, data)
+    env = Env(build_type=EnvType.EnvironmentCreatedEventV1, id=id, name=name, repo=repo)
+    env_event = env.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(env_event)
 
 
 @click.command(help=add_disclaimer_text("Environment Deleted CloudEvent."))
@@ -72,10 +71,10 @@ def deleted(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_environment_event(event_type.EnvironmentDeletedEventV1, id, name, repo, data)
+    env = Env(env_type=EnvType.EnvironmentDeletedEventV1, id=id, name=name, repo=repo)
+    env_event = env.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(env_event)
 
 @click.command(help=add_disclaimer_text("Environment Modified CloudEvent."))
 @common_env_options
@@ -86,7 +85,7 @@ def modified(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_environment_event(event_type.EnvironmentModifiedEventV1, id, name, repo, data)
+    env = Env(env_type=EnvType.EnvironmentModifiedEventV1, id=id, name=name, repo=repo)
+    env_event = env.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(env_event)

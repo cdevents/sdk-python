@@ -9,7 +9,7 @@ class ArtifactType(Enum):
 
 
 class Artifact(Events):
-    """Events."""
+    """Artifact."""
 
     def __init__(self, artifact_type: ArtifactType, id: str, name: str, version: str):
         """Initializes class.
