@@ -1,16 +1,12 @@
 """Module for cli taskrun commands."""
 from __future__ import annotations
-
-import os
 from typing import List
-
 import click
 
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.events import Events
-from cdevents.core import event_type
+from cdevents.core.taskrun import TaskRun, TaskRunType
 
 # pylint: disable=unused-argument
 def common_taskrun_options(function):
@@ -57,10 +53,10 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_taskrun_event(event_type.TaskRunStartedEventV1, id, name, pipelineid, data)
+    taskrun = TaskRun(taskrun_type=TaskRunType.TaskRunStartedEventV1, id=id, name=name, pipelineid=pipelineid)
+    taskrun_event = taskrun.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(taskrun_event)
 
 @click.command(help=add_disclaimer_text("TaskRun Finished CloudEvent."))
 @common_taskrun_options
@@ -71,8 +67,8 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_taskrun_event(event_type.TaskRunFinishedEventV1, id, name, pipelineid, data)
+    taskrun = TaskRun(taskrun_type=TaskRunType.TaskRunFinishedEventV1, id=id, name=name, pipelineid=pipelineid)
+    taskrun_event = taskrun.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(taskrun_event)
 
