@@ -54,9 +54,9 @@ def created(
 ):
     print_function_args()
     repository = Repository(repository_type=RepositoryType.RepositoryCreatedEventV1, id=id, name=name, url=url)
-    pipelinerun_event = repository.create_event(data)
+    repository_event = repository.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(pipelinerun_event)
+    cdevents_command.run(repository_event)
 
 
 @click.command(help=add_disclaimer_text("Repository Modified CloudEvent."))
@@ -69,9 +69,9 @@ def modified(
 ):
     print_function_args()
     repository = Repository(repository_type=RepositoryType.RepositoryModifiedEventV1, id=id, name=name, url=url)
-    pipelinerun_event = repository.create_event(data)
+    repository_event = repository.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(pipelinerun_event)
+    cdevents_command.run(repository_event)
 
 
 @click.command(help=add_disclaimer_text("Repository Deleted CloudEvent."))
@@ -84,7 +84,7 @@ def deleted(
 ):
     print_function_args()
     repository = Repository(repository_type=RepositoryType.RepositoryDeletedEventV1, id=id, name=name, url=url)
-    pipelinerun_event = repository.create_event(data)
+    repository_event = repository.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(pipelinerun_event)
+    cdevents_command.run(repository_event)
 

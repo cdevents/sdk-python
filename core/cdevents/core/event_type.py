@@ -9,17 +9,6 @@ ChangeReviewedEventV1  :str = "cd.repository.change.reviewed.v1"
 ChangeMergedEventV1    :str = "cd.repository.change.merged.v1"
 ChangeAbandonedEventV1 :str = "cd.repository.change.abandoned.v1"
 
-# Repository events
-RepositoryCreatedEventV1  :str = "cd.repository.created.v1"
-RepositoryModifiedEventV1 :str = "cd.repository.modified.v1"
-RepositoryDeletedEventV1  :str = "cd.repository.deleted.v1"
-
-# Service Events
-ServiceDeployedEventV1   :str = "cd.service.deployed.v1"
-ServiceUpgradedEventV1   :str = "cd.service.upgraded.v1"
-ServiceRolledbackEventV1 :str = "cd.service.rolledback.v1"
-ServiceRemovedEventV1    :str = "cd.service.removed.v1"
-
 # TaskRun events
 TaskRunStartedEventV1  :str = "cd.taskrun.started.v1"
 TaskRunFinishedEventV1 :str = "cd.taskrun.finished.v1"
