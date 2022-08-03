@@ -9,11 +9,6 @@ ChangeReviewedEventV1  :str = "cd.repository.change.reviewed.v1"
 ChangeMergedEventV1    :str = "cd.repository.change.merged.v1"
 ChangeAbandonedEventV1 :str = "cd.repository.change.abandoned.v1"
 
-# PipelineRun events
-PipelineRunStartedEventV1  :str = "cd.pipelinerun.started.v1"
-PipelineRunFinishedEventV1 :str = "cd.pipelinerun.finished.v1"
-PipelineRunQueuedEventV1   :str = "cd.pipelinerun.queued.v1"
-
 # Repository events
 RepositoryCreatedEventV1  :str = "cd.repository.created.v1"
 RepositoryModifiedEventV1 :str = "cd.repository.modified.v1"

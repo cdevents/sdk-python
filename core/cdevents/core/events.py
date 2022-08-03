@@ -22,21 +22,6 @@ class Events():
 
         return event
 
-    def create_pipelinerun_event(self, event_type: str , id: str, name: str, status: str, url: str, errors: str, data = {}) -> CloudEvent:
-        """Create pipelinerun event.
-        """
-            
-        extensions = {
-            "pipelinerunid": id,
-            "pipelinerunname": name,
-            "pipelinerunstatus": status,
-            "pipelinerunurl": url,
-            "pipelinerunerrors": errors,
-        }
-        event = self.create_event(event_type, extensions, data)
-
-        return event
-
     def create_repository_event(self, event_type: str , id: str, name: str, url: str, data = {}) -> CloudEvent:
         """Create repository event.
         """

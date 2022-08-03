@@ -1,4 +1,3 @@
-from cdevents.core import event_type
 import pytest
 
 from cdevents.core.env import Env, EnvType
