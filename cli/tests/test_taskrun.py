@@ -1,13 +1,12 @@
-"""Unit tests for branch."""
+"""Unit tests for taskrun."""
 import pytest
 from unittest.mock import patch
 from click.testing import CliRunner
 
-from cdevents.cli.branch import created, deleted
+from cdevents.cli.taskrun import started, finished
 from cdevents.cli.cdevents_command import CDeventsCommand
 
 # pylint: disable=missing-function-docstring, protected-access, missing-class-docstring
-
 @pytest.fixture
 def runner() -> CliRunner:
     return CliRunner()
@@ -15,28 +14,28 @@ def runner() -> CliRunner:
 
 ID_ARG = "id"
 NAME_ARG = "name"
-REPOID_ARG = "repoid"
+PIPLINEID_ARG = "pipelineid"
 DATA_ARG = "data"
 
 @pytest.mark.unit
-def test_created(runner: CliRunner):
-    """Test created of a branch."""
+def test_started(runner: CliRunner):
+    """Test started of an taskrun."""
 
     expected_id = "task1"
     expected_name = "My Task Run"
-    expected_repoid = "repo1"
+    expected_pipelineid = "pipeline1"
     expected_data = ["key1", "value1"]
 
     with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
         result = runner.invoke(
-            created,
+            started,
             [
                 f"--{ID_ARG}",
                 expected_id,
                 f"--{NAME_ARG}",
                 expected_name,
-                f"--{REPOID_ARG}",
-                expected_repoid,
+                f"--{PIPLINEID_ARG}",
+                expected_pipelineid,
                 f"--{DATA_ARG}",
                 *expected_data,
             ],
@@ -44,28 +43,28 @@ def test_created(runner: CliRunner):
     assert result.exit_code == 0
     assert f"{ID_ARG}={expected_id}" in result.stdout
     assert f"{NAME_ARG}={expected_name}" in result.stdout
-    assert f"{REPOID_ARG}={expected_repoid}" in result.stdout
+    assert f"{PIPLINEID_ARG}={expected_pipelineid}" in result.stdout
     assert f"{DATA_ARG}=({tuple(expected_data)},)" in result.stdout
 
 @pytest.mark.unit
-def test_deleted(runner: CliRunner):
-    """Test deleted of a branch."""
+def test_finished(runner: CliRunner):
+    """Test finished of an taskrun."""
 
     expected_id = "task1"
     expected_name = "My Task Run"
-    expected_repoid = "repo1"
+    expected_pipelineid = "pipeline1"
     expected_data = ["key1", "value1"]
 
     with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
         result = runner.invoke(
-            deleted,
+            finished,
             [
                 f"--{ID_ARG}",
                 expected_id,
                 f"--{NAME_ARG}",
                 expected_name,
-                f"--{REPOID_ARG}",
-                expected_repoid,
+                f"--{PIPLINEID_ARG}",
+                expected_pipelineid,
                 f"--{DATA_ARG}",
                 *expected_data,
             ],
@@ -73,5 +72,5 @@ def test_deleted(runner: CliRunner):
     assert result.exit_code == 0
     assert f"{ID_ARG}={expected_id}" in result.stdout
     assert f"{NAME_ARG}={expected_name}" in result.stdout
-    assert f"{REPOID_ARG}={expected_repoid}" in result.stdout
+    assert f"{PIPLINEID_ARG}={expected_pipelineid}" in result.stdout
     assert f"{DATA_ARG}=({tuple(expected_data)},)" in result.stdout
