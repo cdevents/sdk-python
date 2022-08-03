@@ -1,7 +1,6 @@
 """Module for cli branch commands."""
 from __future__ import annotations
 
-import os
 from typing import List
 
 import click
@@ -9,8 +8,7 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.events import Events
-from cdevents.core import event_type
+from cdevents.core.branch import Branch, BranchType
 
 # pylint: disable=unused-argument
 def common_branch_options(function):
@@ -56,11 +54,11 @@ def created(
     repoid: str = None,
     data: List[str] = None,
 ):
-    print_function_args() 
-    e = Events()
-    new_event = e.create_branch_event(event_type.BranchCreatedEventV1, id, name, repoid, data)
+    print_function_args()
+    branch = Branch(branch_type=BranchType.BranchCreatedEventV1, id=id, name=name, repoid=repoid)
+    branch_event = branch.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(branch_event)
 
 
 @click.command(help=add_disclaimer_text("Branch Deleted CloudEvent."))
@@ -71,8 +69,8 @@ def deleted(
     repoid: str = None,
     data: List[str] = None,
 ):
-    print_function_args() 
-    e = Events()
-    new_event = e.create_branch_event(event_type.BranchDeletedEventV1, id, name, repoid, data)
+    print_function_args()
+    branch = Branch(branch_type=BranchType.BranchDeletedEventV1, id=id, name=name, repoid=repoid)
+    branch_event = branch.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(branch_event)

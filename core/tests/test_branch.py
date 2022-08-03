@@ -1,20 +1,21 @@
-from cdevents.core import event_type
 import pytest
 
-from cdevents.core.events import Events
+from cdevents.core.branch import Branch, BranchType
 
 @pytest.mark.unit
 def test_repository_branch_created():
-    event = Events().create_branch_event(event_type.BranchCreatedEventV1, id="_id", name="_name", repoid="_repoid", data={"branch": "_branch"})
-    assert event is not None
-    assert event._attributes["type"] == event_type.BranchCreatedEventV1
-    assert event._attributes["extensions"] == {"branchid": "_id", "branchname": "_name", "branchrepositoryid": "_repoid"}
-    assert event.data == {"branch": "_branch"}
+    branch = Branch(branch_type=BranchType.BranchCreatedEventV1, id="_id", name="_name", repoid="_repoid")
+    branch_event = branch.create_event(data={"key1": "value1"})
+    assert branch_event is not None
+    assert branch_event._attributes["type"] == "cd.repository.branch.created.v1"
+    assert branch_event._attributes["extensions"] == {"branchid": "_id", "branchname": "_name", "branchrepositoryid": "_repoid"}
+    assert branch_event.data == {"key1": "value1"}
 
 @pytest.mark.unit
 def test_repository_branch_deleted():
-    event = Events().create_branch_event(event_type.BranchDeletedEventV1, id="_id", name="_name", repoid="_repoid", data={"branch": "_branch"})
-    assert event is not None
-    assert event._attributes["type"] == event_type.BranchDeletedEventV1
-    assert event._attributes["extensions"] == {"branchid": "_id", "branchname": "_name", "branchrepositoryid": "_repoid"}
-    assert event.data == {"branch": "_branch"}
+    branch = Branch(branch_type=BranchType.BranchDeletedEventV1, id="_id", name="_name", repoid="_repoid")
+    branch_event = branch.create_event(data={"key1": "value1"})
+    assert branch_event is not None
+    assert branch_event._attributes["type"] == "cd.repository.branch.deleted.v1"
+    assert branch_event._attributes["extensions"] == {"branchid": "_id", "branchname": "_name", "branchrepositoryid": "_repoid"}
+    assert branch_event.data == {"key1": "value1"}
