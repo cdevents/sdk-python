@@ -1,8 +1,6 @@
 """Module for cli branch commands."""
 from __future__ import annotations
-
 from typing import List
-
 import click
 
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
