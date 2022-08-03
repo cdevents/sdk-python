@@ -1,9 +1,6 @@
 """Module for cli build commands."""
 from __future__ import annotations
-
-import os
 from typing import List
-
 import click
 
 from cdevents.cli.utils import add_disclaimer_text, print_function_args

@@ -23,22 +23,6 @@ class Events():
         return event
 
 
-
-    def create_service_event(self, event_type: str , envid: str, name: str, version: str, data = {}) -> CloudEvent:
-        """Create service event.
-        """
-            
-        extensions = {
-            "serviceenvid": envid,
-            "servicename": name,
-            "serviceversion": version,
-        }
-
-        event = self.create_event(event_type, extensions, data)
-
-        return event
-
-
     def create_taskrun_event(self, event_type: str, id: str, name: str, pipelineid: str, data = {}) -> CloudEvent:
         """Create taskrun event.
         """

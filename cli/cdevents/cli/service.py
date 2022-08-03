@@ -1,16 +1,12 @@
 """Module for cli service commands."""
 from __future__ import annotations
-
-import os
 from typing import List
-
 import click
 
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.events import Events
-from cdevents.core import event_type
+from cdevents.core.service import Service, ServiceType
 
 # pylint: disable=unused-argument
 def common_service_options(function):
@@ -57,11 +53,10 @@ def deployed(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_service_event(event_type.ServiceDeployedEventV1, envid, name, version, data)
+    service = Service(service_type=ServiceType.ServiceDeployedEventV1, envid=envid, name=name, version=version)
+    service_event = service.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
-
+    cdevents_command.run(service_event)
 
 @click.command(help=add_disclaimer_text("Service Upgraded CloudEvent."))
 @common_service_options
@@ -72,10 +67,10 @@ def upgraded(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_service_event(event_type.ServiceUpgradedEventV1, envid, name, version, data)
+    service = Service(service_type=ServiceType.ServiceUpgradedEventV1, envid=envid, name=name, version=version)
+    service_event = service.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(service_event)
 
 
 @click.command(help=add_disclaimer_text("Service Removed CloudEvent."))
@@ -87,10 +82,10 @@ def removed(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_service_event(event_type.ServiceRemovedEventV1, envid, name, version, data)
+    service = Service(service_type=ServiceType.ServiceRemovedEventV1, envid=envid, name=name, version=version)
+    service_event = service.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(service_event)
 
 
 @click.command(help=add_disclaimer_text("Service Rolledback CloudEvent."))
@@ -102,7 +97,7 @@ def rolledback(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_service_event(event_type.ServiceRolledbackEventV1, envid, name, version, data)
+    service = Service(service_type=ServiceType.ServiceRolledbackEventV1, envid=envid, name=name, version=version)
+    service_event = service.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(service_event)
