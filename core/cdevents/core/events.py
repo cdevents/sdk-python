@@ -22,46 +22,6 @@ class Events():
 
         return event
 
-    # def create_branch_event(self, event_type: str , id: str, name: str, repoid: str, data = {}) -> CloudEvent:
-    #     """Create branch event.
-    #     """
-        
-    #     extensions = {
-    #         "branchid": id,
-    #         "branchname": name,
-    #         "branchrepositoryid": repoid,
-    #     }
-    #     event = self.create_event(event_type, extensions, data)
-
-    #     return event
-
-
-    def create_build_event(self, event_type: str , id: str, name: str, artifact: str, data = {}) -> CloudEvent:
-        """Create build event.
-        """
-        
-        extensions = {
-            "buildid": id,
-            "buildname": name,
-            "buildartifactid": artifact,
-        }
-        event = self.create_event(event_type, extensions, data)
-
-        return event
-
-    def create_environment_event(self, event_type: str , id: str, name: str, repo: str, data = {}) -> CloudEvent:
-        """Create environment event.
-        """
-            
-        extensions = {
-            "envId": id,
-            "envname": name,
-            "envrepourl": repo,
-        }
-        event = self.create_event(event_type, extensions, data)
-
-        return event
-
     def create_pipelinerun_event(self, event_type: str , id: str, name: str, status: str, url: str, errors: str, data = {}) -> CloudEvent:
         """Create pipelinerun event.
         """

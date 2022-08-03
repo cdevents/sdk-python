@@ -2,30 +2,12 @@
 
 # pylint: TODO: 
 
-# # Artifact Events
-# ArtifactPackagedEventV1  :str = "cd.artifact.packaged.v1"
-# ArtifactPublishedEventV1 :str = "cd.artifact.published.v1"
-
-# Branch Events
-BranchCreatedEventV1 :str = "cd.repository.branch.created.v1"
-BranchDeletedEventV1 :str = "cd.repository.branch.deleted.v1"
-
-# Build Events
-BuildStartedEventV1  :str = "cd.build.started.v1"
-BuildQueuedEventV1   :str = "cd.build.queued.v1"
-BuildFinishedEventV1 :str = "cd.build.finished.v1"
-
 # Change Events
 ChangeCreatedEventV1   :str = "cd.repository.change.created.v1"
 ChangeUpdatedEventV1   :str = "cd.repository.change.updated.v1"
 ChangeReviewedEventV1  :str = "cd.repository.change.reviewed.v1"
 ChangeMergedEventV1    :str = "cd.repository.change.merged.v1"
 ChangeAbandonedEventV1 :str = "cd.repository.change.abandoned.v1"
-
-# Environment Events
-EnvironmentCreatedEventV1  :str = "cd.environment.created.v1"
-EnvironmentModifiedEventV1 :str = "cd.environment.modified.v1"
-EnvironmentDeletedEventV1  :str = "cd.environment.deleted.v1"
 
 # PipelineRun events
 PipelineRunStartedEventV1  :str = "cd.pipelinerun.started.v1"
