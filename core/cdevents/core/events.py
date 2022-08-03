@@ -22,31 +22,18 @@ class Events():
 
         return event
 
-    def create_artifact_event(self, event_type: str , id: str, name: str, version: str, data = {}) -> CloudEvent:
-        """Create artifact event.
-        """
+    # def create_branch_event(self, event_type: str , id: str, name: str, repoid: str, data = {}) -> CloudEvent:
+    #     """Create branch event.
+    #     """
         
-        extensions = {
-            "artifactid": id,
-            "artifactname": name,
-            "artifactversion": version,
-        }
-        event = self.create_event(event_type, extensions, data)
+    #     extensions = {
+    #         "branchid": id,
+    #         "branchname": name,
+    #         "branchrepositoryid": repoid,
+    #     }
+    #     event = self.create_event(event_type, extensions, data)
 
-        return event
-
-    def create_branch_event(self, event_type: str , id: str, name: str, repoid: str, data = {}) -> CloudEvent:
-        """Create branch event.
-        """
-        
-        extensions = {
-            "branchid": id,
-            "branchname": name,
-            "branchrepositoryid": repoid,
-        }
-        event = self.create_event(event_type, extensions, data)
-
-        return event
+    #     return event
 
 
     def create_build_event(self, event_type: str , id: str, name: str, artifact: str, data = {}) -> CloudEvent:

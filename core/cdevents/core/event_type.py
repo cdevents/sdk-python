@@ -1,8 +1,10 @@
 """Constants Event types."""
 
-# Artifact Events
-ArtifactPackagedEventV1  :str = "cd.artifact.packaged.v1"
-ArtifactPublishedEventV1 :str = "cd.artifact.published.v1"
+# pylint: TODO: 
+
+# # Artifact Events
+# ArtifactPackagedEventV1  :str = "cd.artifact.packaged.v1"
+# ArtifactPublishedEventV1 :str = "cd.artifact.published.v1"
 
 # Branch Events
 BranchCreatedEventV1 :str = "cd.repository.branch.created.v1"
