@@ -7,7 +7,7 @@ def test_artifact_packaged_v1():
     artifact = Artifact(artifact_type=ArtifactType.ArtifactPackagedEventV1, id="_id", name="_name", version="_version")
     artifact_event = artifact.create_event(data={"key1": "value1"})
     assert artifact_event is not None
-    assert artifact_event._attributes["type"] == "cd.artifact.packaged.v1"
+    assert artifact_event._attributes["type"] == ArtifactType.ArtifactPackagedEventV1.value
     assert artifact_event._attributes["extensions"] == {"artifactid": "_id", "artifactname": "_name", "artifactversion": "_version"}
     assert artifact_event.data == {"key1": "value1"}
 
@@ -16,7 +16,7 @@ def test_artifact_published_v1():
     artifact = Artifact(artifact_type=ArtifactType.ArtifactPublishedEventV1, id="_id", name="_name", version="_version")
     artifact_event = artifact.create_event(data={"key1": "value1"})
     assert artifact_event is not None
-    assert artifact_event._attributes["type"] == "cd.artifact.published.v1"
+    assert artifact_event._attributes["type"] ==ArtifactType.ArtifactPublishedEventV1.value
     assert artifact_event._attributes["extensions"] == {"artifactid": "_id", "artifactname": "_name", "artifactversion": "_version"}
     assert artifact_event.data == {"key1": "value1"}
 

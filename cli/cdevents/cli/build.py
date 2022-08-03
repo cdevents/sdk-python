@@ -9,8 +9,7 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.events import Events
-from cdevents.core import event_type
+from cdevents.core.build import Build, BuildType
 
 # pylint: disable=unused-argument
 def common_build_options(function):
@@ -58,10 +57,10 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_build_event(event_type.BuildStartedEventV1, id, name, artifact, data)
+    build = Build(build_type=BuildType.BuildStartedEventV1, id=id, name=name, artifact=artifact)
+    build_event = build.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(build_event)
 
 @click.command(help=add_disclaimer_text("Build Finished CloudEvent."))
 @common_build_options
@@ -72,10 +71,10 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_build_event(event_type.BuildFinishedEventV1, id, name, artifact, data)
+    build = Build(build_type=BuildType.BuildFinishedEventV1, id=id, name=name, artifact=artifact)
+    build_event = build.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(build_event)
 
 @click.command(help=add_disclaimer_text("PipelineRun Queued CloudEvent."))
 @common_build_options
@@ -86,7 +85,7 @@ def queued(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_build_event(event_type.BuildQueuedEventV1, id, name, artifact, data)
+    build = Build(build_type=BuildType.BuildQueuedEventV1, id=id, name=name, artifact=artifact)
+    build_event = build.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(build_event)
