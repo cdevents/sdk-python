@@ -1,16 +1,12 @@
 """Module for cli pipelinerun commands."""
 from __future__ import annotations
-
-import os
 from typing import List
-
 import click
 
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.events import Events
-from cdevents.core import event_type
+from cdevents.core.pipelinerun import Pipelinerun, PipelinerunType
 
 # pylint: disable=unused-argument
 def common_pipelinerun_options(function):
@@ -73,11 +69,10 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_pipelinerun_event(event_type.PipelineRunStartedEventV1, id, name, status, url, errors, data)
+    pipelinerun = Pipelinerun(PipelinerunType.PipelineRunStartedEventV1, id=id, name=name, status=status, url=url, errors=errors)
+    pipelinerun_event = pipelinerun.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
-
+    cdevents_command.run(pipelinerun_event)
 
 @click.command(help=add_disclaimer_text("PipelineRun Finished CloudEvent."))
 @common_pipelinerun_options
@@ -90,10 +85,11 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_pipelinerun_event(event_type.PipelineRunFinishedEventV1, id, name, status, url, errors, data)
+    pipelinerun = Pipelinerun(PipelinerunType.PipelineRunFinishedEventV1, id=id, name=name, status=status, url=url, errors=errors)
+    pipelinerun_event = pipelinerun.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(pipelinerun_event)
+
 
 @click.command(help=add_disclaimer_text("PipelineRun Queued CloudEvent."))
 @common_pipelinerun_options
@@ -106,8 +102,9 @@ def queued(
     data: List[str] = None,
 ):
     print_function_args()
-    e = Events()
-    new_event = e.create_pipelinerun_event(event_type.PipelineRunQueuedEventV1, id, name, status, url, errors, data)
+    pipelinerun = Pipelinerun(PipelinerunType.PipelineRunQueuedEventV1, id=id, name=name, status=status, url=url, errors=errors)
+    pipelinerun_event = pipelinerun.create_event(data)
     cdevents_command = CDeventsCommand()
-    cdevents_command.run(new_event)
+    cdevents_command.run(pipelinerun_event)
+
 
