@@ -69,8 +69,7 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    pipelinerun = Pipelinerun(PipelinerunType.PipelineRunStartedEventV1, id=id, name=name, status=status, url=url, errors=errors)
-    pipelinerun_event = pipelinerun.create_event(data)
+    pipelinerun_event = Pipelinerun(PipelinerunType.PipelineRunStartedEventV1, id=id, name=name, status=status, url=url, errors=errors, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(pipelinerun_event)
 
@@ -85,8 +84,7 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    pipelinerun = Pipelinerun(PipelinerunType.PipelineRunFinishedEventV1, id=id, name=name, status=status, url=url, errors=errors)
-    pipelinerun_event = pipelinerun.create_event(data)
+    pipelinerun_event = Pipelinerun(PipelinerunType.PipelineRunFinishedEventV1, id=id, name=name, status=status, url=url, errors=errors, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(pipelinerun_event)
 
@@ -102,8 +100,7 @@ def queued(
     data: List[str] = None,
 ):
     print_function_args()
-    pipelinerun = Pipelinerun(PipelinerunType.PipelineRunQueuedEventV1, id=id, name=name, status=status, url=url, errors=errors)
-    pipelinerun_event = pipelinerun.create_event(data)
+    pipelinerun_event = Pipelinerun(PipelinerunType.PipelineRunQueuedEventV1, id=id, name=name, status=status, url=url, errors=errors, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(pipelinerun_event)
 

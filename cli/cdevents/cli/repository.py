@@ -53,8 +53,7 @@ def created(
     data: List[str] = None,
 ):
     print_function_args()
-    repository = Repository(repository_type=RepositoryType.RepositoryCreatedEventV1, id=id, name=name, url=url)
-    repository_event = repository.create_event(data)
+    repository_event = Repository(repository_type=RepositoryType.RepositoryCreatedEventV1, id=id, name=name, url=url, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(repository_event)
 
@@ -68,8 +67,7 @@ def modified(
     data: List[str] = None,
 ):
     print_function_args()
-    repository = Repository(repository_type=RepositoryType.RepositoryModifiedEventV1, id=id, name=name, url=url)
-    repository_event = repository.create_event(data)
+    repository_event = Repository(repository_type=RepositoryType.RepositoryModifiedEventV1, id=id, name=name, url=url, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(repository_event)
 
@@ -83,8 +81,7 @@ def deleted(
     data: List[str] = None,
 ):
     print_function_args()
-    repository = Repository(repository_type=RepositoryType.RepositoryDeletedEventV1, id=id, name=name, url=url)
-    repository_event = repository.create_event(data)
+    repository_event = Repository(repository_type=RepositoryType.RepositoryDeletedEventV1, id=id, name=name, url=url, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(repository_event)
 

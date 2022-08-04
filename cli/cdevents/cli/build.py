@@ -54,8 +54,7 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    build = Build(build_type=BuildType.BuildStartedEventV1, id=id, name=name, artifact=artifact)
-    build_event = build.create_event(data)
+    build_event = Build(build_type=BuildType.BuildStartedEventV1, id=id, name=name, artifact=artifact, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(build_event)
 
@@ -68,8 +67,7 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    build = Build(build_type=BuildType.BuildFinishedEventV1, id=id, name=name, artifact=artifact)
-    build_event = build.create_event(data)
+    build_event = Build(build_type=BuildType.BuildFinishedEventV1, id=id, name=name, artifact=artifact, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(build_event)
 
@@ -82,7 +80,6 @@ def queued(
     data: List[str] = None,
 ):
     print_function_args()
-    build = Build(build_type=BuildType.BuildQueuedEventV1, id=id, name=name, artifact=artifact)
-    build_event = build.create_event(data)
+    build_event = Build(build_type=BuildType.BuildQueuedEventV1, id=id, name=name, artifact=artifact, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(build_event)

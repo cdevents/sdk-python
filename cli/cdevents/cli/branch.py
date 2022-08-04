@@ -53,8 +53,7 @@ def created(
     data: List[str] = None,
 ):
     print_function_args()
-    branch = Branch(branch_type=BranchType.BranchCreatedEventV1, id=id, name=name, repoid=repoid)
-    branch_event = branch.create_event(data)
+    branch_event = Branch(branch_type=BranchType.BranchCreatedEventV1, id=id, name=name, repoid=repoid, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(branch_event)
 
@@ -68,7 +67,6 @@ def deleted(
     data: List[str] = None,
 ):
     print_function_args()
-    branch = Branch(branch_type=BranchType.BranchDeletedEventV1, id=id, name=name, repoid=repoid)
-    branch_event = branch.create_event(data)
+    branch_event = Branch(branch_type=BranchType.BranchDeletedEventV1, id=id, name=name, repoid=repoid, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(branch_event)

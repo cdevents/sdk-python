@@ -53,7 +53,7 @@ def created(
     data: List[str] = None,
 ):
     print_function_args()
-    env = Env(build_type=EnvType.EnvironmentCreatedEventV1, id=id, name=name, repo=repo)
+    env = Env(build_type=EnvType.EnvironmentCreatedEventV1, id=id, name=name, repo=repo, data=data)
     env_event = env.create_event(data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(env_event)
@@ -68,8 +68,7 @@ def deleted(
     data: List[str] = None,
 ):
     print_function_args()
-    env = Env(env_type=EnvType.EnvironmentDeletedEventV1, id=id, name=name, repo=repo)
-    env_event = env.create_event(data)
+    env_event = Env(env_type=EnvType.EnvironmentDeletedEventV1, id=id, name=name, repo=repo, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(env_event)
 
@@ -82,7 +81,6 @@ def modified(
     data: List[str] = None,
 ):
     print_function_args()
-    env = Env(env_type=EnvType.EnvironmentModifiedEventV1, id=id, name=name, repo=repo)
-    env_event = env.create_event(data)
+    env_event = Env(env_type=EnvType.EnvironmentModifiedEventV1, id=id, name=name, repo=repo, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(env_event)

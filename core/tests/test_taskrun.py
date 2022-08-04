@@ -4,8 +4,7 @@ from cdevents.core.taskrun import TaskRun, TaskRunType
 
 @pytest.mark.unit
 def test_taskrun_started():
-    taskrun = TaskRun(taskrun_type=TaskRunType.TaskRunStartedEventV1,id="_id", name="_name", pipelineid="_pipelineid")
-    taskrun_event = taskrun.create_event(data={"key1": "value1"})
+    taskrun_event = TaskRun(taskrun_type=TaskRunType.TaskRunStartedEventV1, id="_id", name="_name", pipelineid="_pipelineid", data={"key1": "value1"})
     assert taskrun_event is not None
     assert taskrun_event._attributes["type"] == TaskRunType.TaskRunStartedEventV1.value
     assert taskrun_event._attributes["extensions"] == {"taskrunid": "_id", "taskrunname": "_name", "taskrunpipelineid": "_pipelineid"}
@@ -14,8 +13,7 @@ def test_taskrun_started():
 
 @pytest.mark.unit
 def test_taskrun_finished():
-    taskrun = TaskRun(taskrun_type=TaskRunType.TaskRunFinishedEventV1,id="_id", name="_name", pipelineid="_pipelineid")
-    taskrun_event = taskrun.create_event(data={"key1": "value1"})
+    taskrun_event = TaskRun(taskrun_type=TaskRunType.TaskRunFinishedEventV1, id="_id", name="_name", pipelineid="_pipelineid", data={"key1": "value1"})
     assert taskrun_event is not None
     assert taskrun_event._attributes["type"] == TaskRunType.TaskRunFinishedEventV1.value
     assert taskrun_event._attributes["extensions"] == {"taskrunid": "_id", "taskrunname": "_name", "taskrunpipelineid": "_pipelineid"}

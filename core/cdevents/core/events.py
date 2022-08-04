@@ -2,38 +2,19 @@
 
 from cloudevents.http import CloudEvent
 
-class Events():
+class Events(CloudEvent):
     """Events."""
 
-    def __init__(self):
+    def __init__(self, event_type: str, extensions: dict, data = {}):
         """Initializes class.
         """
+        self._event_type = event_type
+        self._extensions = extensions
+        self._data = data
 
-    def create_event(self, event_type: str, extensions:dict, data = {}) -> CloudEvent:
-        """Create event.
-        """ 
-        attributes = {
-            "type": event_type,
+        self._attributes = {
+            "type": self._event_type,
             "source": "cde-cli",
-            "extensions": extensions,
+            "extensions": self._extensions,
         }
-
-        event = CloudEvent(attributes, dict(data))
-
-        return event
-
-
-    def create_taskrun_event(self, event_type: str, id: str, name: str, pipelineid: str, data = {}) -> CloudEvent:
-        """Create taskrun event.
-        """
-            
-        extensions = {
-            "taskrunid": id,
-            "taskrunname": name,
-            "taskrunpipelineid": pipelineid,
-        }
-
-        event = self.create_event(event_type, extensions, data)
-
-        return event
-
+        super().__init__(self._attributes, dict(self._data))
