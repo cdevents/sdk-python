@@ -11,15 +11,16 @@ class ArtifactType(Enum):
 class Artifact(Events):
     """Artifact."""
 
-    def __init__(self, artifact_type: ArtifactType, id: str, name: str, version: str):
+    def __init__(self, artifact_type: ArtifactType, id: str, name: str, version: str, data: dict = {}):
         """Initializes class.
         """
         self._event_type = artifact_type
         self._id = id
         self._name = name
         self._version = version
+        super().__init__(event_type=self._event_type.value, extensions=self.create_extensions(), data=data)
     
-    def create_extensions(self):
+    def create_extensions(self) -> dict:
         """Create extensions.
         """
         extensions = {
@@ -28,10 +29,3 @@ class Artifact(Events):
             "artifactversion": self._version,
         }
         return extensions
-    
-    def create_event(self, data: dict={}):
-        """Create artifact event.
-        """
-        extensions = self.create_extensions()
-        event = super().create_event(event_type=self._event_type.value, extensions=extensions, data=data)
-        return event

@@ -12,7 +12,7 @@ class PipelinerunType(Enum):
 class Pipelinerun(Events):
     """Pipelinerun."""
 
-    def __init__(self, pipelinerun_type: PipelinerunType, id: str, name: str, status: str, url: str, errors: str):
+    def __init__(self, pipelinerun_type: PipelinerunType, id: str, name: str, status: str, url: str, errors: str, data: dict = {}):
         """Initializes class.
         """
         self._event_type = pipelinerun_type
@@ -21,8 +21,9 @@ class Pipelinerun(Events):
         self._status = status
         self._url = url
         self._errors = errors
+        super().__init__(event_type=self._event_type.value, extensions=self.create_extensions(), data=data)
         
-    def create_extensions(self):
+    def create_extensions(self) -> dict:
         """Create extensions.
         """
         extensions = {
@@ -34,9 +35,3 @@ class Pipelinerun(Events):
         }
         return extensions
     
-    def create_event(self, data: dict={}):
-        """Create pipelinerun event.
-        """
-        extensions = self.create_extensions()
-        event = super().create_event(event_type=self._event_type.value, extensions=extensions, data=data)
-        return event

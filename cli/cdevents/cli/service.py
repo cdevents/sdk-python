@@ -53,8 +53,7 @@ def deployed(
     data: List[str] = None,
 ):
     print_function_args()
-    service = Service(service_type=ServiceType.ServiceDeployedEventV1, envid=envid, name=name, version=version)
-    service_event = service.create_event(data)
+    service_event = Service(service_type=ServiceType.ServiceDeployedEventV1, envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)
 
@@ -67,8 +66,7 @@ def upgraded(
     data: List[str] = None,
 ):
     print_function_args()
-    service = Service(service_type=ServiceType.ServiceUpgradedEventV1, envid=envid, name=name, version=version)
-    service_event = service.create_event(data)
+    service_event = Service(service_type=ServiceType.ServiceUpgradedEventV1, envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)
 
@@ -82,8 +80,7 @@ def removed(
     data: List[str] = None,
 ):
     print_function_args()
-    service = Service(service_type=ServiceType.ServiceRemovedEventV1, envid=envid, name=name, version=version)
-    service_event = service.create_event(data)
+    service_event = Service(service_type=ServiceType.ServiceRemovedEventV1, envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)
 
@@ -97,7 +94,6 @@ def rolledback(
     data: List[str] = None,
 ):
     print_function_args()
-    service = Service(service_type=ServiceType.ServiceRolledbackEventV1, envid=envid, name=name, version=version)
-    service_event = service.create_event(data)
+    service_event = Service(service_type=ServiceType.ServiceRolledbackEventV1, envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)

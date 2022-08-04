@@ -13,15 +13,16 @@ class ServiceType(Enum):
 class Service(Events):
     """Service."""
 
-    def __init__(self, service_type: ServiceType, envid: str, name: str, version: str):
+    def __init__(self, service_type: ServiceType, envid: str, name: str, version: str, data: dict = {}):
         """Initializes class.
         """
         self._event_type = service_type
         self._envid = envid
         self._name = name
         self._version = version
+        super().__init__(event_type=self._event_type.value, extensions=self.create_extensions(), data=data)
         
-    def create_extensions(self):
+    def create_extensions(self) -> dict:
         """Create extensions.
         """
         extensions = {
@@ -30,10 +31,4 @@ class Service(Events):
             "serviceversion": self._version,
         }
         return extensions
-    
-    def create_event(self, data: dict={}):
-        """Create Service event.
-        """
-        extensions = self.create_extensions()
-        event = super().create_event(event_type=self._event_type.value, extensions=extensions, data=data)
-        return event
+

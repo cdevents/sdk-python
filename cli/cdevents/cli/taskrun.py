@@ -53,8 +53,7 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    taskrun = TaskRun(taskrun_type=TaskRunType.TaskRunStartedEventV1, id=id, name=name, pipelineid=pipelineid)
-    taskrun_event = taskrun.create_event(data)
+    taskrun_event = TaskRun(taskrun_type=TaskRunType.TaskRunStartedEventV1, id=id, name=name, pipelineid=pipelineid, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(taskrun_event)
 
@@ -67,8 +66,7 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    taskrun = TaskRun(taskrun_type=TaskRunType.TaskRunFinishedEventV1, id=id, name=name, pipelineid=pipelineid)
-    taskrun_event = taskrun.create_event(data)
+    taskrun_event = TaskRun(taskrun_type=TaskRunType.TaskRunFinishedEventV1, id=id, name=name, pipelineid=pipelineid, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(taskrun_event)
 
