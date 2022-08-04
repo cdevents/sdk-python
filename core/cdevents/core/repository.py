@@ -12,15 +12,16 @@ class RepositoryType(Enum):
 class Repository(Events):
     """Repository."""
 
-    def __init__(self, repository_type: RepositoryType, id: str, name: str, url: str):
+    def __init__(self, repository_type: RepositoryType, id: str, name: str, url: str, data: dict = {}):
         """Initializes class.
         """
         self._event_type = repository_type
         self._id = id
         self._name = name
         self._url = url
+        super().__init__(event_type=self._event_type.value, extensions=self.create_extensions(), data=data)
         
-    def create_extensions(self):
+    def create_extensions(self) -> dict:
         """Create extensions.
         """
         extensions = {
@@ -29,10 +30,3 @@ class Repository(Events):
             "repositoryurl": self._url,
         }
         return extensions
-    
-    def create_event(self, data: dict={}):
-        """Create Repository event.
-        """
-        extensions = self.create_extensions()
-        event = super().create_event(event_type=self._event_type.value, extensions=extensions, data=data)
-        return event

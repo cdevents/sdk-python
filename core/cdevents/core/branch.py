@@ -11,15 +11,16 @@ class BranchType(Enum):
 class Branch(Events):
     """Brach."""
 
-    def __init__(self, branch_type: BranchType, id: str, name: str, repoid: str):
+    def __init__(self, branch_type: BranchType, id: str, name: str, repoid: str, data: dict = {}):
         """Initializes class.
         """
         self._event_type = branch_type
         self._id = id
         self._name = name
         self._repoid = repoid
+        super().__init__(event_type=self._event_type.value, extensions=self.create_extensions(), data=data)
     
-    def create_extensions(self):
+    def create_extensions(self) -> dict:
         """Create extensions.
         """
         extensions = {
@@ -28,10 +29,3 @@ class Branch(Events):
             "branchrepositoryid": self._repoid,
         }
         return extensions
-    
-    def create_event(self, data: dict={}):
-        """Create branch event.
-        """
-        extensions = self.create_extensions()
-        event = super().create_event(event_type=self._event_type.value, extensions=extensions, data=data)
-        return event
