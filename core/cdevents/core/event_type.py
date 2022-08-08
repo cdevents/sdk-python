@@ -9,11 +9,12 @@ ChangeReviewedEventV1  :str = "cd.repository.change.reviewed.v1"
 ChangeMergedEventV1    :str = "cd.repository.change.merged.v1"
 ChangeAbandonedEventV1 :str = "cd.repository.change.abandoned.v1"
 
-# Test Events
+# TestCase Events
 TestCaseStartedEventV1  :str = "cd.test.case.started.v1"
 TestCaseQueuedEventV1   :str = "cd.test.case.queued.v1"
 TestCaseFinishedEventV1 :str = "cd.test.case.finished.v1"
 
+# TestSuite Events
 TestSuiteStartedEventV1  :str = "cd.test.suite.started.v1"
 TestSuiteQueuedEventV1   :str = "cd.test.suite.queued.v1"
 TestSuiteFinishedEventV1 :str = "cd.test.suite.finished.v1"

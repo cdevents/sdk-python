@@ -1,5 +1,6 @@
 """Core events."""
 
+from abc import abstractmethod
 from cloudevents.http import CloudEvent
 
 class Events(CloudEvent):
@@ -18,3 +19,16 @@ class Events(CloudEvent):
             "extensions": self._extensions,
         }
         super().__init__(self._attributes, dict(self._data))
+
+    @abstractmethod
+    def create_extensions(self) -> dict:
+        """Create extensions.
+        """
+        extensions = {}
+        return extensions
+
+    # @abstractmethod
+    # def event_from_json(json_obj: dict) -> Events:
+    #     """Create event from json.
+    #     """
+    #     pass
