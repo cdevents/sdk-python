@@ -9,7 +9,7 @@ class BranchType(Enum):
 
 
 class Branch(Events):
-    """Brach."""
+    """Branch."""
 
     def __init__(self, branch_type: BranchType, id: str, name: str, repoid: str, data: dict = {}):
         """Initializes class.
