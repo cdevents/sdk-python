@@ -6,7 +6,7 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.service import Service, ServiceType
+from cdevents.core.service import ServiceEvent, ServiceType
 
 # pylint: disable=unused-argument
 def common_service_options(function):
@@ -53,7 +53,7 @@ def deployed(
     data: List[str] = None,
 ):
     print_function_args()
-    service_event = Service(service_type=ServiceType.ServiceDeployedEventV1, envid=envid, name=name, version=version, data=data)
+    service_event = ServiceEvent(service_type=ServiceType.ServiceDeployedEventV1, envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)
 
@@ -66,7 +66,7 @@ def upgraded(
     data: List[str] = None,
 ):
     print_function_args()
-    service_event = Service(service_type=ServiceType.ServiceUpgradedEventV1, envid=envid, name=name, version=version, data=data)
+    service_event = ServiceEvent(service_type=ServiceType.ServiceUpgradedEventV1, envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)
 
@@ -80,7 +80,7 @@ def removed(
     data: List[str] = None,
 ):
     print_function_args()
-    service_event = Service(service_type=ServiceType.ServiceRemovedEventV1, envid=envid, name=name, version=version, data=data)
+    service_event = ServiceEvent(service_type=ServiceType.ServiceRemovedEventV1, envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)
 
@@ -94,6 +94,6 @@ def rolledback(
     data: List[str] = None,
 ):
     print_function_args()
-    service_event = Service(service_type=ServiceType.ServiceRolledbackEventV1, envid=envid, name=name, version=version, data=data)
+    service_event = ServiceEvent(service_type=ServiceType.ServiceRolledbackEventV1, envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)

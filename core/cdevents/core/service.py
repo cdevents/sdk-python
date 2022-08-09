@@ -1,7 +1,7 @@
 """service"""
 
 from enum import Enum
-from cdevents.core.events import Events
+from cdevents.core.event import Event
 
 class ServiceType(Enum):
     ServiceDeployedEventV1   :str = "cd.service.deployed.v1"
@@ -10,8 +10,8 @@ class ServiceType(Enum):
     ServiceRemovedEventV1    :str = "cd.service.removed.v1"
 
 
-class Service(Events):
-    """Service."""
+class ServiceEvent(Event):
+    """Service Event."""
 
     def __init__(self, service_type: ServiceType, envid: str, name: str, version: str, data: dict = {}):
         """Initializes class.

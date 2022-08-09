@@ -1,15 +1,15 @@
 """artifact"""
 
 from enum import Enum
-from cdevents.core.events import Events
+from cdevents.core.event import Event
 
 class ArtifactType(Enum):
     ArtifactPackagedEventV1: str = "cd.artifact.packaged.v1"
     ArtifactPublishedEventV1: str = "cd.artifact.published.v1"
 
 
-class Artifact(Events):
-    """Artifact."""
+class ArtifactEvent(Event):
+    """Artifact Event."""
 
     def __init__(self, artifact_type: ArtifactType, id: str, name: str, version: str, data: dict = {}):
         """Initializes class.

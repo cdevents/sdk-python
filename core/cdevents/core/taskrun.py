@@ -1,15 +1,15 @@
 """taskrun"""
 
 from enum import Enum
-from cdevents.core.events import Events
+from cdevents.core.event import Event
 
 class TaskRunType(Enum):
     TaskRunStartedEventV1  :str = "cd.taskrun.started.v1"
     TaskRunFinishedEventV1 :str = "cd.taskrun.finished.v1"
 
 
-class TaskRun(Events):
-    """Taskrun."""
+class TaskRunEvent(Event):
+    """Taskrun Event."""
 
     def __init__(self, taskrun_type: TaskRunType, id: str, name: str, pipelineid: str, data: dict = {}):
         """Initializes class.
