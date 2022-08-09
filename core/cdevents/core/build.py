@@ -1,7 +1,7 @@
 """build"""
 
 from enum import Enum
-from cdevents.core.events import Events
+from cdevents.core.event import Event
 
 class BuildType(Enum):
     BuildStartedEventV1  :str = "cd.build.started.v1"
@@ -9,8 +9,8 @@ class BuildType(Enum):
     BuildFinishedEventV1 :str = "cd.build.finished.v1"
 
 
-class Build(Events):
-    """build."""
+class BuildEvent(Event):
+    """Build Event."""
 
     def __init__(self, build_type: BuildType, id: str, name: str, artifact: str, data: dict = {}): 
         """Initializes class.

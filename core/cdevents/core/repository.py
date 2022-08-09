@@ -1,7 +1,7 @@
 """repository"""
 
 from enum import Enum
-from cdevents.core.events import Events
+from cdevents.core.event import Event
 
 class RepositoryType(Enum):
     RepositoryCreatedEventV1  :str = "cd.repository.created.v1"
@@ -9,8 +9,8 @@ class RepositoryType(Enum):
     RepositoryDeletedEventV1  :str = "cd.repository.deleted.v1"
 
 
-class Repository(Events):
-    """Repository."""
+class RepositoryEvent(Event):
+    """Repository Event."""
 
     def __init__(self, repository_type: RepositoryType, id: str, name: str, url: str, data: dict = {}):
         """Initializes class.

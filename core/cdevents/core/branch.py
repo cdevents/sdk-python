@@ -1,15 +1,15 @@
 """branch"""
 
 from enum import Enum
-from cdevents.core.events import Events
+from cdevents.core.event import Event
 
 class BranchType(Enum):
     BranchCreatedEventV1: str = "cd.repository.branch.created.v1"
     BranchDeletedEventV1: str = "cd.repository.branch.deleted.v1"
 
 
-class Branch(Events):
-    """Branch."""
+class BranchEvent(Event):
+    """Branch Event."""
 
     def __init__(self, branch_type: BranchType, id: str, name: str, repoid: str, data: dict = {}):
         """Initializes class.
@@ -29,3 +29,22 @@ class Branch(Events):
             "branchrepositoryid": self._repoid,
         }
         return extensions
+
+# TODO: Add tests for this class.
+class BranchCreatedEvent(BranchEvent):
+    
+    def __init__(self, id: str, name: str, repoid: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type : str = "cd.repository.branch.created.v1"
+
+        super().__init__(event_type=self._event_type, id=id, name=name, repoid=repoid, data=data)
+
+class BranchDeletedEvent(BranchEvent):
+    
+    def __init__(self, id: str, name: str, repoid: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type : str = "cd.repository.branch.deleted.v1"
+
+        super().__init__(event_type=self._event_type, id=id, name=name, repoid=repoid, data=data)

@@ -1,10 +1,10 @@
 import pytest
 
-from cdevents.core.env import Env, EnvType
+from cdevents.core.env import EnvEvent, EnvType
 
 @pytest.mark.unit
 def test_environment_created():
-    env_event = Env(env_type=EnvType.EnvironmentCreatedEventV1, id="_id", name="_name", repo="_repo", data={"key1": "value1"})
+    env_event = EnvEvent(env_type=EnvType.EnvironmentCreatedEventV1, id="_id", name="_name", repo="_repo", data={"key1": "value1"})
     assert env_event is not None
     assert env_event._attributes["type"] == EnvType.EnvironmentCreatedEventV1.value
     assert env_event._attributes["extensions"] == {"envId": "_id", "envname": "_name", "envrepourl": "_repo"}
@@ -13,7 +13,7 @@ def test_environment_created():
 
 @pytest.mark.unit
 def test_environment_modified():
-    env_event = Env(env_type=EnvType.EnvironmentModifiedEventV1, id="_id", name="_name", repo="_repo", data={"key1": "value1"})
+    env_event = EnvEvent(env_type=EnvType.EnvironmentModifiedEventV1, id="_id", name="_name", repo="_repo", data={"key1": "value1"})
     assert env_event is not None
     assert env_event._attributes["type"] == EnvType.EnvironmentModifiedEventV1.value
     assert env_event._attributes["extensions"] == {"envId": "_id", "envname": "_name", "envrepourl": "_repo"}
@@ -21,7 +21,7 @@ def test_environment_modified():
 
 @pytest.mark.unit
 def test_environment_deleted():
-    env_event = Env(env_type=EnvType.EnvironmentDeletedEventV1, id="_id", name="_name", repo="_repo", data={"key1": "value1"})
+    env_event = EnvEvent(env_type=EnvType.EnvironmentDeletedEventV1, id="_id", name="_name", repo="_repo", data={"key1": "value1"})
     assert env_event is not None
     assert env_event._attributes["type"] == EnvType.EnvironmentDeletedEventV1.value
     assert env_event._attributes["extensions"] == {"envId": "_id", "envname": "_name", "envrepourl": "_repo"}

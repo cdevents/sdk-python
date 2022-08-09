@@ -6,7 +6,7 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.pipelinerun import Pipelinerun, PipelinerunType
+from cdevents.core.pipelinerun import PipelinerunEvent, PipelinerunType
 
 # pylint: disable=unused-argument
 def common_pipelinerun_options(function):
@@ -69,7 +69,7 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    pipelinerun_event = Pipelinerun(PipelinerunType.PipelineRunStartedEventV1, id=id, name=name, status=status, url=url, errors=errors, data=data)
+    pipelinerun_event = PipelinerunEvent(PipelinerunType.PipelineRunStartedEventV1, id=id, name=name, status=status, url=url, errors=errors, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(pipelinerun_event)
 
@@ -84,7 +84,7 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    pipelinerun_event = Pipelinerun(PipelinerunType.PipelineRunFinishedEventV1, id=id, name=name, status=status, url=url, errors=errors, data=data)
+    pipelinerun_event = PipelinerunEvent(PipelinerunType.PipelineRunFinishedEventV1, id=id, name=name, status=status, url=url, errors=errors, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(pipelinerun_event)
 
@@ -100,7 +100,7 @@ def queued(
     data: List[str] = None,
 ):
     print_function_args()
-    pipelinerun_event = Pipelinerun(PipelinerunType.PipelineRunQueuedEventV1, id=id, name=name, status=status, url=url, errors=errors, data=data)
+    pipelinerun_event = PipelinerunEvent(PipelinerunType.PipelineRunQueuedEventV1, id=id, name=name, status=status, url=url, errors=errors, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(pipelinerun_event)
 

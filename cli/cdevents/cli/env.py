@@ -6,7 +6,7 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.env import Env, EnvType
+from cdevents.core.env import EnvEvent, EnvType
 
 # pylint: disable=unused-argument
 def common_env_options(function):
@@ -53,7 +53,7 @@ def created(
     data: List[str] = None,
 ):
     print_function_args()
-    env = Env(build_type=EnvType.EnvironmentCreatedEventV1, id=id, name=name, repo=repo, data=data)
+    env = EnvEvent(build_type=EnvType.EnvironmentCreatedEventV1, id=id, name=name, repo=repo, data=data)
     env_event = env.create_event(data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(env_event)
@@ -68,7 +68,7 @@ def deleted(
     data: List[str] = None,
 ):
     print_function_args()
-    env_event = Env(env_type=EnvType.EnvironmentDeletedEventV1, id=id, name=name, repo=repo, data=data)
+    env_event = EnvEvent(env_type=EnvType.EnvironmentDeletedEventV1, id=id, name=name, repo=repo, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(env_event)
 
@@ -81,6 +81,6 @@ def modified(
     data: List[str] = None,
 ):
     print_function_args()
-    env_event = Env(env_type=EnvType.EnvironmentModifiedEventV1, id=id, name=name, repo=repo, data=data)
+    env_event = EnvEvent(env_type=EnvType.EnvironmentModifiedEventV1, id=id, name=name, repo=repo, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(env_event)
