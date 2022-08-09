@@ -1,7 +1,7 @@
 """pipelinerun"""
 
 from enum import Enum
-from cdevents.core.events import Events
+from cdevents.core.event import Event
 
 class PipelinerunType(Enum):
     PipelineRunStartedEventV1  :str = "cd.pipelinerun.started.v1"
@@ -9,8 +9,8 @@ class PipelinerunType(Enum):
     PipelineRunQueuedEventV1   :str = "cd.pipelinerun.queued.v1"
 
 
-class Pipelinerun(Events):
-    """Pipelinerun."""
+class PipelinerunEvent(Event):
+    """Pipelinerun Event."""
 
     def __init__(self, pipelinerun_type: PipelinerunType, id: str, name: str, status: str, url: str, errors: str, data: dict = {}):
         """Initializes class.

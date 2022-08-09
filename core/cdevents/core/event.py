@@ -3,8 +3,8 @@
 from abc import abstractmethod
 from cloudevents.http import CloudEvent
 
-class Events(CloudEvent):
-    """Events."""
+class Event(CloudEvent):
+    """Event."""
 
     def __init__(self, event_type: str, extensions: dict, data = {}):
         """Initializes class.

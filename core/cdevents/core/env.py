@@ -1,7 +1,7 @@
 """env"""
 
 from enum import Enum
-from cdevents.core.events import Events
+from cdevents.core.event import Event
 
 class EnvType(Enum):
     EnvironmentCreatedEventV1  :str = "cd.environment.created.v1"
@@ -9,8 +9,8 @@ class EnvType(Enum):
     EnvironmentDeletedEventV1  :str = "cd.environment.deleted.v1"
 
 
-class Env(Events):
-    """Env."""
+class EnvEvent(Event):
+    """Env Event."""
 
     def __init__(self, env_type: EnvType, id: str, name: str, repo: str,data: dict = {}):
         """Initializes class.
