@@ -35,3 +35,29 @@ class PipelinerunEvent(Event):
         }
         return extensions
     
+class PipelinerunStartedEvent(PipelinerunEvent):
+    
+    def __init__(self, id: str, name: str, status: str, url: str, errors: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = PipelinerunType.PipelineRunStartedEventV1
+
+        super().__init__(pipelinerun_type=self._event_type, id=id, name=name, status=status, url=url, errors=errors, data=data)
+    
+class PipelinerunFinishedEvent(PipelinerunEvent):
+    
+    def __init__(self, id: str, name: str, status: str, url: str, errors: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = PipelinerunType.PipelineRunFinishedEventV1
+
+        super().__init__(pipelinerun_type=self._event_type, id=id, name=name, status=status, url=url, errors=errors, data=data)
+    
+class PipelinerunQueuedEvent(PipelinerunEvent):
+    
+    def __init__(self, id: str, name: str, status: str, url: str, errors: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = PipelinerunType.PipelineRunQueuedEventV1
+
+        super().__init__(pipelinerun_type=self._event_type, id=id, name=name, status=status, url=url, errors=errors, data=data)

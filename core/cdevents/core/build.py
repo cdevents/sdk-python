@@ -30,3 +30,30 @@ class BuildEvent(Event):
             "buildartifactid": self._artifact,
         }
         return extensions
+
+class BuildStartedEvent(BuildEvent):
+    
+    def __init__(self, id: str, name: str, artifact: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = BuildType.BuildStartedEventV1
+
+        super().__init__(build_type=self._event_type, id=id, name=name, artifact=artifact, data=data)
+
+class BuildQueuedEvent(BuildEvent):
+    
+    def __init__(self, id: str, name: str, artifact: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = BuildType.BuildQueuedEventV1
+
+        super().__init__(build_type=self._event_type, id=id, name=name, artifact=artifact, data=data)
+
+class BuildFinishedEvent(BuildEvent):
+    
+    def __init__(self, id: str, name: str, artifact: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = BuildType.BuildFinishedEventV1
+
+        super().__init__(build_type=self._event_type, id=id, name=name, artifact=artifact, data=data)

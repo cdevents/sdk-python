@@ -30,3 +30,31 @@ class RepositoryEvent(Event):
             "repositoryurl": self._url,
         }
         return extensions
+
+class RepositoryCreatedEvent(RepositoryEvent):
+    
+    def __init__(self, id: str, name: str, url: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = RepositoryType.RepositoryCreatedEventV1
+
+        super().__init__(repository_type=self._event_type, id=id, name=name, url=url, data=data)
+
+class RepositoryModifiedEvent(RepositoryEvent):
+    
+    def __init__(self, id: str, name: str, url: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = RepositoryType.RepositoryModifiedEventV1
+
+        super().__init__(repository_type=self._event_type, id=id, name=name, url=url, data=data)
+
+class RepositoryDeletedEvent(RepositoryEvent):
+    
+    def __init__(self, id: str, name: str, url: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = RepositoryType.RepositoryDeletedEventV1
+
+        super().__init__(repository_type=self._event_type, id=id, name=name, url=url, data=data)
+

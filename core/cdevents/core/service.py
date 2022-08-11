@@ -32,3 +32,39 @@ class ServiceEvent(Event):
         }
         return extensions
 
+class ServiceDeployedEvent(ServiceEvent):
+    
+    def __init__(self, envid: str, name: str, version: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = ServiceType.ServiceDeployedEventV1
+
+        super().__init__(service_type=self._event_type, envid=envid, name=name, version=version, data=data)
+
+class ServiceUpgradedEvent(ServiceEvent):
+    
+    def __init__(self, envid: str, name: str, version: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = ServiceType.ServiceUpgradedEventV1
+
+        super().__init__(service_type=self._event_type, envid=envid, name=name, version=version, data=data)
+
+class ServiceRolledbackEvent(ServiceEvent):
+    
+    def __init__(self, envid: str, name: str, version: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = ServiceType.ServiceRolledbackEventV1
+
+        super().__init__(service_type=self._event_type, envid=envid, name=name, version=version, data=data)
+
+class ServiceRemovedEvent(ServiceEvent):
+    
+    def __init__(self, envid: str, name: str, version: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = ServiceType.ServiceRemovedEventV1
+
+        super().__init__(service_type=self._event_type, envid=envid, name=name, version=version, data=data)
+
