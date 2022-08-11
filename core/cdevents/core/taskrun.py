@@ -29,3 +29,21 @@ class TaskRunEvent(Event):
             "taskrunpipelineid": self._pipelineid,
         }
         return extensions
+
+class TaskRunStartedEvent(TaskRunEvent):
+    
+    def __init__(self, id: str, name: str, pipelineid: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = TaskRunType.TaskRunStartedEventV1
+
+        super().__init__(taskrun_type=self._event_type, id=id, name=name, pipelineid=pipelineid, data=data)
+
+class TaskRunFinishedEvent(TaskRunEvent):
+    
+    def __init__(self, id: str, name: str, pipelineid: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = TaskRunType.TaskRunFinishedEventV1
+
+        super().__init__(taskrun_type=self._event_type, id=id, name=name, pipelineid=pipelineid, data=data)

@@ -6,7 +6,7 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.repository import RepositoryEvent, RepositoryType
+from cdevents.core.repository import RepositoryCreatedEvent, RepositoryModifiedEvent, RepositoryDeletedEvent
 
 # pylint: disable=unused-argument
 def common_repository_options(function):
@@ -53,7 +53,7 @@ def created(
     data: List[str] = None,
 ):
     print_function_args()
-    repository_event = RepositoryEvent(repository_type=RepositoryType.RepositoryCreatedEventV1, id=id, name=name, url=url, data=data)
+    repository_event = RepositoryCreatedEvent(id=id, name=name, url=url, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(repository_event)
 
@@ -67,7 +67,7 @@ def modified(
     data: List[str] = None,
 ):
     print_function_args()
-    repository_event = RepositoryEvent(repository_type=RepositoryType.RepositoryModifiedEventV1, id=id, name=name, url=url, data=data)
+    repository_event = RepositoryModifiedEvent(id=id, name=name, url=url, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(repository_event)
 
@@ -81,7 +81,7 @@ def deleted(
     data: List[str] = None,
 ):
     print_function_args()
-    repository_event = RepositoryEvent(repository_type=RepositoryType.RepositoryDeletedEventV1, id=id, name=name, url=url, data=data)
+    repository_event = RepositoryDeletedEvent(id=id, name=name, url=url, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(repository_event)
 

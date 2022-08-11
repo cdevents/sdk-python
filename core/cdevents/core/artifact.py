@@ -29,3 +29,21 @@ class ArtifactEvent(Event):
             "artifactversion": self._version,
         }
         return extensions
+
+class ArtifactPackagedEvent(ArtifactEvent):
+    
+    def __init__(self, id: str, name: str, version: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = ArtifactType.ArtifactPackagedEventV1
+
+        super().__init__(artifact_type=self._event_type, id=id, name=name, version=version, data=data)
+
+class ArtifactPublishedEvent(ArtifactEvent):
+    
+    def __init__(self, id: str, name: str, version: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = ArtifactType.ArtifactPublishedEventV1
+
+        super().__init__(artifact_type=self._event_type, id=id, name=name, version=version, data=data)

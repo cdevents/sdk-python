@@ -6,7 +6,7 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.taskrun import TaskRunEvent, TaskRunType
+from cdevents.core.taskrun import TaskRunStartedEvent, TaskRunFinishedEvent
 
 # pylint: disable=unused-argument
 def common_taskrun_options(function):
@@ -53,7 +53,7 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    taskrun_event = TaskRunEvent(taskrun_type=TaskRunType.TaskRunStartedEventV1, id=id, name=name, pipelineid=pipelineid, data=data)
+    taskrun_event = TaskRunStartedEvent(id=id, name=name, pipelineid=pipelineid, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(taskrun_event)
 
@@ -66,7 +66,7 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    taskrun_event = TaskRunEvent(taskrun_type=TaskRunType.TaskRunFinishedEventV1, id=id, name=name, pipelineid=pipelineid, data=data)
+    taskrun_event = TaskRunFinishedEvent(id=id, name=name, pipelineid=pipelineid, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(taskrun_event)
 

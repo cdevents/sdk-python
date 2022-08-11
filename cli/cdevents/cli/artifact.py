@@ -6,7 +6,7 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.artifact import ArtifactEvent, ArtifactType
+from cdevents.core.artifact import ArtifactPackagedEvent, ArtifactPublishedEvent
 
 # pylint: disable=unused-argument
 def common_artifact_options(function):
@@ -53,7 +53,7 @@ def packaged(
     data: List[str] = None,
 ):
     print_function_args()
-    artifact_event = ArtifactEvent(ArtifactType.ArtifactPackagedEventV1, id, name, version, data=data)
+    artifact_event = ArtifactPackagedEvent(id, name, version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(artifact_event)
 
@@ -67,6 +67,6 @@ def published(
     data: List[str] = None,
 ):
     print_function_args()
-    artifact_event = ArtifactEvent(ArtifactType.ArtifactPublishedEventV1, id, name, version, data=data)
+    artifact_event = ArtifactPublishedEvent(id, name, version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(artifact_event)

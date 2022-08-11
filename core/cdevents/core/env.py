@@ -12,7 +12,7 @@ class EnvType(Enum):
 class EnvEvent(Event):
     """Env Event."""
 
-    def __init__(self, env_type: EnvType, id: str, name: str, repo: str,data: dict = {}):
+    def __init__(self, env_type: EnvType, id: str, name: str, repo: str, data: dict = {}):
         """Initializes class.
         """
         self._event_type = env_type
@@ -30,3 +30,32 @@ class EnvEvent(Event):
             "envrepourl": self._repo,
         }
         return extensions
+
+class EnvEventCreatedEvent(EnvEvent):
+    
+    def __init__(self, id: str, name: str, repo: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = EnvType.EnvironmentCreatedEventV1
+
+        super().__init__(env_type=self._event_type, id=id, name=name, repo=repo, data=data)
+
+class EnvEventModifiedEvent(EnvEvent):
+    
+    def __init__(self, id: str, name: str, repo: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = EnvType.EnvironmentModifiedEventV1
+
+        super().__init__(env_type=self._event_type, id=id, name=name, repo=repo, data=data)
+
+
+class EnvEventDeletedEvent(EnvEvent):
+    
+    def __init__(self, id: str, name: str, repo: str, data: dict = {}):
+        """Initializes class.
+        """
+        self._event_type: str = EnvType.EnvironmentDeletedEventV1
+
+        super().__init__(env_type=self._event_type, id=id, name=name, repo=repo, data=data)
+
