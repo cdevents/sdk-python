@@ -30,21 +30,20 @@ class BranchEvent(Event):
         }
         return extensions
 
-# TODO: Add tests for this class.
 class BranchCreatedEvent(BranchEvent):
     
     def __init__(self, id: str, name: str, repoid: str, data: dict = {}):
         """Initializes class.
         """
-        self._event_type : str = "cd.repository.branch.created.v1"
+        self._event_type: str = BranchType.BranchCreatedEventV1
 
-        super().__init__(event_type=self._event_type, id=id, name=name, repoid=repoid, data=data)
+        super().__init__(branch_type=self._event_type, id=id, name=name, repoid=repoid, data=data)
 
 class BranchDeletedEvent(BranchEvent):
     
     def __init__(self, id: str, name: str, repoid: str, data: dict = {}):
         """Initializes class.
         """
-        self._event_type : str = "cd.repository.branch.deleted.v1"
+        self._event_type: str = BranchType.BranchDeletedEventV1
 
-        super().__init__(event_type=self._event_type, id=id, name=name, repoid=repoid, data=data)
+        super().__init__(branch_type=self._event_type, id=id, name=name, repoid=repoid, data=data)

@@ -1,10 +1,9 @@
-from cdevents.core import event_type
 import pytest
 
-from cdevents.core.service import ServiceEvent, ServiceType
+from cdevents.core.service import ServiceEvent, ServiceType, ServiceDeployedEvent, ServiceUpgradedEvent, ServiceRolledbackEvent, ServiceRemovedEvent
 
 @pytest.mark.unit
-def test_service_deployed():
+def test_service_created():
     service_event = ServiceEvent(service_type=ServiceType.ServiceDeployedEventV1, envid="_envid", name="_name", version="_version", data={"key1": "value1"})
     assert service_event is not None
     assert service_event._attributes["type"] == ServiceType.ServiceDeployedEventV1.value
@@ -13,8 +12,17 @@ def test_service_deployed():
 
 
 @pytest.mark.unit
-def test_service_upgraded():
-    service_event = ServiceEvent(service_type=ServiceType.ServiceUpgradedEventV1, envid="_envid", name="_name", version="_version", data={"key1": "value1"})
+def test_service_type_deployed_v1():
+    service_event = ServiceDeployedEvent(envid="_envid", name="_name", version="_version", data={"key1": "value1"})
+    assert service_event is not None
+    assert service_event._attributes["type"] == ServiceType.ServiceDeployedEventV1.value
+    assert service_event._attributes["extensions"] == {"serviceenvid": "_envid", "servicename": "_name", "serviceversion": "_version"}
+    assert service_event.data == {"key1": "value1"}
+
+
+@pytest.mark.unit
+def test_service_type_upgraded_v1():
+    service_event = ServiceUpgradedEvent(envid="_envid", name="_name", version="_version", data={"key1": "value1"})
     assert service_event is not None
     assert service_event._attributes["type"] == ServiceType.ServiceUpgradedEventV1.value
     assert service_event._attributes["extensions"] == {"serviceenvid": "_envid", "servicename": "_name", "serviceversion": "_version"}
@@ -22,8 +30,8 @@ def test_service_upgraded():
 
 
 @pytest.mark.unit
-def test_service_rolledback():
-    service_event = ServiceEvent(service_type=ServiceType.ServiceRolledbackEventV1, envid="_envid", name="_name", version="_version", data={"key1": "value1"})
+def test_service_type_rolledback_v1():
+    service_event = ServiceRolledbackEvent(envid="_envid", name="_name", version="_version", data={"key1": "value1"})
     assert service_event is not None
     assert service_event._attributes["type"] == ServiceType.ServiceRolledbackEventV1.value
     assert service_event._attributes["extensions"] == {"serviceenvid": "_envid", "servicename": "_name", "serviceversion": "_version"}
@@ -31,8 +39,8 @@ def test_service_rolledback():
 
 
 @pytest.mark.unit
-def test_service_removed():
-    service_event = ServiceEvent(service_type=ServiceType.ServiceRemovedEventV1, envid="_envid", name="_name", version="_version", data={"key1": "value1"})
+def test_service_type_removed_v1():
+    service_event = ServiceRemovedEvent(envid="_envid", name="_name", version="_version", data={"key1": "value1"})
     assert service_event is not None
     assert service_event._attributes["type"] == ServiceType.ServiceRemovedEventV1.value
     assert service_event._attributes["extensions"] == {"serviceenvid": "_envid", "servicename": "_name", "serviceversion": "_version"}

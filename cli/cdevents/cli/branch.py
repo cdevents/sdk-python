@@ -6,7 +6,7 @@ import click
 from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
 
-from cdevents.core.branch import BranchEvent, BranchType
+from cdevents.core.branch import BranchCreatedEvent, BranchDeletedEvent
 
 # pylint: disable=unused-argument
 def common_branch_options(function):
@@ -53,7 +53,7 @@ def created(
     data: List[str] = None,
 ):
     print_function_args()
-    branch_event = BranchEvent(branch_type=BranchType.BranchCreatedEventV1, id=id, name=name, repoid=repoid, data=data)
+    branch_event = BranchCreatedEvent(id=id, name=name, repoid=repoid, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(branch_event)
 
@@ -67,6 +67,6 @@ def deleted(
     data: List[str] = None,
 ):
     print_function_args()
-    branch_event = BranchEvent(branch_type=BranchType.BranchDeletedEventV1, id=id, name=name, repoid=repoid, data=data)
+    branch_event = BranchDeletedEvent(id=id, name=name, repoid=repoid, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(branch_event)
