@@ -1,26 +1,30 @@
 """repository"""
 
-from enum import Enum
 from cdevents.core.event import Event
-
-class RepositoryType(Enum):
-    RepositoryCreatedEventV1  :str = "cd.repository.created.v1"
-    RepositoryModifiedEventV1 :str = "cd.repository.modified.v1"
-    RepositoryDeletedEventV1  :str = "cd.repository.deleted.v1"
-
+from cdevents.core.event_type import EventType
 
 class RepositoryEvent(Event):
     """Repository Event."""
 
-    def __init__(self, repository_type: RepositoryType, id: str, name: str, url: str, data: dict = {}):
+    def __init__(self, **kwargs):
         """Initializes class.
         """
-        self._event_type = repository_type
-        self._id = id
-        self._name = name
-        self._url = url
-        super().__init__(event_type=self._event_type.value, extensions=self.create_extensions(), data=data)
+        self._event_type :EventType = kwargs['repository_type']
+        if 'data' in kwargs:
+            self._data :dict = kwargs['data']
         
+        if 'id' in kwargs and 'name' in kwargs and 'url' in kwargs:
+            self._id :str = kwargs['id']
+            self._name :str = kwargs['name']
+            self._url :str = kwargs['url']
+        
+        elif 'extensions' in kwargs:
+            self._id = kwargs['extensions']['repositoryid']
+            self._name = kwargs['extensions']['repositoryname']
+            self._url = kwargs['extensions']['repositoryurl']
+
+        super().__init__(event_type=self._event_type.value, extensions=self.create_extensions(), data=self._data)
+
     def create_extensions(self) -> dict:
         """Create extensions.
         """
@@ -33,28 +37,28 @@ class RepositoryEvent(Event):
 
 class RepositoryCreatedEvent(RepositoryEvent):
     
-    def __init__(self, id: str, name: str, url: str, data: dict = {}):
+    def __init__(self, **kwargs):
         """Initializes class.
         """
-        self._event_type: str = RepositoryType.RepositoryCreatedEventV1
+        self._event_type: str = EventType.RepositoryCreatedEventV1
 
-        super().__init__(repository_type=self._event_type, id=id, name=name, url=url, data=data)
+        super().__init__(repository_type=self._event_type, **kwargs)
 
 class RepositoryModifiedEvent(RepositoryEvent):
     
-    def __init__(self, id: str, name: str, url: str, data: dict = {}):
+    def __init__(self, **kwargs):
         """Initializes class.
         """
-        self._event_type: str = RepositoryType.RepositoryModifiedEventV1
+        self._event_type: str = EventType.RepositoryModifiedEventV1
 
-        super().__init__(repository_type=self._event_type, id=id, name=name, url=url, data=data)
+        super().__init__(repository_type=self._event_type, **kwargs)
 
 class RepositoryDeletedEvent(RepositoryEvent):
     
-    def __init__(self, id: str, name: str, url: str, data: dict = {}):
+    def __init__(self, **kwargs):
         """Initializes class.
         """
-        self._event_type: str = RepositoryType.RepositoryDeletedEventV1
+        self._event_type: str = EventType.RepositoryDeletedEventV1
 
-        super().__init__(repository_type=self._event_type, id=id, name=name, url=url, data=data)
+        super().__init__(repository_type=self._event_type, **kwargs)
 
