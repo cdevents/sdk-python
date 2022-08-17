@@ -1,7 +1,6 @@
 """Module for cli common command code."""
 import logging
 from abc import ABC
-import requests
 
 from cloudevents.http import CloudEvent
 

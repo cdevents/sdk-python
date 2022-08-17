@@ -53,7 +53,7 @@ def packaged(
     data: List[str] = None,
 ):
     print_function_args()
-    artifact_event = ArtifactPackagedEvent(id, name, version, data=data)
+    artifact_event = ArtifactPackagedEvent(id=id, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(artifact_event)
 
@@ -67,6 +67,6 @@ def published(
     data: List[str] = None,
 ):
     print_function_args()
-    artifact_event = ArtifactPublishedEvent(id, name, version, data=data)
+    artifact_event = ArtifactPublishedEvent(id=id, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(artifact_event)
