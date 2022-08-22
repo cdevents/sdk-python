@@ -14,7 +14,13 @@ from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
 
 from cdevents.core.artifact import ArtifactPackagedEvent, ArtifactPublishedEvent
+from cdevents.core.branch import BranchCreatedEvent, BranchDeletedEvent
 from cdevents.core.build import BuildStartedEvent, BuildFinishedEvent, BuildQueuedEvent
+from cdevents.core.env import EnvEventCreatedEvent, EnvEventModifiedEvent, EnvEventDeletedEvent
+from cdevents.core.pipelinerun import PipelinerunStartedEvent, PipelinerunFinishedEvent, PipelinerunQueuedEvent
+from cdevents.core.repository import RepositoryCreatedEvent, RepositoryModifiedEvent, RepositoryDeletedEvent
+from cdevents.core.service import ServiceDeployedEvent, ServiceUpgradedEvent, ServiceRolledbackEvent, ServiceRemovedEvent
+from cdevents.core.taskrun import TaskRunStartedEvent, TaskRunFinishedEvent
 
 class HttpHandlar():
     """Http Handlar."""
@@ -110,12 +116,43 @@ class HttpHandlar():
             return ArtifactPackagedEvent(attrs=attrs, extensions=extensions, data=event_data)
         elif etype.value == EventType.ArtifactPublishedEventV1.value:
             return ArtifactPublishedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.BranchCreatedEventV1.value:
+            return BranchCreatedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.BranchDeletedEventV1.value:
+            return BranchDeletedEvent(attrs=attrs, extensions=extensions, data=event_data)
         elif etype.value == EventType.BuildStartedEventV1.value:
             return BuildStartedEvent(attrs=attrs, extensions=extensions, data=event_data)
         elif etype.value == EventType.BuildQueuedEventV1.value:
             return BuildQueuedEvent(attrs=attrs, extensions=extensions, data=event_data)
         elif etype.value == EventType.BuildFinishedEventV1.value:
             return BuildFinishedEvent(attrs=attrs, extensions=extensions, data=event_data)
-
-        # e = BuildStartedEvent.create_from_event(event)
-        # return e
+        elif etype.value == EventType.EnvironmentCreatedEventV1.value:
+            return EnvEventCreatedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.EnvironmentModifiedEventV1.value:
+            return EnvEventModifiedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.EnvironmentDeletedEventV1.value:
+            return EnvEventDeletedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.PipelineRunStartedEventV1.value:
+            return PipelinerunStartedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.PipelineRunFinishedEventV1.value:
+            return PipelinerunFinishedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.PipelineRunQueuedEventV1.value:
+            return PipelinerunQueuedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.RepositoryCreatedEventV1.value:
+            return RepositoryCreatedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.RepositoryModifiedEventV1.value:
+            return RepositoryModifiedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.RepositoryDeletedEventV1.value:
+            return RepositoryDeletedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.ServiceDeployedEventV1.value:
+            return ServiceDeployedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.ServiceUpgradedEventV1.value:
+            return ServiceUpgradedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.ServiceRolledbackEventV1.value:
+            return ServiceRolledbackEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.ServiceRemovedEventV1.value:
+            return ServiceRemovedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.TaskRunStartedEventV1.value:
+            return TaskRunStartedEvent(attrs=attrs, extensions=extensions, data=event_data)
+        elif etype.value == EventType.TaskRunFinishedEventV1.value:
+            return TaskRunFinishedEvent(attrs=attrs, extensions=extensions, data=event_data)
