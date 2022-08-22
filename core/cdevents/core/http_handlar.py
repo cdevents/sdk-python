@@ -105,7 +105,6 @@ class HttpHandlar():
         attrs = HttpHandlar.get_attrs(headers, data, data_unmarshaller)
 
         event_data=attrs.pop("data", None)
-        extensions=attrs.pop("extensions", None)
 
         etype = EventType(attrs.get("type"))
         if etype.value == "" or etype.value is None:
@@ -113,46 +112,46 @@ class HttpHandlar():
                 "Failed to find type in HTTP request"
             )
         elif etype.value == EventType.ArtifactPackagedEventV1.value:
-            return ArtifactPackagedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return ArtifactPackagedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.ArtifactPublishedEventV1.value:
-            return ArtifactPublishedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return ArtifactPublishedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.BranchCreatedEventV1.value:
-            return BranchCreatedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return BranchCreatedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.BranchDeletedEventV1.value:
-            return BranchDeletedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return BranchDeletedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.BuildStartedEventV1.value:
-            return BuildStartedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return BuildStartedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.BuildQueuedEventV1.value:
-            return BuildQueuedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return BuildQueuedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.BuildFinishedEventV1.value:
-            return BuildFinishedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return BuildFinishedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.EnvironmentCreatedEventV1.value:
-            return EnvEventCreatedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return EnvEventCreatedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.EnvironmentModifiedEventV1.value:
-            return EnvEventModifiedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return EnvEventModifiedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.EnvironmentDeletedEventV1.value:
-            return EnvEventDeletedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return EnvEventDeletedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.PipelineRunStartedEventV1.value:
-            return PipelinerunStartedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return PipelinerunStartedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.PipelineRunFinishedEventV1.value:
-            return PipelinerunFinishedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return PipelinerunFinishedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.PipelineRunQueuedEventV1.value:
-            return PipelinerunQueuedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return PipelinerunQueuedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.RepositoryCreatedEventV1.value:
-            return RepositoryCreatedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return RepositoryCreatedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.RepositoryModifiedEventV1.value:
-            return RepositoryModifiedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return RepositoryModifiedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.RepositoryDeletedEventV1.value:
-            return RepositoryDeletedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return RepositoryDeletedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.ServiceDeployedEventV1.value:
-            return ServiceDeployedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return ServiceDeployedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.ServiceUpgradedEventV1.value:
-            return ServiceUpgradedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return ServiceUpgradedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.ServiceRolledbackEventV1.value:
-            return ServiceRolledbackEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return ServiceRolledbackEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.ServiceRemovedEventV1.value:
-            return ServiceRemovedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return ServiceRemovedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.TaskRunStartedEventV1.value:
-            return TaskRunStartedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return TaskRunStartedEvent(attrs=attrs, data=event_data)
         elif etype.value == EventType.TaskRunFinishedEventV1.value:
-            return TaskRunFinishedEvent(attrs=attrs, extensions=extensions, data=event_data)
+            return TaskRunFinishedEvent(attrs=attrs, data=event_data)
