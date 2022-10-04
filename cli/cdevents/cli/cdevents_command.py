@@ -2,12 +2,12 @@
 import logging
 from abc import ABC
 
-from cloudevents.http import CloudEvent
-
+from cdevents.cli.configuration_handler import (
+    ConfigurationHandler,
+    new_default_configuration_handler,
+)
 from cdevents.core.event_sender import EventSender
-
-from cdevents.cli.configuration_handler import ConfigurationHandler
-from cdevents.cli.configuration_handler import new_default_configuration_handler
+from cloudevents.http import CloudEvent
 
 
 class CDeventsCommand(ABC):
@@ -25,11 +25,9 @@ class CDeventsCommand(ABC):
             self._config_handler = new_default_configuration_handler()
 
     def run(self, event: CloudEvent):
-        """run command.
-        """
+        """run command."""
         e = EventSender(cde_link=self.config_handler.client.host)
         e.send(event)
-
 
     @property
     def config_handler(self) -> ConfigurationHandler:

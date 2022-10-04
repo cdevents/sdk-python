@@ -1,14 +1,15 @@
 """Core events."""
 
 from abc import abstractmethod
+
 from cloudevents.http import CloudEvent
+
 
 class Event(CloudEvent):
     """Event."""
 
-    def __init__(self, event_type: str, extensions: dict, attrs=None, data = {}):
-        """Initializes class.
-        """
+    def __init__(self, event_type: str, extensions: dict, attrs=None, data={}):
+        """Initializes class."""
         if attrs:
             super().__init__(attributes=attrs, data=data)
         else:
@@ -25,7 +26,6 @@ class Event(CloudEvent):
 
     @abstractmethod
     def create_extensions(self) -> dict:
-        """Create extensions.
-        """
+        """Create extensions."""
         extensions = {}
         return extensions

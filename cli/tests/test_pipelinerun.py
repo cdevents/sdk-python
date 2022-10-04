@@ -1,10 +1,11 @@
 """Unit tests for pipelinerun."""
-import pytest
 from unittest.mock import patch
+
+import pytest
+from cdevents.cli.cdevents_command import CDeventsCommand
+from cdevents.cli.pipelinerun import finished, queued, started
 from click.testing import CliRunner
 
-from cdevents.cli.pipelinerun import started, finished, queued
-from cdevents.cli.cdevents_command import CDeventsCommand
 
 # pylint: disable=missing-function-docstring, protected-access, missing-class-docstring
 @pytest.fixture
@@ -19,6 +20,7 @@ URL_ARG = "url"
 ERRORS_ARG = "errors"
 DATA_ARG = "data"
 
+
 @pytest.mark.unit
 def test_started(runner: CliRunner):
     """Test started of an env."""
@@ -30,7 +32,7 @@ def test_started(runner: CliRunner):
     expected_errors = "my-errors"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             started,
             [
@@ -68,7 +70,7 @@ def test_finished(runner: CliRunner):
     expected_errors = "my-errors"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             finished,
             [
@@ -94,6 +96,7 @@ def test_finished(runner: CliRunner):
     assert f"{ERRORS_ARG}={expected_errors}" in result.stdout
     assert f"{DATA_ARG}=({tuple(expected_data)},)" in result.stdout
 
+
 @pytest.mark.unit
 def test_queued(runner: CliRunner):
     """Test queued of an env."""
@@ -105,7 +108,7 @@ def test_queued(runner: CliRunner):
     expected_errors = "my-errors"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             queued,
             [
@@ -130,4 +133,3 @@ def test_queued(runner: CliRunner):
     assert f"{URL_ARG}={expected_url}" in result.stdout
     assert f"{ERRORS_ARG}={expected_errors}" in result.stdout
     assert f"{DATA_ARG}=({tuple(expected_data)},)" in result.stdout
-

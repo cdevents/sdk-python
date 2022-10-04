@@ -1,12 +1,18 @@
 """Module for cli service commands."""
 from __future__ import annotations
+
 from typing import List
+
 import click
-
-from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
+from cdevents.core.service import (
+    ServiceDeployedEvent,
+    ServiceRemovedEvent,
+    ServiceRolledbackEvent,
+    ServiceUpgradedEvent,
+)
 
-from cdevents.core.service import ServiceDeployedEvent, ServiceUpgradedEvent, ServiceRolledbackEvent, ServiceRemovedEvent
 
 # pylint: disable=unused-argument
 def common_service_options(function):
@@ -57,6 +63,7 @@ def deployed(
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)
 
+
 @click.command(help=add_disclaimer_text("Service Upgraded CloudEvent."))
 @common_service_options
 def upgraded(
@@ -70,6 +77,7 @@ def upgraded(
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)
 
+
 @click.command(help=add_disclaimer_text("Service Rolledback CloudEvent."))
 @common_service_options
 def rolledback(
@@ -82,6 +90,7 @@ def rolledback(
     service_event = ServiceRolledbackEvent(envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(service_event)
+
 
 @click.command(help=add_disclaimer_text("Service Removed CloudEvent."))
 @common_service_options

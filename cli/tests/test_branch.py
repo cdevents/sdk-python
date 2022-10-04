@@ -1,12 +1,13 @@
 """Unit tests for branch."""
-import pytest
 from unittest.mock import patch
-from click.testing import CliRunner
 
+import pytest
 from cdevents.cli.branch import created, deleted
 from cdevents.cli.cdevents_command import CDeventsCommand
+from click.testing import CliRunner
 
 # pylint: disable=missing-function-docstring, protected-access, missing-class-docstring
+
 
 @pytest.fixture
 def runner() -> CliRunner:
@@ -18,6 +19,7 @@ NAME_ARG = "name"
 REPOID_ARG = "repoid"
 DATA_ARG = "data"
 
+
 @pytest.mark.unit
 def test_created(runner: CliRunner):
     """Test created of a branch."""
@@ -27,7 +29,7 @@ def test_created(runner: CliRunner):
     expected_repoid = "repo1"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             created,
             [
@@ -47,6 +49,7 @@ def test_created(runner: CliRunner):
     assert f"{REPOID_ARG}={expected_repoid}" in result.stdout
     assert f"{DATA_ARG}=({tuple(expected_data)},)" in result.stdout
 
+
 @pytest.mark.unit
 def test_deleted(runner: CliRunner):
     """Test deleted of a branch."""
@@ -56,7 +59,7 @@ def test_deleted(runner: CliRunner):
     expected_repoid = "repo1"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             deleted,
             [

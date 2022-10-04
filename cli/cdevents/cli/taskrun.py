@@ -1,12 +1,13 @@
 """Module for cli taskrun commands."""
 from __future__ import annotations
+
 from typing import List
+
 import click
-
-from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
+from cdevents.core.taskrun import TaskRunFinishedEvent, TaskRunStartedEvent
 
-from cdevents.core.taskrun import TaskRunStartedEvent, TaskRunFinishedEvent
 
 # pylint: disable=unused-argument
 def common_taskrun_options(function):
@@ -57,6 +58,7 @@ def started(
     cdevents_command = CDeventsCommand()
     cdevents_command.run(taskrun_event)
 
+
 @click.command(help=add_disclaimer_text("TaskRun Finished CloudEvent."))
 @common_taskrun_options
 def finished(
@@ -69,4 +71,3 @@ def finished(
     taskrun_event = TaskRunFinishedEvent(id=id, name=name, pipelineid=pipelineid, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(taskrun_event)
-

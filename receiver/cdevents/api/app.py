@@ -1,6 +1,5 @@
-from flask import Flask, request
-
 from cdevents.core.http_handlar import HttpHandlar
+from flask import Flask, request
 
 app = Flask(__name__)
 

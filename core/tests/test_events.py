@@ -1,6 +1,6 @@
 import pytest
-
 from cdevents.core.event import Event
+
 
 @pytest.mark.unit
 def test_create_event():

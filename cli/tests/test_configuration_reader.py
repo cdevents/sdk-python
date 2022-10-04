@@ -6,7 +6,6 @@ from unittest.mock import patch
 
 import pytest
 import yaml
-
 from cdevents.cli.configuration_reader import ConfigurationReader
 
 # pylint: disable=missing-function-docstring, protected-access, missing-class-docstring

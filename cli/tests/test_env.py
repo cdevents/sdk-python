@@ -1,10 +1,11 @@
 """Unit tests for env."""
-import pytest
 from unittest.mock import patch
+
+import pytest
+from cdevents.cli.cdevents_command import CDeventsCommand
+from cdevents.cli.env import created, deleted, modified
 from click.testing import CliRunner
 
-from cdevents.cli.env import created, deleted, modified
-from cdevents.cli.cdevents_command import CDeventsCommand
 
 # pylint: disable=missing-function-docstring, protected-access, missing-class-docstring
 @pytest.fixture
@@ -17,6 +18,7 @@ NAME_ARG = "name"
 REPO_ARG = "repo"
 DATA_ARG = "data"
 
+
 @pytest.mark.unit
 def test_started(runner: CliRunner):
     """Test started of an env."""
@@ -26,7 +28,7 @@ def test_started(runner: CliRunner):
     expected_repo = "my-repo"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             created,
             [
@@ -56,7 +58,7 @@ def test_started(runner: CliRunner):
     expected_repo = "my-repo"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             deleted,
             [
@@ -86,7 +88,7 @@ def test_started(runner: CliRunner):
     expected_repo = "my-repo"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             modified,
             [
@@ -105,4 +107,3 @@ def test_started(runner: CliRunner):
     assert f"{NAME_ARG}={expected_name}" in result.stdout
     assert f"{REPO_ARG}={expected_repo}" in result.stdout
     assert f"{DATA_ARG}=({tuple(expected_data)},)" in result.stdout
-

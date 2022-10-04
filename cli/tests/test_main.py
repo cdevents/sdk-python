@@ -1,7 +1,7 @@
 import pytest
+from cdevents.cli.__main__ import cli
 from click.testing import CliRunner
 
-from cdevents.cli.__main__ import cli
 
 @pytest.fixture
 def runner() -> CliRunner:

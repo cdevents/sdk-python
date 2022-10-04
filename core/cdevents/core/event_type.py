@@ -2,7 +2,7 @@
 
 from enum import Enum
 
-# pylint: TODO: 
+# pylint: TODO:
 
 # # Change Events
 # ChangeCreatedEventV1   :str = "cd.repository.change.created.v1"
@@ -21,6 +21,7 @@ from enum import Enum
 # TestSuiteQueuedEventV1   :str = "cd.test.suite.queued.v1"
 # TestSuiteFinishedEventV1 :str = "cd.test.suite.finished.v1"
 
+
 class EventType(Enum):
     """Constants Event types."""
 
@@ -33,31 +34,31 @@ class EventType(Enum):
     BranchDeletedEventV1: str = "cd.repository.branch.deleted.v1"
 
     # Build Events
-    BuildStartedEventV1  :str = "cd.build.started.v1"
-    BuildQueuedEventV1   :str = "cd.build.queued.v1"
-    BuildFinishedEventV1 :str = "cd.build.finished.v1"
+    BuildStartedEventV1: str = "cd.build.started.v1"
+    BuildQueuedEventV1: str = "cd.build.queued.v1"
+    BuildFinishedEventV1: str = "cd.build.finished.v1"
 
     # Environment Events
-    EnvironmentCreatedEventV1  :str = "cd.environment.created.v1"
-    EnvironmentModifiedEventV1 :str = "cd.environment.modified.v1"
-    EnvironmentDeletedEventV1  :str = "cd.environment.deleted.v1"
+    EnvironmentCreatedEventV1: str = "cd.environment.created.v1"
+    EnvironmentModifiedEventV1: str = "cd.environment.modified.v1"
+    EnvironmentDeletedEventV1: str = "cd.environment.deleted.v1"
 
     # PipelineRun Events
-    PipelineRunStartedEventV1  :str = "cd.pipelinerun.started.v1"
-    PipelineRunFinishedEventV1 :str = "cd.pipelinerun.finished.v1"
-    PipelineRunQueuedEventV1   :str = "cd.pipelinerun.queued.v1"
+    PipelineRunStartedEventV1: str = "cd.pipelinerun.started.v1"
+    PipelineRunFinishedEventV1: str = "cd.pipelinerun.finished.v1"
+    PipelineRunQueuedEventV1: str = "cd.pipelinerun.queued.v1"
 
     # Repository Events
-    RepositoryCreatedEventV1  :str = "cd.repository.created.v1"
-    RepositoryModifiedEventV1 :str = "cd.repository.modified.v1"
-    RepositoryDeletedEventV1  :str = "cd.repository.deleted.v1"
+    RepositoryCreatedEventV1: str = "cd.repository.created.v1"
+    RepositoryModifiedEventV1: str = "cd.repository.modified.v1"
+    RepositoryDeletedEventV1: str = "cd.repository.deleted.v1"
 
     # Service Events
-    ServiceDeployedEventV1   :str = "cd.service.deployed.v1"
-    ServiceUpgradedEventV1   :str = "cd.service.upgraded.v1"
-    ServiceRolledbackEventV1 :str = "cd.service.rolledback.v1"
-    ServiceRemovedEventV1    :str = "cd.service.removed.v1"
+    ServiceDeployedEventV1: str = "cd.service.deployed.v1"
+    ServiceUpgradedEventV1: str = "cd.service.upgraded.v1"
+    ServiceRolledbackEventV1: str = "cd.service.rolledback.v1"
+    ServiceRemovedEventV1: str = "cd.service.removed.v1"
 
     # TaskRun Events
-    TaskRunStartedEventV1  :str = "cd.taskrun.started.v1"
-    TaskRunFinishedEventV1 :str = "cd.taskrun.finished.v1"
+    TaskRunStartedEventV1: str = "cd.taskrun.started.v1"
+    TaskRunFinishedEventV1: str = "cd.taskrun.finished.v1"

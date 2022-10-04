@@ -1,12 +1,17 @@
 """Module for cli pipelinerun commands."""
 from __future__ import annotations
+
 from typing import List
+
 import click
-
-from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
+from cdevents.core.pipelinerun import (
+    PipelinerunFinishedEvent,
+    PipelinerunQueuedEvent,
+    PipelinerunStartedEvent,
+)
 
-from cdevents.core.pipelinerun import PipelinerunStartedEvent, PipelinerunFinishedEvent, PipelinerunQueuedEvent
 
 # pylint: disable=unused-argument
 def common_pipelinerun_options(function):
@@ -69,9 +74,12 @@ def started(
     data: List[str] = None,
 ):
     print_function_args()
-    pipelinerun_event = PipelinerunStartedEvent(id=id, name=name, status=status, url=url, errors=errors, data=data)
+    pipelinerun_event = PipelinerunStartedEvent(
+        id=id, name=name, status=status, url=url, errors=errors, data=data
+    )
     cdevents_command = CDeventsCommand()
     cdevents_command.run(pipelinerun_event)
+
 
 @click.command(help=add_disclaimer_text("PipelineRun Finished CloudEvent."))
 @common_pipelinerun_options
@@ -84,7 +92,9 @@ def finished(
     data: List[str] = None,
 ):
     print_function_args()
-    pipelinerun_event = PipelinerunFinishedEvent(id=id, name=name, status=status, url=url, errors=errors, data=data)
+    pipelinerun_event = PipelinerunFinishedEvent(
+        id=id, name=name, status=status, url=url, errors=errors, data=data
+    )
     cdevents_command = CDeventsCommand()
     cdevents_command.run(pipelinerun_event)
 
@@ -100,8 +110,8 @@ def queued(
     data: List[str] = None,
 ):
     print_function_args()
-    pipelinerun_event = PipelinerunQueuedEvent(id=id, name=name, status=status, url=url, errors=errors, data=data)
+    pipelinerun_event = PipelinerunQueuedEvent(
+        id=id, name=name, status=status, url=url, errors=errors, data=data
+    )
     cdevents_command = CDeventsCommand()
     cdevents_command.run(pipelinerun_event)
-
-

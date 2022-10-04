@@ -3,8 +3,8 @@ from datetime import datetime
 from unittest import mock
 
 import pytest
-
 from cdevents.cli.utils import DictUtils, time_stamp
+
 
 # pylint: disable=missing-function-docstring, protected-access, missing-class-docstring
 @pytest.mark.unit

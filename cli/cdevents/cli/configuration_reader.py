@@ -7,7 +7,6 @@ from pathlib import Path
 from typing import Union
 
 import yaml
-
 from cdevents.cli.utils import DictUtils
 
 

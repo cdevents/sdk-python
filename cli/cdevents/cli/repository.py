@@ -1,12 +1,17 @@
 """Module for cli repository commands."""
 from __future__ import annotations
+
 from typing import List
+
 import click
-
-from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
+from cdevents.core.repository import (
+    RepositoryCreatedEvent,
+    RepositoryDeletedEvent,
+    RepositoryModifiedEvent,
+)
 
-from cdevents.core.repository import RepositoryCreatedEvent, RepositoryModifiedEvent, RepositoryDeletedEvent
 
 # pylint: disable=unused-argument
 def common_repository_options(function):
@@ -84,4 +89,3 @@ def deleted(
     repository_event = RepositoryDeletedEvent(id=id, name=name, url=url, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(repository_event)
-

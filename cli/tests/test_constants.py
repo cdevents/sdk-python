@@ -2,10 +2,13 @@
 from pathlib import Path
 
 import pytest
-
-from cdevents.cli.constants import DEFAULT_CONFIGURATION_FILE, LOGGING_CONFIGURATION_FILE
+from cdevents.cli.constants import (
+    DEFAULT_CONFIGURATION_FILE,
+    LOGGING_CONFIGURATION_FILE,
+)
 
 # pylint: disable=missing-function-docstring, missing-class-docstring
+
 
 @pytest.mark.unit
 def test_default_config_exist():
