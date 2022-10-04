@@ -1,6 +1,7 @@
 """Core events."""
 
 from abc import abstractmethod
+from typing import Dict
 
 from cloudevents.http import CloudEvent
 
@@ -25,7 +26,7 @@ class Event(CloudEvent):
             super().__init__(self._attributes, dict(self._data))
 
     @abstractmethod
-    def create_extensions(self) -> dict:
+    def create_extensions(self) -> Dict[str, str]:
         """Create extensions."""
-        extensions = {}
+        extensions: Dict[str, str] = {}
         return extensions

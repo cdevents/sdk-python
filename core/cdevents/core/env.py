@@ -1,5 +1,7 @@
 """Environment-related events."""
 
+from typing import Optional
+
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
 
@@ -8,7 +10,13 @@ class EnvEvent(Event):
     """Env Event."""
 
     def __init__(
-        self, env_type: EventType, id: str, name: str, repo: str, attrs=None, data: dict = {}
+        self,
+        env_type: EventType,
+        id: Optional[str],
+        name: Optional[str],
+        repo: Optional[str],
+        attrs=None,
+        data: dict = {},
     ):
         """Initializes class."""
         self._event_type = env_type

@@ -42,6 +42,7 @@ class HttpHandlar:
     """Http Handler."""
 
     def get_attrs(
+        self,
         headers: typing.Dict[str, str],
         data: typing.Union[str, bytes, None],
         data_unmarshaller: types.UnmarshallerType = None,
@@ -81,7 +82,7 @@ class HttpHandlar:
             except json.decoder.JSONDecodeError:
                 raise cloud_exceptions.MissingRequiredFields(
                     "Failed to read specversion from both headers and data. "
-                    f"The following can not be parsed as json: {data}"
+                    f"The following can not be parsed as json: {str(data)}"
                 )
             if hasattr(raw_ce, "get"):
                 specversion = raw_ce.get("specversion", None)
@@ -112,12 +113,13 @@ class HttpHandlar:
         return attrs
 
     def event_from_http(
+        self,
         headers: typing.Dict[str, str],
         data: typing.Union[str, bytes, None],
         data_unmarshaller: types.UnmarshallerType = None,
     ):
         """Create a CDEvent from HTTP headers and data."""
-        attrs = HttpHandlar.get_attrs(headers, data, data_unmarshaller)
+        attrs = self.get_attrs(headers, data, data_unmarshaller)
 
         event_data = attrs.pop("data", None)
 

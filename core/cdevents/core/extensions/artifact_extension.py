@@ -14,11 +14,11 @@ class ArtifactExtension:
         """Initializes Artifact Extension."""
         pass
 
-    def read_transformer():
+    def read_transformer(self):
         """Read transformer."""
         pass
 
-    def write_transformer(event: CloudEvent, extensions: dict) -> CloudEvent:
+    def write_transformer(self, event: CloudEvent, extensions: dict) -> CloudEvent:
         """Write transformer."""
         if event._attributes["extensions"].get(ArtifactIdExtension):
             event._attributes["extensions"].set(

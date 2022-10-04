@@ -1,5 +1,7 @@
 """Taskrun-related events."""
 
+from typing import Optional
+
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
 
@@ -10,9 +12,9 @@ class TaskRunEvent(Event):
     def __init__(
         self,
         taskrun_type: EventType,
-        id: str,
-        name: str,
-        pipelineid: str,
+        id: Optional[str],
+        name: Optional[str],
+        pipelineid: Optional[str],
         attrs=None,
         data: dict = {},
     ):

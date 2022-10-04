@@ -1,5 +1,7 @@
 """PipelineRun-related events."""
 
+from typing import Optional
+
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
 
@@ -10,11 +12,11 @@ class PipelinerunEvent(Event):
     def __init__(
         self,
         pipelinerun_type: EventType,
-        id: str,
-        name: str,
-        status: str,
-        url: str,
-        errors: str,
+        id: Optional[str],
+        name: Optional[str],
+        status: Optional[str],
+        url: Optional[str],
+        errors: Optional[str],
         attrs=None,
         data: dict = {},
     ):

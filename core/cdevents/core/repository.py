@@ -1,5 +1,7 @@
 """Repository-related events."""
 
+from typing import Optional
+
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
 
@@ -8,7 +10,13 @@ class RepositoryEvent(Event):
     """Repository Event."""
 
     def __init__(
-        self, repository_type: EventType, id: str, name: str, url: str, attrs=None, data: dict = {}
+        self,
+        repository_type: EventType,
+        id: Optional[str],
+        name: Optional[str],
+        url: Optional[str],
+        attrs=None,
+        data: dict = {},
     ):
         """Initializes class."""
         self._event_type = repository_type

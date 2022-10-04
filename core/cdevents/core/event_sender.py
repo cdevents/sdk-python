@@ -7,10 +7,11 @@ from cloudevents.http import CloudEvent, to_structured
 class EventSender:
     """Events Sender."""
 
-    def __init__(self, cde_link: str = None):
+    def __init__(self, cde_link: str = ""):
         """Initializes class."""
-        self._cde_link = cde_link
-        if cde_link is None:
+        if cde_link:
+            self._cde_link = cde_link
+        else:
             self._cde_link = "http://localhost:8080"
 
     def send(self, event: CloudEvent):

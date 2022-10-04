@@ -1,5 +1,7 @@
 """Service-related events."""
 
+from typing import Optional
+
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
 
@@ -10,9 +12,9 @@ class ServiceEvent(Event):
     def __init__(
         self,
         service_type: EventType,
-        envid: str,
-        name: str,
-        version: str,
+        envid: Optional[str],
+        name: Optional[str],
+        version: Optional[str],
         attrs=None,
         data: dict = {},
     ):
