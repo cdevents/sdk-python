@@ -1,10 +1,11 @@
 """Unit tests for build."""
-import pytest
 from unittest.mock import patch
+
+import pytest
+from cdevents.cli.build import finished, queued, started
+from cdevents.cli.cdevents_command import CDeventsCommand
 from click.testing import CliRunner
 
-from cdevents.cli.build import started, finished, queued
-from cdevents.cli.cdevents_command import CDeventsCommand
 
 # pylint: disable=missing-function-docstring, protected-access, missing-class-docstring
 @pytest.fixture
@@ -17,6 +18,7 @@ NAME_ARG = "name"
 ARTIFACT_ARG = "artifact"
 DATA_ARG = "data"
 
+
 @pytest.mark.unit
 def test_started(runner: CliRunner):
     """Test started of a build."""
@@ -26,7 +28,7 @@ def test_started(runner: CliRunner):
     expected_artifact = "artifact1"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             started,
             [
@@ -56,7 +58,7 @@ def test_finished(runner: CliRunner):
     expected_artifact = "artifact1"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             finished,
             [
@@ -86,7 +88,7 @@ def test_queued(runner: CliRunner):
     expected_artifact = "artifact1"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             queued,
             [
@@ -105,4 +107,3 @@ def test_queued(runner: CliRunner):
     assert f"{NAME_ARG}={expected_name}" in result.stdout
     assert f"{ARTIFACT_ARG}={expected_artifact}" in result.stdout
     assert f"{DATA_ARG}=({tuple(expected_data)},)" in result.stdout
-

@@ -1,12 +1,13 @@
 """Module for cli artifact commands."""
 from __future__ import annotations
+
 from typing import List
+
 import click
-
-from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
-
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.core.artifact import ArtifactPackagedEvent, ArtifactPublishedEvent
+
 
 # pylint: disable=unused-argument
 def common_artifact_options(function):
@@ -52,6 +53,7 @@ def packaged(
     version: str = None,
     data: List[str] = None,
 ):
+    """Creates an ArtifactPackaged CDEvent."""
     print_function_args()
     artifact_event = ArtifactPackagedEvent(id=id, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
@@ -66,6 +68,7 @@ def published(
     version: str = None,
     data: List[str] = None,
 ):
+    """Creates an ArtifactPublished CDEvent."""
     print_function_args()
     artifact_event = ArtifactPublishedEvent(id=id, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()

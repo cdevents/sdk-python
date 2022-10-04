@@ -1,12 +1,13 @@
 """Module for cli build commands."""
 from __future__ import annotations
+
 from typing import List
+
 import click
-
-from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
+from cdevents.core.build import BuildFinishedEvent, BuildQueuedEvent, BuildStartedEvent
 
-from cdevents.core.build import BuildStartedEvent, BuildQueuedEvent, BuildFinishedEvent
 
 # pylint: disable=unused-argument
 def common_build_options(function):
@@ -53,10 +54,12 @@ def started(
     artifact: str = None,
     data: List[str] = None,
 ):
+    """Creates a BuildStarted CDEvent."""
     print_function_args()
     build_event = BuildStartedEvent(id=id, name=name, artifact=artifact, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(build_event)
+
 
 @click.command(help=add_disclaimer_text("Build Finished CloudEvent."))
 @common_build_options
@@ -66,10 +69,12 @@ def finished(
     artifact: str = None,
     data: List[str] = None,
 ):
+    """Creates a BuildFinished CDEvent."""
     print_function_args()
     build_event = BuildQueuedEvent(id=id, name=name, artifact=artifact, data=data)
     cdevents_command = CDeventsCommand()
     cdevents_command.run(build_event)
+
 
 @click.command(help=add_disclaimer_text("PipelineRun Queued CloudEvent."))
 @common_build_options
@@ -79,6 +84,7 @@ def queued(
     artifact: str = None,
     data: List[str] = None,
 ):
+    """Creates a BuildQueued CDEvent."""
     print_function_args()
     build_event = BuildFinishedEvent(id=id, name=name, artifact=artifact, data=data)
     cdevents_command = CDeventsCommand()

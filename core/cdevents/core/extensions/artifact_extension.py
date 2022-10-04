@@ -2,27 +2,34 @@
 
 from cloudevents.http import CloudEvent
 
-ArtifactIdExtension      = "artifactid"
-ArtifactNameExtension    = "artifactname"
+ArtifactIdExtension = "artifactid"
+ArtifactNameExtension = "artifactname"
 ArtifactVersionExtension = "artifactversion"
 
 
-class ArtifactExtension():
+class ArtifactExtension:
     """Artifact Extension."""
+
     def __init__(self) -> None:
+        """Initializes Artifact Extension."""
         pass
 
-    def read_transformer():
+    def read_transformer(self):
         """Read transformer."""
         pass
 
-    def write_transformer(event: CloudEvent, extensions: dict) -> CloudEvent:
+    def write_transformer(self, event: CloudEvent, extensions: dict) -> CloudEvent:
         """Write transformer."""
         if event._attributes["extensions"].get(ArtifactIdExtension):
-            event._attributes["extensions"].set(ArtifactIdExtension, extensions.get(ArtifactIdExtension))
+            event._attributes["extensions"].set(
+                ArtifactIdExtension, extensions.get(ArtifactIdExtension)
+            )
         if event._attributes["extensions"].get(ArtifactNameExtension):
-            event._attributes["extensions"].set(ArtifactNameExtension, extensions.get(ArtifactNameExtension))
+            event._attributes["extensions"].set(
+                ArtifactNameExtension, extensions.get(ArtifactNameExtension)
+            )
         if event._attributes["extensions"].get(ArtifactVersionExtension):
-            event._attributes["extensions"].set(ArtifactVersionExtension, extensions.get(ArtifactVersionExtension))
+            event._attributes["extensions"].set(
+                ArtifactVersionExtension, extensions.get(ArtifactVersionExtension)
+            )
         return event
-

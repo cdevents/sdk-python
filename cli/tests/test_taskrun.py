@@ -1,10 +1,11 @@
 """Unit tests for taskrun."""
-import pytest
 from unittest.mock import patch
+
+import pytest
+from cdevents.cli.cdevents_command import CDeventsCommand
+from cdevents.cli.taskrun import finished, started
 from click.testing import CliRunner
 
-from cdevents.cli.taskrun import started, finished
-from cdevents.cli.cdevents_command import CDeventsCommand
 
 # pylint: disable=missing-function-docstring, protected-access, missing-class-docstring
 @pytest.fixture
@@ -17,6 +18,7 @@ NAME_ARG = "name"
 PIPLINEID_ARG = "pipelineid"
 DATA_ARG = "data"
 
+
 @pytest.mark.unit
 def test_started(runner: CliRunner):
     """Test started of an taskrun."""
@@ -26,7 +28,7 @@ def test_started(runner: CliRunner):
     expected_pipelineid = "pipeline1"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             started,
             [
@@ -46,6 +48,7 @@ def test_started(runner: CliRunner):
     assert f"{PIPLINEID_ARG}={expected_pipelineid}" in result.stdout
     assert f"{DATA_ARG}=({tuple(expected_data)},)" in result.stdout
 
+
 @pytest.mark.unit
 def test_finished(runner: CliRunner):
     """Test finished of an taskrun."""
@@ -55,7 +58,7 @@ def test_finished(runner: CliRunner):
     expected_pipelineid = "pipeline1"
     expected_data = ["key1", "value1"]
 
-    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand): 
+    with patch.object(CDeventsCommand, "run", spec=CDeventsCommand):
         result = runner.invoke(
             finished,
             [

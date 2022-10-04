@@ -1,12 +1,13 @@
 """Module for cli branch commands."""
 from __future__ import annotations
+
 from typing import List
+
 import click
-
-from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.cli.cdevents_command import CDeventsCommand
-
+from cdevents.cli.utils import add_disclaimer_text, print_function_args
 from cdevents.core.branch import BranchCreatedEvent, BranchDeletedEvent
+
 
 # pylint: disable=unused-argument
 def common_branch_options(function):
@@ -52,6 +53,7 @@ def created(
     repoid: str = None,
     data: List[str] = None,
 ):
+    """Creates a BranchCreated CDEvent."""
     print_function_args()
     branch_event = BranchCreatedEvent(id=id, name=name, repoid=repoid, data=data)
     cdevents_command = CDeventsCommand()
@@ -66,6 +68,7 @@ def deleted(
     repoid: str = None,
     data: List[str] = None,
 ):
+    """Creates a BranchDeleted CDEvent."""
     print_function_args()
     branch_event = BranchDeletedEvent(id=id, name=name, repoid=repoid, data=data)
     cdevents_command = CDeventsCommand()

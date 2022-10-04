@@ -1,7 +1,6 @@
 import re
 
 import pytest
-
 from cdevents.core import __version__
 
 # From https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string

@@ -3,7 +3,6 @@ import os
 from pathlib import Path
 
 import pytest
-
 from cdevents.cli.configuration_handler import ConfigurationHandler
 
 # pylint: disable=missing-function-docstring, protected-access, missing-class-docstring

@@ -16,8 +16,9 @@ def get_default_configuration_file() -> str:
     """Returns the default configuration file path."""
     return DEFAULT_CONFIGURATION_FILE
 
+
 def new_default_configuration_handler() -> ConfigurationHandler:
-    """Returnes a configuration handler with the default configuration file"""
+    """Returns a configuration handler with the default configuration file."""
     config_handler: ConfigurationHandler = ConfigurationHandler.create_new(
         get_default_configuration_file()
     )
@@ -25,13 +26,10 @@ def new_default_configuration_handler() -> ConfigurationHandler:
     return config_handler
 
 
-def new_configuration_handler_with_override(
-    client_host, source_name
-) -> ConfigurationHandler:
-    """Returnes a configuration handler where args override configuration file."""
+def new_configuration_handler_with_override(client_host, source_name) -> ConfigurationHandler:
+    """Returns a configuration handler where args override configuration file."""
     args_as_config = ConfigurationHandler.create_override_config(
-        client_host=client_host,
-        source_name=source_name
+        client_host=client_host, source_name=source_name
     )
 
     config_handler: ConfigurationHandler = ConfigurationHandler.create_new(
@@ -45,7 +43,7 @@ class ConfigurationHandler:
     """Class for providing configuration."""
 
     def __init__(self, configuration: dict):
-        """Initializes the configuration. 
+        """Initializes the configuration.
 
         Args:
             configuration (dict): The configuration.
@@ -116,6 +114,7 @@ class ConfigurationHandler:
 @dataclass
 class _ClientConfig:
     host: str
+
 
 @dataclass
 class _SourceConfig:
