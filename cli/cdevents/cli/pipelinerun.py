@@ -73,6 +73,7 @@ def started(
     errors: str = None,
     data: List[str] = None,
 ):
+    """Creates a PipelineRunStarted CDEvent."""
     print_function_args()
     pipelinerun_event = PipelinerunStartedEvent(
         id=id, name=name, status=status, url=url, errors=errors, data=data
@@ -91,6 +92,7 @@ def finished(
     errors: str = None,
     data: List[str] = None,
 ):
+    """Creates a PipelineRunFinished CDEvent."""
     print_function_args()
     pipelinerun_event = PipelinerunFinishedEvent(
         id=id, name=name, status=status, url=url, errors=errors, data=data
@@ -109,6 +111,7 @@ def queued(
     errors: str = None,
     data: List[str] = None,
 ):
+    """Creates a PipelineRunQueued CDEvent."""
     print_function_args()
     pipelinerun_event = PipelinerunQueuedEvent(
         id=id, name=name, status=status, url=url, errors=errors, data=data

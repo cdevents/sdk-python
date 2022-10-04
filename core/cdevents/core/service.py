@@ -1,4 +1,4 @@
-"""service"""
+"""Service-related events."""
 
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
@@ -39,6 +39,8 @@ class ServiceEvent(Event):
 
 
 class ServiceDeployedEvent(ServiceEvent):
+    """Service Deployed CDEvent."""
+
     def __init__(
         self, envid: str = None, name: str = None, version: str = None, attrs=None, data: dict = {}
     ):
@@ -56,6 +58,8 @@ class ServiceDeployedEvent(ServiceEvent):
 
 
 class ServiceUpgradedEvent(ServiceEvent):
+    """Service Upgraded CDEvent."""
+
     def __init__(
         self, envid: str = None, name: str = None, version: str = None, attrs=None, data: dict = {}
     ):
@@ -73,6 +77,8 @@ class ServiceUpgradedEvent(ServiceEvent):
 
 
 class ServiceRolledbackEvent(ServiceEvent):
+    """Service Rolledback CDEvent."""
+
     def __init__(
         self, envid: str = None, name: str = None, version: str = None, attrs=None, data: dict = {}
     ):
@@ -90,6 +96,8 @@ class ServiceRolledbackEvent(ServiceEvent):
 
 
 class ServiceRemovedEvent(ServiceEvent):
+    """Service Removed CDEvent."""
+
     def __init__(
         self, envid: str = None, name: str = None, version: str = None, attrs=None, data: dict = {}
     ):

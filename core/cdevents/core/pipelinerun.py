@@ -1,4 +1,4 @@
-"""pipelinerun"""
+"""PipelineRun-related events."""
 
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
@@ -45,6 +45,8 @@ class PipelinerunEvent(Event):
 
 
 class PipelinerunStartedEvent(PipelinerunEvent):
+    """PipelineRun Started CDEvent."""
+
     def __init__(
         self,
         id: str = None,
@@ -71,6 +73,8 @@ class PipelinerunStartedEvent(PipelinerunEvent):
 
 
 class PipelinerunFinishedEvent(PipelinerunEvent):
+    """PipelineRun Finished CDEvent."""
+
     def __init__(
         self,
         id: str = None,
@@ -97,6 +101,8 @@ class PipelinerunFinishedEvent(PipelinerunEvent):
 
 
 class PipelinerunQueuedEvent(PipelinerunEvent):
+    """PipelineRun Queued CDEvent."""
+
     def __init__(
         self,
         id: str = None,

@@ -18,7 +18,7 @@ def get_default_configuration_file() -> str:
 
 
 def new_default_configuration_handler() -> ConfigurationHandler:
-    """Returnes a configuration handler with the default configuration file"""
+    """Returns a configuration handler with the default configuration file."""
     config_handler: ConfigurationHandler = ConfigurationHandler.create_new(
         get_default_configuration_file()
     )
@@ -27,7 +27,7 @@ def new_default_configuration_handler() -> ConfigurationHandler:
 
 
 def new_configuration_handler_with_override(client_host, source_name) -> ConfigurationHandler:
-    """Returnes a configuration handler where args override configuration file."""
+    """Returns a configuration handler where args override configuration file."""
     args_as_config = ConfigurationHandler.create_override_config(
         client_host=client_host, source_name=source_name
     )

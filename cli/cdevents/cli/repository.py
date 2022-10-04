@@ -57,6 +57,7 @@ def created(
     url: str = None,
     data: List[str] = None,
 ):
+    """Creates a RepositoryCreated CDEvent."""
     print_function_args()
     repository_event = RepositoryCreatedEvent(id=id, name=name, url=url, data=data)
     cdevents_command = CDeventsCommand()
@@ -71,6 +72,7 @@ def modified(
     url: str = None,
     data: List[str] = None,
 ):
+    """Creates a RepositoryModified CDEvent."""
     print_function_args()
     repository_event = RepositoryModifiedEvent(id=id, name=name, url=url, data=data)
     cdevents_command = CDeventsCommand()
@@ -85,6 +87,7 @@ def deleted(
     url: str = None,
     data: List[str] = None,
 ):
+    """Creates a RepositoryDeleted CDEvent."""
     print_function_args()
     repository_event = RepositoryDeletedEvent(id=id, name=name, url=url, data=data)
     cdevents_command = CDeventsCommand()

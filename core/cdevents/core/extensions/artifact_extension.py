@@ -11,6 +11,7 @@ class ArtifactExtension:
     """Artifact Extension."""
 
     def __init__(self) -> None:
+        """Initializes Artifact Extension."""
         pass
 
     def read_transformer():

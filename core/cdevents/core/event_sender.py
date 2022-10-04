@@ -14,7 +14,7 @@ class EventSender:
             self._cde_link = "http://localhost:8080"
 
     def send(self, event: CloudEvent):
-        """send events."""
+        """Send the given event."""
         headers, body = to_structured(event)
 
         # send and print event

@@ -1,4 +1,4 @@
-"""build"""
+"""Build-related events."""
 
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType

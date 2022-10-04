@@ -54,6 +54,7 @@ def started(
     artifact: str = None,
     data: List[str] = None,
 ):
+    """Creates a BuildStarted CDEvent."""
     print_function_args()
     build_event = BuildStartedEvent(id=id, name=name, artifact=artifact, data=data)
     cdevents_command = CDeventsCommand()
@@ -68,6 +69,7 @@ def finished(
     artifact: str = None,
     data: List[str] = None,
 ):
+    """Creates a BuildFinished CDEvent."""
     print_function_args()
     build_event = BuildQueuedEvent(id=id, name=name, artifact=artifact, data=data)
     cdevents_command = CDeventsCommand()
@@ -82,6 +84,7 @@ def queued(
     artifact: str = None,
     data: List[str] = None,
 ):
+    """Creates a BuildQueued CDEvent."""
     print_function_args()
     build_event = BuildFinishedEvent(id=id, name=name, artifact=artifact, data=data)
     cdevents_command = CDeventsCommand()

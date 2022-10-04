@@ -53,6 +53,7 @@ def created(
     repoid: str = None,
     data: List[str] = None,
 ):
+    """Creates a BranchCreated CDEvent."""
     print_function_args()
     branch_event = BranchCreatedEvent(id=id, name=name, repoid=repoid, data=data)
     cdevents_command = CDeventsCommand()
@@ -67,6 +68,7 @@ def deleted(
     repoid: str = None,
     data: List[str] = None,
 ):
+    """Creates a BranchDeleted CDEvent."""
     print_function_args()
     branch_event = BranchDeletedEvent(id=id, name=name, repoid=repoid, data=data)
     cdevents_command = CDeventsCommand()

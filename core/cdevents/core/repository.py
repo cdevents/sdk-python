@@ -1,4 +1,4 @@
-"""repository"""
+"""Repository-related events."""
 
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
@@ -33,6 +33,8 @@ class RepositoryEvent(Event):
 
 
 class RepositoryCreatedEvent(RepositoryEvent):
+    """Repository Created CDEvent."""
+
     def __init__(
         self, id: str = None, name: str = None, url: str = None, attrs=None, data: dict = {}
     ):
@@ -45,6 +47,8 @@ class RepositoryCreatedEvent(RepositoryEvent):
 
 
 class RepositoryModifiedEvent(RepositoryEvent):
+    """Repository Modified CDEvent."""
+
     def __init__(
         self, id: str = None, name: str = None, url: str = None, attrs=None, data: dict = {}
     ):
@@ -57,6 +61,8 @@ class RepositoryModifiedEvent(RepositoryEvent):
 
 
 class RepositoryDeletedEvent(RepositoryEvent):
+    """Repository Deleted CDEvent."""
+
     def __init__(
         self, id: str = None, name: str = None, url: str = None, attrs=None, data: dict = {}
     ):

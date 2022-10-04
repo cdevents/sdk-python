@@ -53,6 +53,7 @@ def packaged(
     version: str = None,
     data: List[str] = None,
 ):
+    """Creates an ArtifactPackaged CDEvent."""
     print_function_args()
     artifact_event = ArtifactPackagedEvent(id=id, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
@@ -67,6 +68,7 @@ def published(
     version: str = None,
     data: List[str] = None,
 ):
+    """Creates an ArtifactPublished CDEvent."""
     print_function_args()
     artifact_event = ArtifactPublishedEvent(id=id, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()

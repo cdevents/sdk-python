@@ -58,6 +58,7 @@ def deployed(
     version: str = None,
     data: List[str] = None,
 ):
+    """Create ServiceDeployed CDEvent."""
     print_function_args()
     service_event = ServiceDeployedEvent(envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
@@ -72,6 +73,7 @@ def upgraded(
     version: str = None,
     data: List[str] = None,
 ):
+    """Create ServiceUpgraded CDEvent."""
     print_function_args()
     service_event = ServiceUpgradedEvent(envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
@@ -86,6 +88,7 @@ def rolledback(
     version: str = None,
     data: List[str] = None,
 ):
+    """Create ServiceRolledback CDEvent."""
     print_function_args()
     service_event = ServiceRolledbackEvent(envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()
@@ -100,6 +103,7 @@ def removed(
     version: str = None,
     data: List[str] = None,
 ):
+    """Create ServiceRemoved CDEvent."""
     print_function_args()
     service_event = ServiceRemovedEvent(envid=envid, name=name, version=version, data=data)
     cdevents_command = CDeventsCommand()

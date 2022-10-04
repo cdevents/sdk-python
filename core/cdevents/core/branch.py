@@ -1,4 +1,4 @@
-"""branch"""
+"""Branch-related events."""
 
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
@@ -39,6 +39,8 @@ class BranchEvent(Event):
 
 
 class BranchCreatedEvent(BranchEvent):
+    """Branch created event."""
+
     def __init__(
         self, id: str = None, name: str = None, repoid: str = None, attrs=None, data: dict = {}
     ):
@@ -51,6 +53,8 @@ class BranchCreatedEvent(BranchEvent):
 
 
 class BranchDeletedEvent(BranchEvent):
+    """Branch deleted event."""
+
     def __init__(
         self, id: str = None, name: str = None, repoid: str = None, attrs=None, data: dict = {}
     ):

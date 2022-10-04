@@ -1,4 +1,4 @@
-"""artifact"""
+"""Artifact-related events."""
 
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
@@ -39,6 +39,8 @@ class ArtifactEvent(Event):
 
 
 class ArtifactPackagedEvent(ArtifactEvent):
+    """Artifact packaged event."""
+
     def __init__(
         self, id: str = None, name: str = None, version: str = None, attrs=None, data: dict = {}
     ):
@@ -56,6 +58,8 @@ class ArtifactPackagedEvent(ArtifactEvent):
 
 
 class ArtifactPublishedEvent(ArtifactEvent):
+    """Artifact published event."""
+
     def __init__(
         self, id: str = None, name: str = None, version: str = None, attrs=None, data: dict = {}
     ):

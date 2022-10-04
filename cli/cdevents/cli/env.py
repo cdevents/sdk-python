@@ -57,6 +57,7 @@ def created(
     repo: str = None,
     data: List[str] = None,
 ):
+    """Creates an EnvironmentCreated CDEvent."""
     print_function_args()
     env_event = EnvEventCreatedEvent(id=id, name=name, repo=repo, data=data)
     cdevents_command = CDeventsCommand()
@@ -71,6 +72,7 @@ def deleted(
     repo: str = None,
     data: List[str] = None,
 ):
+    """Creates an EnvironmentDeleted CDEvent."""
     print_function_args()
     env_event = EnvEventModifiedEvent(id=id, name=name, repo=repo, data=data)
     cdevents_command = CDeventsCommand()
@@ -85,6 +87,7 @@ def modified(
     repo: str = None,
     data: List[str] = None,
 ):
+    """Creates an EnvironmentModified CDEvent."""
     print_function_args()
     env_event = EnvEventDeletedEvent(id=id, name=name, repo=repo, data=data)
     cdevents_command = CDeventsCommand()

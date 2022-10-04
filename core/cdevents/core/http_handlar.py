@@ -1,3 +1,4 @@
+"""Handler for CDEvents over HTTP."""
 import json
 import typing
 
@@ -38,15 +39,15 @@ from cloudevents.sdk import marshaller, types
 
 
 class HttpHandlar:
-    """Http Handlar."""
+    """Http Handler."""
 
     def get_attrs(
         headers: typing.Dict[str, str],
         data: typing.Union[str, bytes, None],
         data_unmarshaller: types.UnmarshallerType = None,
     ):
-        """
-        Unwrap a CD_evnets (binary or structured) from an HTTP request.
+        """Unwrap a CDEvent (binary or structured) from an HTTP request.
+
         :param headers: the HTTP headers
         :type headers: typing.Dict[str, str]
         :param data: the HTTP request body. If set to None, "" or b'', the returned
@@ -115,6 +116,7 @@ class HttpHandlar:
         data: typing.Union[str, bytes, None],
         data_unmarshaller: types.UnmarshallerType = None,
     ):
+        """Create a CDEvent from HTTP headers and data."""
         attrs = HttpHandlar.get_attrs(headers, data, data_unmarshaller)
 
         event_data = attrs.pop("data", None)

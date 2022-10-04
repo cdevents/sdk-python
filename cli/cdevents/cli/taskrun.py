@@ -53,6 +53,7 @@ def started(
     pipelineid: str = None,
     data: List[str] = None,
 ):
+    """Creates a TaskRunStarted CDEvent."""
     print_function_args()
     taskrun_event = TaskRunStartedEvent(id=id, name=name, pipelineid=pipelineid, data=data)
     cdevents_command = CDeventsCommand()
@@ -67,6 +68,7 @@ def finished(
     pipelineid: str = None,
     data: List[str] = None,
 ):
+    """Creates a TaskRunFinished CDEvent."""
     print_function_args()
     taskrun_event = TaskRunFinishedEvent(id=id, name=name, pipelineid=pipelineid, data=data)
     cdevents_command = CDeventsCommand()

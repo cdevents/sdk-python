@@ -25,7 +25,7 @@ class CDeventsCommand(ABC):
             self._config_handler = new_default_configuration_handler()
 
     def run(self, event: CloudEvent):
-        """run command."""
+        """Run command."""
         e = EventSender(cde_link=self.config_handler.client.host)
         e.send(event)
 

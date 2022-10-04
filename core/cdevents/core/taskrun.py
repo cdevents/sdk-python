@@ -1,4 +1,4 @@
-"""taskrun"""
+"""Taskrun-related events."""
 
 from cdevents.core.event import Event
 from cdevents.core.event_type import EventType
@@ -39,6 +39,8 @@ class TaskRunEvent(Event):
 
 
 class TaskRunStartedEvent(TaskRunEvent):
+    """TaskRun Started CDEvent."""
+
     def __init__(
         self, id: str = None, name: str = None, pipelineid: str = None, attrs=None, data: dict = {}
     ):
@@ -56,6 +58,8 @@ class TaskRunStartedEvent(TaskRunEvent):
 
 
 class TaskRunFinishedEvent(TaskRunEvent):
+    """TaskRun Finished CDEvent."""
+
     def __init__(
         self, id: str = None, name: str = None, pipelineid: str = None, attrs=None, data: dict = {}
     ):

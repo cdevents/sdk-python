@@ -11,6 +11,7 @@ class ServiceExtension:
     """Service Extension."""
 
     def __init__(self) -> None:
+        """Initializes Service Extension."""
         pass
 
     def read_transformer():
