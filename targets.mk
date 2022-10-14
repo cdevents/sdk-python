@@ -31,6 +31,9 @@ package-install: ## install the package without dev dependencies
 test: ## run tests quickly with the default Python
 	python -m pytest -m unit -vv
 
+test-coverage: ## run tests quickly with the default Python
+	python -m pytest --cov=cdevents tests
+
 dist: clean ## builds source and wheel package
 	python setup.py sdist
 	python setup.py bdist_wheel

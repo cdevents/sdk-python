@@ -33,3 +33,9 @@ jobs:
         run: make package-install
       - name: Run tests
         run: make test
+      - name: Run tests and collect coverage
+        run: make test-coverage
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.1
+        with:
+          - flags: all

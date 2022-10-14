@@ -1,0 +1,31 @@
+coverage:
+  status:
+    project: off
+    patch: off
+
+flag_management:
+  default_rules:
+    carryforward: true
+  individual_flags:
+    - name: all
+      paths:
+        - cli/
+        - core/
+      statuses:
+        - type: project
+          target: 100%
+          threshold: 1%
+    - name: cli
+      paths:
+        - cli/
+      statuses:
+        - type: project
+          target: 70
+          threshold: 1%
+    - name: core
+      paths:
+        - core/
+      statuses:
+        - type: project
+          target: 100
+          threshold: 1%
