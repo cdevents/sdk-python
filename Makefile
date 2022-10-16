@@ -30,6 +30,10 @@ test: $(TESTPACKAGES) ## Run tests on all packages
 $(TESTPACKAGES):
 	$(MAKE) -C $(@:test-%=%) test
 
+test-coverage: $(TESTPACKAGES) ## Run tests coverage on all packages
+$(TESTPACKAGES):
+	$(MAKE) -C $(@:test-%=%) test-coverage
+
 clean: $(CLEANPACKAGES) ## Remove all build, test, coverage and Python artifacts
 $(CLEANPACKAGES):
 	$(MAKE) -C $(@:clean-%=%) clean
