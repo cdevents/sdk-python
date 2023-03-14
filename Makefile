@@ -13,6 +13,7 @@ $(PACKAGES):
 # the sets of directories to do various things in
 INITPACKAGES = $(PACKAGES:%=init-%)
 INSTALLPACKAGES = $(PACKAGES:%=package-install-%)
+DEVINSTALLPACKAGES = $(PACKAGES:%=dev-install-%)
 CLEANPACKAGES = $(PACKAGES:%=clean-%)
 TESTPACKAGES = $(PACKAGES:%=test-%)
 LINTPACKAGES = $(PACKAGES:%=lint-%)
@@ -25,6 +26,10 @@ help: ## Prints this help text
 package-install: $(INSTALLPACKAGES) ## Installs all packages without dev dependencies
 $(INSTALLPACKAGES):
 	$(MAKE) -C $(@:package-install-%=%) package-install
+
+dev-install: $(DEVINSTALLPACKAGES) ## Installs all packages without dev dependencies
+$(DEVINSTALLPACKAGES):
+	$(MAKE) -C $(@:dev-install-%=%) dev-install
 
 test: $(TESTPACKAGES) ## Run tests on all packages
 $(TESTPACKAGES):
@@ -62,6 +67,7 @@ docker-shell: ## Opens a bash
 .PHONY: packages $(PACKAGES)
 .PHONY: packages $(INITPACKAGES)
 .PHONY: packages $(INSTALLPACKAGES)
+.PHONY: packages $(DEVINSTALLPACKAGES)
 .PHONY: packages $(TESTPACKAGES)
 .PHONY: packages $(CLEANPACKAGES)
 .PHONY: packages $(BUMPVERSIONPACKAGES)

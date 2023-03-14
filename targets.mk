@@ -28,6 +28,9 @@ clean-mypy: ## remove MyPy cache files
 package-install: ## install the package without dev dependencies
 	pip install -e .
 
+dev-install: ## install the package without dev dependencies
+	pip install -e .[dev]
+
 test: ## run tests quickly with the default Python
 	python -m pytest -m unit -vv
 
