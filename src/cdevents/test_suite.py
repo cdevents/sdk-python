@@ -14,7 +14,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 """Events under dev.cdevents.testsuite."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Union
 
@@ -27,7 +27,10 @@ from cdevents.subject import Subject
 class TestSuiteSubject(Subject):
     """Subject for testsuite-related events."""
 
-    pass
+    content: Dict = field(default_factory=dict, init=False)
+    """Content for test suite subjects."""
+
+    type: str = field(default="testCase", init=False)
 
 
 # region TestSuiteStartedEvent
@@ -50,7 +53,7 @@ def new_testsuite_started_event(
     subject_id: str,
     subject_source: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> TestSuiteStartedEvent:
     """Creates a new testsuite started CDEvent."""
     context = Context(
@@ -67,7 +70,10 @@ def new_testsuite_started_event(
     )
 
     event = TestSuiteStartedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -95,7 +101,7 @@ def new_testsuite_finished_event(
     subject_id: str,
     subject_source: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> TestSuiteFinishedEvent:
     """Creates a new testsuite finished CDEvent."""
     context = Context(
@@ -112,7 +118,10 @@ def new_testsuite_finished_event(
     )
 
     event = TestSuiteFinishedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event

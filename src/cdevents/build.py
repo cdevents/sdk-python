@@ -14,7 +14,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 """Events under dev.cdevents.artifact."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Union
 
@@ -24,18 +24,28 @@ from cdevents.subject import Subject
 
 
 @dataclass
+class BuildFinishedSubjectContent:
+    """Content for build subjects when a build is finished."""
+
+    artifact_id: str
+    """PURL-format ID of artifact produced by the build."""
+
+
+@dataclass
 class BuildSubject(Subject):
     """Subject for build-related events."""
 
-    pass
+    type: str = field(default="build", init=False)
+
+    content: Union[Dict, BuildFinishedSubjectContent] = field(default_factory=dict, init=False)
 
 
 @dataclass
 class BuildFinishedSubject(BuildSubject):
     """Subject for artifact-related messages."""
 
-    artifact_id: str
-    """PURL-format ID of artifact produced by the build."""
+    content: BuildFinishedSubjectContent
+    """Content for build finished."""
 
 
 # region BuildQueuedEvent
@@ -43,6 +53,8 @@ class BuildFinishedSubject(BuildSubject):
 
 @dataclass
 class BuildQueuedEvent(CDEvent):
+    """Build queued event."""
+
     CDEVENT_TYPE = "dev.cdevents.build.queued." + SPEC_VERSION
 
     subject: BuildSubject
@@ -56,10 +68,9 @@ def new_build_queued_event(
     subject_id: str,
     subject_source: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> BuildQueuedEvent:
     """Creates a new build queued CDEvent."""
-
     context = Context(
         type=BuildQueuedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -71,7 +82,10 @@ def new_build_queued_event(
     subject = BuildSubject(id=subject_id, source=subject_source)
 
     event = BuildQueuedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -84,23 +98,24 @@ def new_build_queued_event(
 
 @dataclass
 class BuildStartedEvent(CDEvent):
+    """Build started event."""
+
     CDEVENT_TYPE = "dev.cdevents.build.started." + SPEC_VERSION
 
     subject: BuildSubject
     """Build subject."""
 
 
-def new_build_queued_event(
+def new_build_started_event(
     context_id: str,
     context_source: str,
     context_timestamp: datetime,
     subject_id: str,
     subject_source: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> BuildStartedEvent:
     """Creates a new build started CDEvent."""
-
     context = Context(
         type=BuildStartedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -112,7 +127,10 @@ def new_build_queued_event(
     subject = BuildSubject(id=subject_id, source=subject_source)
 
     event = BuildStartedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -125,6 +143,8 @@ def new_build_queued_event(
 
 @dataclass
 class BuildFinishedEvent(CDEvent):
+    """Build finished event."""
+
     CDEVENT_TYPE = "dev.cdevents.build.finished." + SPEC_VERSION
 
     subject: BuildSubject
@@ -139,10 +159,9 @@ def new_build_finished_event(
     subject_source: str,
     artifact_id: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> BuildFinishedEvent:
     """Creates a new build finished CDEvent."""
-
     context = Context(
         type=BuildFinishedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -151,10 +170,14 @@ def new_build_finished_event(
         timestamp=context_timestamp,
     )
 
-    subject = BuildFinishedSubject(id=subject_id, source=subject_source, artifact_id=artifact_id)
+    content = BuildFinishedSubjectContent(artifact_id=artifact_id)
+    subject = BuildFinishedSubject(id=subject_id, source=subject_source, content=content)
 
     event = BuildFinishedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event

@@ -14,7 +14,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 """Events under dev.cdevents.testcase."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Union
 
@@ -27,7 +27,10 @@ from cdevents.subject import Subject
 class TestCaseSubject(Subject):
     """Subject for testcase-related events."""
 
-    pass
+    content: Dict = field(default_factory=dict, init=False)
+    """Content for test case subjects."""
+
+    type: str = field(default="testCase", init=False)
 
 
 # region TestCaseQueuedEvent
@@ -35,6 +38,8 @@ class TestCaseSubject(Subject):
 
 @dataclass
 class TestCaseQueuedEvent(CDEvent):
+    """Test case queued event."""
+
     CDEVENT_TYPE = "dev.cdevents.testcase.queued." + SPEC_VERSION
 
     subject: TestCaseSubject
@@ -48,10 +53,9 @@ def new_testcase_queued_event(
     subject_id: str,
     subject_source: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> TestCaseQueuedEvent:
     """Creates a new testcase queued CDEvent."""
-
     context = Context(
         type=TestCaseQueuedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -66,7 +70,10 @@ def new_testcase_queued_event(
     )
 
     event = TestCaseQueuedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -80,6 +87,8 @@ def new_testcase_queued_event(
 
 @dataclass
 class TestCaseStartedEvent(CDEvent):
+    """Test case started event."""
+
     CDEVENT_TYPE = "dev.cdevents.testcase.started." + SPEC_VERSION
 
     subject: TestCaseSubject
@@ -93,10 +102,9 @@ def new_testcase_started_event(
     subject_id: str,
     subject_source: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> TestCaseStartedEvent:
     """Creates a new testcase started CDEvent."""
-
     context = Context(
         type=TestCaseStartedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -111,7 +119,10 @@ def new_testcase_started_event(
     )
 
     event = TestCaseStartedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -124,6 +135,8 @@ def new_testcase_started_event(
 
 @dataclass
 class TestCaseFinishedEvent(CDEvent):
+    """Test case finished event."""
+
     CDEVENT_TYPE = "dev.cdevents.testcase.finished." + SPEC_VERSION
 
     subject: TestCaseSubject
@@ -137,10 +150,9 @@ def new_testcase_finished_event(
     subject_id: str,
     subject_source: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> TestCaseFinishedEvent:
     """Creates a new testcase finished CDEvent."""
-
     context = Context(
         type=TestCaseFinishedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -155,7 +167,10 @@ def new_testcase_finished_event(
     )
 
     event = TestCaseFinishedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event

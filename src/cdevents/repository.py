@@ -14,7 +14,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 """Events under dev.cdevents.repository."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Optional, Union
 
@@ -24,8 +24,8 @@ from cdevents.subject import Subject
 
 
 @dataclass
-class RepositorySubject(Subject):
-    """Subject for branch-related events."""
+class RepositorySubjectContent:
+    """Content for repository subjects."""
 
     name: str
     """Name of the repository."""
@@ -40,11 +40,23 @@ class RepositorySubject(Subject):
     """URL for humans to view the content of the repository."""
 
 
+@dataclass
+class RepositorySubject(Subject):
+    """Subject for branch-related events."""
+
+    content: RepositorySubjectContent
+    """Content for change subjects."""
+
+    type: str = field(default="repository", init=False)
+
+
 # region RepositoryCreatedEvent
 
 
 @dataclass
 class RepositoryCreatedEvent(CDEvent):
+    """Repository created event."""
+
     CDEVENT_TYPE = "dev.cdevents.repository.created." + SPEC_VERSION
 
     subject: RepositorySubject
@@ -62,10 +74,9 @@ def new_repository_created_event(
     url: str,
     view_url: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> RepositoryCreatedEvent:
     """Creates a new repository created CDEvent."""
-
     context = Context(
         type=RepositoryCreatedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -73,13 +84,14 @@ def new_repository_created_event(
         source=context_source,
         timestamp=context_timestamp,
     )
-
-    subject = RepositorySubject(
-        id=subject_id, source=subject_source, name=name, owner=owner, url=url, view_url=view_url
-    )
+    content = RepositorySubjectContent(name=name, owner=owner, url=url, view_url=view_url)
+    subject = RepositorySubject(id=subject_id, source=subject_source, content=content)
 
     event = RepositoryCreatedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -93,6 +105,8 @@ def new_repository_created_event(
 
 @dataclass
 class RepositoryDeletedEvent(CDEvent):
+    """Repository deleted event."""
+
     CDEVENT_TYPE = "dev.cdevents.repository.deleted." + SPEC_VERSION
 
     subject: RepositorySubject
@@ -110,10 +124,9 @@ def new_repository_deleted_event(
     url: str,
     view_url: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> RepositoryDeletedEvent:
     """Creates a new repository deleted CDEvent."""
-
     context = Context(
         type=RepositoryDeletedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -122,12 +135,14 @@ def new_repository_deleted_event(
         timestamp=context_timestamp,
     )
 
-    subject = RepositorySubject(
-        id=subject_id, source=subject_source, name=name, owner=owner, url=url, view_url=view_url
-    )
+    content = RepositorySubjectContent(name=name, owner=owner, url=url, view_url=view_url)
+    subject = RepositorySubject(id=subject_id, source=subject_source, content=content)
 
     event = RepositoryDeletedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -141,6 +156,8 @@ def new_repository_deleted_event(
 
 @dataclass
 class RepositoryModifiedEvent(CDEvent):
+    """Repository modified event."""
+
     CDEVENT_TYPE = "dev.cdevents.repository.modified." + SPEC_VERSION
 
     subject: RepositorySubject
@@ -158,10 +175,9 @@ def new_repository_modified_event(
     url: str,
     view_url: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> RepositoryModifiedEvent:
     """Creates a new repository modified CDEvent."""
-
     context = Context(
         type=RepositoryModifiedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -170,12 +186,14 @@ def new_repository_modified_event(
         timestamp=context_timestamp,
     )
 
-    subject = RepositorySubject(
-        id=subject_id, source=subject_source, name=name, owner=owner, url=url, view_url=view_url
-    )
+    content = RepositorySubjectContent(name=name, owner=owner, url=url, view_url=view_url)
+    subject = RepositorySubject(id=subject_id, source=subject_source, content=content)
 
     event = RepositoryModifiedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event

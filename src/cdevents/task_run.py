@@ -14,7 +14,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 """Events under dev.cdevents.taskrun."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Union
 
@@ -25,13 +25,13 @@ from cdevents.subject import Subject
 
 
 @dataclass
-class TaskRunSubject(Subject):
-    """Subject for taskrun-related events."""
+class TaskRunSubjectContent:
+    """Content for task run subjects."""
 
     task_name: str
     """The name of the task."""
 
-    pipeline_run: PipelineRunSubject
+    pipeline_run: Dict[str, str]
     """Information about the pipeline that runs this task."""
 
     url: str
@@ -39,7 +39,17 @@ class TaskRunSubject(Subject):
 
 
 @dataclass
-class TaskRunFinishedSubject(TaskRunSubject):
+class TaskRunSubject(Subject):
+    """Subject for taskrun-related events."""
+
+    content: TaskRunSubjectContent
+    """Content for change subjects."""
+
+    type: str = field(default="taskRun", init=False)
+
+
+@dataclass
+class TaskRunFinishedSubjectContent(TaskRunSubjectContent):
     """Subject for artifact-related messages."""
 
     outcome: str
@@ -52,11 +62,21 @@ class TaskRunFinishedSubject(TaskRunSubject):
     """In case of error or failed task run, provides details about the failure."""
 
 
+@dataclass
+class TaskRunFinishedSubject(TaskRunSubject):
+    """Subject for taskrun-related events."""
+
+    content: TaskRunFinishedSubjectContent
+    """Content for change subjects."""
+
+
 # region TaskRunStartedEvent
 
 
 @dataclass
 class TaskRunStartedEvent(CDEvent):
+    """Task run started event."""
+
     CDEVENT_TYPE = "dev.cdevents.taskrun.started." + SPEC_VERSION
 
     subject: TaskRunSubject
@@ -70,14 +90,12 @@ def new_taskrun_started_event(
     subject_id: str,
     subject_source: str,
     task_name: str,
-    pipeline_run_id: str,
-    pipeline_run_source: str,
+    pipeline_run: Dict[str, str],
     url: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> TaskRunStartedEvent:
     """Creates a new taskrun started CDEvent."""
-
     context = Context(
         type=TaskRunStartedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -86,21 +104,15 @@ def new_taskrun_started_event(
         timestamp=context_timestamp,
     )
 
-    pipeline_run = PipelineRunSubject(
-        id=pipeline_run_id,
-        source=pipeline_run_source,
-    )
+    content = TaskRunSubjectContent(task_name=task_name, pipeline_run=pipeline_run, url=url)
 
-    subject = TaskRunSubject(
-        id=subject_id,
-        source=subject_source,
-        task_name=task_name,
-        pipeline_run=pipeline_run,
-        url=url,
-    )
+    subject = TaskRunSubject(id=subject_id, source=subject_source, content=content)
 
     event = TaskRunStartedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -113,9 +125,11 @@ def new_taskrun_started_event(
 
 @dataclass
 class TaskRunFinishedEvent(CDEvent):
+    """Task run finished event."""
+
     CDEVENT_TYPE = "dev.cdevents.taskrun.finished." + SPEC_VERSION
 
-    subject: TaskRunSubject
+    subject: TaskRunFinishedSubject
     """TaskRun subject."""
 
 
@@ -126,16 +140,14 @@ def new_taskrun_finished_event(
     subject_id: str,
     subject_source: str,
     task_name: str,
-    pipeline_run_id: str,
-    pipeline_run_source: str,
+    pipeline_run: Dict[str, str],
     url: str,
     outcome: str,
     errors: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> TaskRunFinishedEvent:
     """Creates a new taskrun finished CDEvent."""
-
     context = Context(
         type=TaskRunFinishedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -144,23 +156,17 @@ def new_taskrun_finished_event(
         timestamp=context_timestamp,
     )
 
-    pipeline_run = PipelineRunSubject(
-        id=pipeline_run_id,
-        source=pipeline_run_source,
+    content = TaskRunFinishedSubjectContent(
+        task_name=task_name, pipeline_run=pipeline_run, url=url, outcome=outcome, errors=errors
     )
 
-    subject = TaskRunFinishedSubject(
-        id=subject_id,
-        source=subject_source,
-        task_name=task_name,
-        pipeline_run=pipeline_run,
-        url=url,
-        outcome=outcome,
-        errors=errors,
-    )
+    subject = TaskRunFinishedSubject(id=subject_id, source=subject_source, content=content)
 
     event = TaskRunFinishedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event

@@ -14,7 +14,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 """Events under dev.cdevents.branch."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Optional, Union
 
@@ -24,11 +24,21 @@ from cdevents.subject import Subject
 
 
 @dataclass
+class BranchSubjectContent:
+    """Content for branch subjects."""
+
+    repository: Dict[str, str]
+    """A reference to the repository where the branch event happened."""
+
+
+@dataclass
 class BranchSubject(Subject):
     """Subject for branch-related events."""
 
-    repository: Optional[Dict]
-    """A reference to the repository where the branch event happened."""
+    content: BranchSubjectContent
+    """Content for branch subjects."""
+
+    type: str = field(default="branch", init=False)
 
 
 # region BranchCreatedEvent
@@ -36,6 +46,8 @@ class BranchSubject(Subject):
 
 @dataclass
 class BranchCreatedEvent(CDEvent):
+    """Branch created event."""
+
     CDEVENT_TYPE = "dev.cdevents.branch.created." + SPEC_VERSION
 
     subject: BranchSubject
@@ -48,12 +60,11 @@ def new_branch_created_event(
     context_timestamp: datetime,
     subject_id: str,
     subject_source: str,
-    repository: Optional[Dict],
+    repository: Dict[str, str],
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> BranchCreatedEvent:
     """Creates a new branch created CDEvent."""
-
     context = Context(
         type=BranchCreatedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -62,10 +73,14 @@ def new_branch_created_event(
         timestamp=context_timestamp,
     )
 
-    subject = BranchSubject(id=subject_id, source=subject_source, repository=repository)
+    content = BranchSubjectContent(repository=repository)
+    subject = BranchSubject(id=subject_id, source=subject_source, content=content)
 
     event = BranchCreatedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -79,6 +94,8 @@ def new_branch_created_event(
 
 @dataclass
 class BranchDeletedEvent(CDEvent):
+    """Branch deleted event."""
+
     CDEVENT_TYPE = "dev.cdevents.branch.deleted." + SPEC_VERSION
 
     subject: BranchSubject
@@ -91,12 +108,11 @@ def new_branch_deleted_event(
     context_timestamp: datetime,
     subject_id: str,
     subject_source: str,
-    repository: Optional[Dict],
+    repository: Dict[str, str],
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> BranchDeletedEvent:
     """Creates a new branch deleted CDEvent."""
-
     context = Context(
         type=BranchDeletedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -105,10 +121,14 @@ def new_branch_deleted_event(
         timestamp=context_timestamp,
     )
 
-    subject = BranchSubject(id=subject_id, source=subject_source, repository=repository)
+    content = BranchSubjectContent(repository=repository)
+    subject = BranchSubject(id=subject_id, source=subject_source, content=content)
 
     event = BranchDeletedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event

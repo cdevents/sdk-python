@@ -14,7 +14,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 """Events under dev.cdevents.change."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Optional, Union
 
@@ -24,11 +24,21 @@ from cdevents.subject import Subject
 
 
 @dataclass
+class ChangeSubjectContent:
+    """Content for change subjects."""
+
+    repository: Dict[str, str]
+    """A reference to the repository where the change event happened."""
+
+
+@dataclass
 class ChangeSubject(Subject):
     """Subject for change-related events."""
 
-    repository: Optional[Dict]
-    """A reference to the repository where the change event happened."""
+    content: ChangeSubjectContent
+    """Content for change subjects."""
+
+    type: str = field(default="change", init=False)
 
 
 # region ChangeAbandonedEvent
@@ -36,6 +46,8 @@ class ChangeSubject(Subject):
 
 @dataclass
 class ChangeAbandonedEvent(CDEvent):
+    """Change abandoned event."""
+
     CDEVENT_TYPE = "dev.cdevents.change.abandoned." + SPEC_VERSION
 
     subject: ChangeSubject
@@ -48,12 +60,11 @@ def new_change_abandoned_event(
     context_timestamp: datetime,
     subject_id: str,
     subject_source: str,
-    repository: Optional[Dict],
+    repository: Dict[str, str],
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> ChangeAbandonedEvent:
     """Creates a new change abandoned CDEvent."""
-
     context = Context(
         type=ChangeAbandonedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -62,10 +73,14 @@ def new_change_abandoned_event(
         timestamp=context_timestamp,
     )
 
-    subject = ChangeSubject(id=subject_id, source=subject_source, repository=repository)
+    content = ChangeSubjectContent(repository=repository)
+    subject = ChangeSubject(id=subject_id, source=subject_source, content=content)
 
     event = ChangeAbandonedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -79,6 +94,8 @@ def new_change_abandoned_event(
 
 @dataclass
 class ChangeCreatedEvent(CDEvent):
+    """Change created event."""
+
     CDEVENT_TYPE = "dev.cdevents.change.created." + SPEC_VERSION
 
     subject: ChangeSubject
@@ -91,12 +108,11 @@ def new_change_created_event(
     context_timestamp: datetime,
     subject_id: str,
     subject_source: str,
-    repository: Optional[Dict],
+    repository: Dict[str, str],
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> ChangeCreatedEvent:
     """Creates a new change created CDEvent."""
-
     context = Context(
         type=ChangeCreatedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -105,10 +121,14 @@ def new_change_created_event(
         timestamp=context_timestamp,
     )
 
-    subject = ChangeSubject(id=subject_id, source=subject_source, repository=repository)
+    content = ChangeSubjectContent(repository=repository)
+    subject = ChangeSubject(id=subject_id, source=subject_source, content=content)
 
     event = ChangeCreatedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -122,6 +142,8 @@ def new_change_created_event(
 
 @dataclass
 class ChangeMergedEvent(CDEvent):
+    """Change merged event."""
+
     CDEVENT_TYPE = "dev.cdevents.change.merged." + SPEC_VERSION
 
     subject: ChangeSubject
@@ -134,12 +156,11 @@ def new_change_merged_event(
     context_timestamp: datetime,
     subject_id: str,
     subject_source: str,
-    repository: Optional[Dict],
+    repository: Dict[str, str],
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> ChangeMergedEvent:
     """Creates a new change merged CDEvent."""
-
     context = Context(
         type=ChangeMergedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -148,10 +169,14 @@ def new_change_merged_event(
         timestamp=context_timestamp,
     )
 
-    subject = ChangeSubject(id=subject_id, source=subject_source, repository=repository)
+    content = ChangeSubjectContent(repository=repository)
+    subject = ChangeSubject(id=subject_id, source=subject_source, content=content)
 
     event = ChangeMergedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -165,6 +190,8 @@ def new_change_merged_event(
 
 @dataclass
 class ChangeReviewedEvent(CDEvent):
+    """Change reviewed event."""
+
     CDEVENT_TYPE = "dev.cdevents.change.reviewed." + SPEC_VERSION
 
     subject: ChangeSubject
@@ -177,12 +204,11 @@ def new_change_reviewed_event(
     context_timestamp: datetime,
     subject_id: str,
     subject_source: str,
-    repository: Optional[Dict],
+    repository: Dict[str, str],
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> ChangeReviewedEvent:
     """Creates a new change reviewed CDEvent."""
-
     context = Context(
         type=ChangeReviewedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -191,10 +217,14 @@ def new_change_reviewed_event(
         timestamp=context_timestamp,
     )
 
-    subject = ChangeSubject(id=subject_id, source=subject_source, repository=repository)
+    content = ChangeSubjectContent(repository=repository)
+    subject = ChangeSubject(id=subject_id, source=subject_source, content=content)
 
     event = ChangeReviewedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -208,6 +238,8 @@ def new_change_reviewed_event(
 
 @dataclass
 class ChangeUpdatedEvent(CDEvent):
+    """Change updated event."""
+
     CDEVENT_TYPE = "dev.cdevents.change.updated." + SPEC_VERSION
 
     subject: ChangeSubject
@@ -220,12 +252,11 @@ def new_change_updated_event(
     context_timestamp: datetime,
     subject_id: str,
     subject_source: str,
-    repository: Optional[Dict],
+    repository: Dict[str, str],
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> ChangeUpdatedEvent:
     """Creates a new change updated CDEvent."""
-
     context = Context(
         type=ChangeUpdatedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -234,10 +265,14 @@ def new_change_updated_event(
         timestamp=context_timestamp,
     )
 
-    subject = ChangeSubject(id=subject_id, source=subject_source, repository=repository)
+    content = ChangeSubjectContent(repository=repository)
+    subject = ChangeSubject(id=subject_id, source=subject_source, content=content)
 
     event = ChangeUpdatedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event

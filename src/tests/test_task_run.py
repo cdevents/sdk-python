@@ -16,34 +16,16 @@
 import datetime
 
 from cdevents import (
-    ArtifactPackagedEvent,
-    ArtifactPublishedEvent,
-    new_artifact_packaged_event,
-    new_artifact_published_event,
+    TaskRunFinishedEvent,
+    TaskRunStartedEvent,
+    new_taskrun_finished_event,
+    new_taskrun_started_event,
     to_cloudevent,
 )
 
 
-def test_artifact_packaged(schema_validation_error):
-    event = new_artifact_packaged_event(
-        context_id="CONTEXT_ID",
-        context_source="CONTEXT_SOURCE",
-        context_timestamp=datetime.datetime.now(),
-        subject_id="SUBJECT_ID",
-        subject_source="SUBJECT_SOURCE",
-        change={"id": "CHANGE_ID"},
-        custom_data={"hello_message": "hi!"},
-        custom_data_content_type="application/json",
-    )
-
-    cloudevent = to_cloudevent(event)
-
-    assert cloudevent.get("type") == ArtifactPackagedEvent.CDEVENT_TYPE
-    assert not schema_validation_error("artifactpackaged.json", cloudevent)
-
-
-def test_artifact_published(schema_validation_error):
-    event = new_artifact_published_event(
+def test_taskrun_started(schema_validation_error):
+    event = new_taskrun_started_event(
         context_id="CONTEXT_ID",
         context_source="CONTEXT_SOURCE",
         context_timestamp=datetime.datetime.now(),
@@ -51,9 +33,34 @@ def test_artifact_published(schema_validation_error):
         subject_source="SUBJECT_SOURCE",
         custom_data={"hello_message": "hi!"},
         custom_data_content_type="application/json",
+        pipeline_run={"id": "PIPELINE_RUN_UD"},
+        task_name="TASK_NAME",
+        url="https://taskrun.url",
     )
 
     cloudevent = to_cloudevent(event)
 
-    assert cloudevent.get("type") == ArtifactPublishedEvent.CDEVENT_TYPE
-    assert not schema_validation_error("artifactpublished.json", cloudevent)
+    assert cloudevent.get("type") == TaskRunStartedEvent.CDEVENT_TYPE
+    assert not schema_validation_error("taskrunstarted.json", cloudevent)
+
+
+def test_taskrun_finished(schema_validation_error):
+    event = new_taskrun_finished_event(
+        context_id="CONTEXT_ID",
+        context_source="CONTEXT_SOURCE",
+        context_timestamp=datetime.datetime.now(),
+        subject_id="SUBJECT_ID",
+        subject_source="SUBJECT_SOURCE",
+        custom_data={"hello_message": "hi!"},
+        custom_data_content_type="application/json",
+        pipeline_run={"id": "PIPELINE_RUN_UD"},
+        task_name="TASK_NAME",
+        url="https://taskrun.url",
+        outcome="success",
+        errors="ERRORS",
+    )
+
+    cloudevent = to_cloudevent(event)
+
+    assert cloudevent.get("type") == TaskRunFinishedEvent.CDEVENT_TYPE
+    assert not schema_validation_error("taskrunfinished.json", cloudevent)

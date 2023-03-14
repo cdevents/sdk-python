@@ -20,9 +20,7 @@ from typing import Dict, TypeVar, Union
 from cdevents.context import Context
 from cdevents.subject import Subject
 
-SPEC_VERSION = "0.1.0-draft"
-
-SubjectType = TypeVar("SubjectType", bound=Subject)
+SPEC_VERSION = "0.1.0"
 
 
 @dataclass
@@ -32,11 +30,11 @@ class CDEvent:
     context: Context
     """Context."""
 
-    subject: SubjectType
+    subject: Subject
     """Subject."""
 
     custom_data: Union[Dict, str, None]
     """Custom data for event."""
 
-    custom_data_type: str
+    custom_data_content_type: str
     """Type identifier for custom data."""

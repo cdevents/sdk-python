@@ -14,7 +14,7 @@
 #
 #  SPDX-License-Identifier: Apache-2.0
 """Events under dev.cdevents.artifact."""
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Union
 
@@ -24,7 +24,15 @@ from cdevents.subject import Subject
 
 
 @dataclass
-class ArtifactSubject(Subject):
+class ArtifactPackagedSubjectContent:
+    """Content for artifact subjects."""
+
+    change: Dict
+    """Change from which the artifact was created."""
+
+
+@dataclass
+class ArtifactPackagedSubject(Subject):
     """Subject for artifact-related events."""
 
     id: str
@@ -33,15 +41,37 @@ class ArtifactSubject(Subject):
     source: str
     """Source in which the artifact can be found."""
 
+    type: str = field(default="artifact", init=False)
+
+    content: ArtifactPackagedSubjectContent
+    """Content for artifact subject."""
+
+
+@dataclass
+class ArtifactPublishedSubject(Subject):
+    """Subject for artifact-related events."""
+
+    id: str
+    """PURL format identifier for the artifact."""
+
+    source: str
+    """Source in which the artifact can be found."""
+
+    type: str = field(default="artifact", init=False)
+
+    content: Dict = field(default_factory=dict, init=False)
+
 
 # region ArtifactPackagedEvent
 
 
 @dataclass
 class ArtifactPackagedEvent(CDEvent):
+    """Artifact packaged event."""
+
     CDEVENT_TYPE = "dev.cdevents.artifact.packaged." + SPEC_VERSION
 
-    subject: ArtifactSubject
+    subject: ArtifactPackagedSubject
     """Artifact subject."""
 
 
@@ -51,11 +81,11 @@ def new_artifact_packaged_event(
     context_timestamp: datetime,
     subject_id: str,
     subject_source: str,
+    change: Dict[str, str],
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> ArtifactPackagedEvent:
     """Creates a new artifact packaged CDEvent."""
-
     context = Context(
         type=ArtifactPackagedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -64,10 +94,14 @@ def new_artifact_packaged_event(
         timestamp=context_timestamp,
     )
 
-    subject = ArtifactSubject(id=subject_id, source=subject_source)
+    content = ArtifactPackagedSubjectContent(change=change)
+    subject = ArtifactPackagedSubject(id=subject_id, source=subject_source, content=content)
 
     event = ArtifactPackagedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
@@ -80,9 +114,11 @@ def new_artifact_packaged_event(
 
 @dataclass
 class ArtifactPublishedEvent(CDEvent):
+    """Artifact published event."""
+
     CDEVENT_TYPE = "dev.cdevents.artifact.published." + SPEC_VERSION
 
-    subject: ArtifactSubject
+    subject: ArtifactPublishedSubject
     """Artifact subject."""
 
 
@@ -93,10 +129,9 @@ def new_artifact_published_event(
     subject_id: str,
     subject_source: str,
     custom_data: Union[str, Dict, None],
-    custom_data_type: str,
+    custom_data_content_type: str,
 ) -> ArtifactPublishedEvent:
     """Creates a new artifact published CDEvent."""
-
     context = Context(
         type=ArtifactPublishedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
@@ -105,10 +140,13 @@ def new_artifact_published_event(
         timestamp=context_timestamp,
     )
 
-    subject = ArtifactSubject(id=subject_id, source=subject_source)
+    subject = ArtifactPublishedSubject(id=subject_id, source=subject_source)
 
     event = ArtifactPublishedEvent(
-        context=context, subject=subject, custom_data=custom_data, custom_data_type=custom_data_type
+        context=context,
+        subject=subject,
+        custom_data=custom_data,
+        custom_data_content_type=custom_data_content_type,
     )
 
     return event
