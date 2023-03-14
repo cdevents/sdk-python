@@ -1,8 +1,0 @@
-# N.B. The file is used for testing the configuration handler.
-# The content should reflect the content of the default configuration file cli/configuration/configuration.yaml
----
-configuration:
-  source:
-    name: cde-cli
-  client:
-    host: http://localhost:8080
