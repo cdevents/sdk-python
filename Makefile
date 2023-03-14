@@ -1,6 +1,6 @@
 include header.mk
 
-PACKAGES = core
+PACKAGES = src
 export ABS_ROOT_PATH=$(shell pwd)
 
 .PHONY: packages $(PACKAGES)
