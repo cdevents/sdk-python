@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
@@ -25,12 +27,14 @@ jobs:
         python: ['3.7', '3.8', '3.9', '3.x']
     steps:
       - uses: actions/checkout@v3
+        with:
+          submodules: recursive
       - name: Setup Python ${{ matrix.python }}
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python }}
       - name: Install dependencies
-        run: make package-install
+        run: make dev-install
       - name: Run tests
         run: make test
       - name: Run tests and collect coverage

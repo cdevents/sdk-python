@@ -1,0 +1,3 @@
+[submodule "src/tests/spec"]
+	path = src/tests/spec
+	url = https://github.com/cdevents/spec

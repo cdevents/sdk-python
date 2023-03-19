@@ -1,6 +1,0 @@
----
-configuration:
-  source:
-    name: cde-cli
-  client:
-    host: http://localhost:8080
