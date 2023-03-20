@@ -1,0 +1,21 @@
+name: Pylint
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v1
+        with:
+          python-version: 3.9
+      - name: Checkout PyTorch
+        uses: actions/checkout@master
+      - name: Install flake8
+        run: pip install flake8
+      - name: Run flake8
+        run: |
+          # Ignoring E501 reporting lines are too long (>79 characters)
+          # Ignoring F401 reporting imported module not used when part of SDK
+          flake8 . --count --ignore=E501,F401 --show-source --statistics
