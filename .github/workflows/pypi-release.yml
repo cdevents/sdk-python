@@ -3,7 +3,7 @@ name: PyPI-Release
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-and-publish:
@@ -13,16 +13,34 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
-          python-version: "3.x"
-      - name: Install build dependencies
-        run: pip install -U setuptools wheel build
-      - name: Build
-        run: python -m build .
-      - name: Publish
-        uses: pypa/gh-action-pypi-publish@master
+          python-version: "3.9"
+      - name: Set Release Version
+        run: echo "RELEASE=$(grep 'version' pyproject.toml | cut -d \" -f2)" >> $GITHUB_ENV
+      - name: Set up npm
+        uses: actions/setup-node@v2
         with:
-          password: ${{ secrets.pypi_password }}
-      - name: Install GitPython and cdevents for pypi_packaging
-        run: pip install -U -r requirements/publish.txt
-      - name: Create Tag
-        run: python pypi_packaging.py
+          node-version: '12'
+      - run: git config --global user.email "actions@users.noreply.github.com"
+      - run: git config --global user.name "GitHub Actions"
+      - name: Install github-changes
+        run: |
+          npm install -g github-changes
+      - name: Generate Changelog
+        run: |
+          github-changes -o ${GITHUB_REPOSITORY///*} -r ${GITHUB_REPOSITORY##*/} -a --only-pulls --use-commit-body -k ${{ secrets.GITHUB_TOKEN }} -b main -n "${{ env.RELEASE }}" -m "(YYYY-MM-DD)" -t "Changelog" -f "CHANGELOG.md"
+          git add CHANGELOG.md
+          git commit -m "Updated CHANGELOG.md"
+      - name: Push changes to release branch
+        run: |
+          git push origin main
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "${{ env.RELEASE }}"
+          release_name: "Release ${{ env.RELEASE }}"
+          body_path: "CHANGELOG.md"
+          draft: false
+          prerelease: false
