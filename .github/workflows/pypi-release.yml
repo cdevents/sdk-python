@@ -5,11 +5,20 @@ on:
     branches:
       - main
 
+env:
+  USER_EMAIL: 'cdevents@cd.foundation'
+  USER_NAME: 'CDEvents Bot'
+  USER_ID: 'cdevents-bot'
+
 jobs:
   build-and-publish:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout sources
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GH_BOT_TOKEN }}
       - name: Set up Python
         uses: actions/setup-python@v1
         with:
@@ -20,8 +29,8 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '12'
-      - run: git config --global user.email "actions@users.noreply.github.com"
-      - run: git config --global user.name "GitHub Actions"
+      - run: git config --global user.email "${{ env.USER_EMAIL }}"
+      - run: git config --global user.name "${{ env.USER_NAME }}"
       - name: Install github-changes
         run: |
           npm install -g github-changes
