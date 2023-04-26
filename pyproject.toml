@@ -1,6 +1,6 @@
 [project]
 name = "cdevents-sdk"
-version = "0.0.0"
+version = "0.0.1-draft"
 authors = [
   { name="Erik Sternerson", email="erik@sternerson.se" },
   { name="Evan Elms", email="evanmelms@gmail.com" }
