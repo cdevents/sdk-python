@@ -16,11 +16,13 @@
 """Events under dev.cdevents.branch."""
 from dataclasses import dataclass, field
 from datetime import datetime
+import datetime
 from typing import Dict, Optional, Union
 
 from cdevents.cdevent import SPEC_VERSION, CDEvent
 from cdevents.context import Context
 from cdevents.subject import Subject
+from pydanticEvent import parsedEvent
 
 
 @dataclass
@@ -64,27 +66,28 @@ def new_branch_created_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> BranchCreatedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    repository=repository, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new branch created CDEvent."""
     context = Context(
         type=BranchCreatedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = BranchSubjectContent(repository=repository)
-    subject = BranchSubject(id=subject_id, source=subject_source, content=content)
+    content = BranchSubjectContent(repository=input_data.repository)
+    subject = BranchSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = BranchCreatedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
-
 
 # endregion BranchCreatedEvent
 
@@ -112,26 +115,27 @@ def new_branch_deleted_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> BranchDeletedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    repository=repository, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new branch deleted CDEvent."""
     context = Context(
         type=BranchDeletedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = BranchSubjectContent(repository=repository)
-    subject = BranchSubject(id=subject_id, source=subject_source, content=content)
+    content = BranchSubjectContent(repository=input_data.repository)
+    subject = BranchSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = BranchDeletedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
-
 
 # endregion BranchDeletedEvent

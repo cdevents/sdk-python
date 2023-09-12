@@ -17,10 +17,12 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Optional, Union
+import datetime
 
 from cdevents.cdevent import SPEC_VERSION, CDEvent
 from cdevents.context import Context
 from cdevents.subject import Subject
+from pydanticEvent import parsedEvent
 
 
 @dataclass
@@ -77,21 +79,23 @@ def new_repository_created_event(
     custom_data_content_type: str,
 ) -> RepositoryCreatedEvent:
     """Creates a new repository created CDEvent."""
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    url = url, name=name, owner = owner, view_url = view_url,  custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     context = Context(
         type=RepositoryCreatedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
-    content = RepositorySubjectContent(name=name, owner=owner, url=url, view_url=view_url)
-    subject = RepositorySubject(id=subject_id, source=subject_source, content=content)
+    content = RepositorySubjectContent(name=input_data.name, owner=input_data.owner, url=input_data.url, view_url=input_data.view_url)
+    subject = RepositorySubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = RepositoryCreatedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -126,26 +130,29 @@ def new_repository_deleted_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> RepositoryDeletedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    url = url, name=name, owner = owner, view_url = view_url,  custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new repository deleted CDEvent."""
     context = Context(
         type=RepositoryDeletedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = RepositorySubjectContent(name=name, owner=owner, url=url, view_url=view_url)
-    subject = RepositorySubject(id=subject_id, source=subject_source, content=content)
+    content = RepositorySubjectContent(name=input_data.name, owner=input_data.owner, url=input_data.url, view_url=input_data.view_url)
+    subject = RepositorySubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = RepositoryDeletedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
+
 
 
 # endregion RepositoryDeletedEvent
@@ -177,23 +184,25 @@ def new_repository_modified_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> RepositoryModifiedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    url = url, name=name, owner = owner, view_url = view_url,  custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new repository modified CDEvent."""
     context = Context(
         type=RepositoryModifiedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = RepositorySubjectContent(name=name, owner=owner, url=url, view_url=view_url)
-    subject = RepositorySubject(id=subject_id, source=subject_source, content=content)
+    content = RepositorySubjectContent(name=input_data.name, owner=input_data.owner, url=input_data.url, view_url=input_data.view_url)
+    subject = RepositorySubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = RepositoryModifiedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event

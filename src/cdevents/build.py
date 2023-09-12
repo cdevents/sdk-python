@@ -17,11 +17,12 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Union
+import datetime
 
 from cdevents.cdevent import SPEC_VERSION, CDEvent
 from cdevents.context import Context
 from cdevents.subject import Subject
-
+from pydanticEvent import parsedEvent
 
 @dataclass
 class BuildFinishedSubjectContent:
@@ -36,8 +37,8 @@ class BuildSubject(Subject):
     """Subject for build-related events."""
 
     type: str = field(default="build", init=False)
-
     content: Union[Dict, BuildFinishedSubjectContent] = field(default_factory=dict, init=False)
+
 
 
 @dataclass
@@ -60,7 +61,6 @@ class BuildQueuedEvent(CDEvent):
     subject: BuildSubject
     """Build subject."""
 
-
 def new_build_queued_event(
     context_id: str,
     context_source: str,
@@ -70,31 +70,30 @@ def new_build_queued_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> BuildQueuedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new build queued CDEvent."""
     context = Context(
-        type=BuildQueuedEvent.CDEVENT_TYPE,
-        version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+    type=BuildQueuedEvent.CDEVENT_TYPE,
+    version=SPEC_VERSION,
+    id=input_data.context_id,
+    source=input_data.context_source,
+    timestamp=input_data.context_timestamp,
     )
-
-    subject = BuildSubject(id=subject_id, source=subject_source)
+    
+    subject = BuildSubject(id=input_data.subject_id, source=input_data.subject_source)
 
     event = BuildQueuedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type
     )
-
     return event
-
 
 # endregion BuildQueuedEvent
 
 # region BuildStartedEvent
-
 
 @dataclass
 class BuildStartedEvent(CDEvent):
@@ -113,33 +112,32 @@ def new_build_started_event(
     subject_id: str,
     subject_source: str,
     custom_data: Union[str, Dict, None],
-    custom_data_content_type: str,
+    custom_data_content_type: str
 ) -> BuildStartedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new build started CDEvent."""
     context = Context(
         type=BuildStartedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp
     )
 
-    subject = BuildSubject(id=subject_id, source=subject_source)
+    subject = BuildSubject(id=input_data.subject_id, source=input_data.subject_source)
 
     event = BuildStartedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type
     )
 
     return event
-
-
 # endregion BuildStartedEvent
 
 # region BuildFinishedEvent
-
 
 @dataclass
 class BuildFinishedEvent(CDEvent):
@@ -150,7 +148,6 @@ class BuildFinishedEvent(CDEvent):
     subject: BuildSubject
     """Build subject."""
 
-
 def new_build_finished_event(
     context_id: str,
     context_source: str,
@@ -159,28 +156,27 @@ def new_build_finished_event(
     subject_source: str,
     artifact_id: str,
     custom_data: Union[str, Dict, None],
-    custom_data_content_type: str,
+    custom_data_content_type: str
 ) -> BuildFinishedEvent:
+    input_data = parsedEvent(context_id = context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type, artifact_id=artifact_id)
     """Creates a new build finished CDEvent."""
     context = Context(
         type=BuildFinishedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
-
-    content = BuildFinishedSubjectContent(artifact_id=artifact_id)
-    subject = BuildFinishedSubject(id=subject_id, source=subject_source, content=content)
+    content = BuildFinishedSubjectContent(artifact_id=input_data.artifact_id)
+    subject = BuildFinishedSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = BuildFinishedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
-
-
 # endregion BuildFinishedEvent

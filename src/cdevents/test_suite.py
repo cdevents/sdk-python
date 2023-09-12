@@ -13,40 +13,42 @@
 #  limitations under the License.
 #
 #  SPDX-License-Identifier: Apache-2.0
-"""Events under dev.cdevents.testsuite."""
+"""Events under dev.cdevents.testcase."""
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Union
+import datetime
 
 from cdevents.cdevent import SPEC_VERSION, CDEvent
 from cdevents.context import Context
 from cdevents.subject import Subject
+from pydanticEvent import parsedEvent
 
 
 @dataclass
-class TestSuiteSubject(Subject):
-    """Subject for testsuite-related events."""
+class TestCaseSubject(Subject):
+    """Subject for testcase-related events."""
 
     content: Dict = field(default_factory=dict, init=False)
-    """Content for test suite subjects."""
+    """Content for test case subjects."""
 
     type: str = field(default="testCase", init=False)
 
 
-# region TestSuiteStartedEvent
+# region TestCaseQueuedEvent
 
 
 @dataclass
-class TestSuiteStartedEvent(CDEvent):
-    """Test suite started event."""
+class TestCaseQueuedEvent(CDEvent):
+    """Test case queued event."""
 
-    CDEVENT_TYPE = "dev.cdevents.testsuite.started." + SPEC_VERSION
+    CDEVENT_TYPE = "dev.cdevents.testcase.queued." + SPEC_VERSION
 
-    subject: TestSuiteSubject
-    """TestSuite subject."""
+    subject: TestCaseSubject
+    """TestCase subject."""
 
 
-def new_testsuite_started_event(
+def new_testcase_queued_event(
     context_id: str,
     context_source: str,
     context_timestamp: datetime,
@@ -54,47 +56,50 @@ def new_testsuite_started_event(
     subject_source: str,
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
-) -> TestSuiteStartedEvent:
-    """Creates a new testsuite started CDEvent."""
+) -> TestCaseQueuedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type)
+    """Creates a new testcase queued CDEvent."""
     context = Context(
-        type=TestSuiteStartedEvent.CDEVENT_TYPE,
+        type=TestCaseQueuedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    subject = TestSuiteSubject(
-        id=subject_id,
-        source=subject_source,
+    subject = TestCaseSubject(
+        id=input_data.subject_id,
+        source=input_data.subject_source,
     )
 
-    event = TestSuiteStartedEvent(
+    event = TestCaseQueuedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
 
 
-# endregion TestSuiteStartedEvent
+# endregion TestCaseQueuedEvent
 
-# region TestSuiteFinishedEvent
+
+# region TestCaseStartedEvent
 
 
 @dataclass
-class TestSuiteFinishedEvent(CDEvent):
-    """Test suite finished event."""
+class TestCaseStartedEvent(CDEvent):
+    """Test case started event."""
 
-    CDEVENT_TYPE = "dev.cdevents.testsuite.finished." + SPEC_VERSION
+    CDEVENT_TYPE = "dev.cdevents.testcase.started." + SPEC_VERSION
 
-    subject: TestSuiteSubject
-    """TestSuite subject."""
+    subject: TestCaseSubject
+    """TestCase subject."""
 
 
-def new_testsuite_finished_event(
+def new_testcase_started_event(
     context_id: str,
     context_source: str,
     context_timestamp: datetime,
@@ -102,29 +107,81 @@ def new_testsuite_finished_event(
     subject_source: str,
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
-) -> TestSuiteFinishedEvent:
-    """Creates a new testsuite finished CDEvent."""
+) -> TestCaseStartedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type)
+    """Creates a new testcase started CDEvent."""
     context = Context(
-        type=TestSuiteFinishedEvent.CDEVENT_TYPE,
+        type=TestCaseStartedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    subject = TestSuiteSubject(
-        id=subject_id,
-        source=subject_source,
+    subject = TestCaseSubject(
+        id=input_data.subject_id,
+        source=input_data.subject_source,
     )
 
-    event = TestSuiteFinishedEvent(
+    event = TestCaseStartedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
 
 
-# endregion TestSuiteFinishedEvent
+# endregion TestCaseStartedEvent
+
+# region TestCaseFinishedEvent
+
+
+@dataclass
+class TestCaseFinishedEvent(CDEvent):
+    """Test case finished event."""
+
+    CDEVENT_TYPE = "dev.cdevents.testcase.finished." + SPEC_VERSION
+
+    subject: TestCaseSubject
+    """TestCase subject."""
+
+
+def new_testcase_finished_event(
+    context_id: str,
+    context_source: str,
+    context_timestamp: datetime,
+    subject_id: str,
+    subject_source: str,
+    custom_data: Union[str, Dict, None],
+    custom_data_content_type: str,
+) -> TestCaseFinishedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type)
+    """Creates a new testcase finished CDEvent."""
+    context = Context(
+        type=TestCaseFinishedEvent.CDEVENT_TYPE,
+        version=SPEC_VERSION,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
+    )
+
+    subject = TestCaseSubject(
+        id=input_data.subject_id,
+        source=input_data.subject_source,
+    )
+
+    event = TestCaseFinishedEvent(
+        context=context,
+        subject=subject,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
+    )
+
+    return event
+
+
+# endregion TestCaseFinishedEvent

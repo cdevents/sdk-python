@@ -17,11 +17,13 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Union
+import datetime
 
 from cdevents.cdevent import SPEC_VERSION, CDEvent
 from cdevents.context import Context
 from cdevents.pipeline_run import PipelineRunSubject
 from cdevents.subject import Subject
+from pydanticEvent import parsedEvent
 
 
 @dataclass
@@ -95,28 +97,29 @@ def new_taskrun_started_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> TaskRunStartedEvent:
+    input_data = parsedEvent(context_id = context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    task_name = task_name, pipeline_run = pipeline_run, url = url, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new taskrun started CDEvent."""
     context = Context(
         type=TaskRunStartedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = TaskRunSubjectContent(task_name=task_name, pipeline_run=pipeline_run, url=url)
+    content = TaskRunSubjectContent(task_name=input_data.task_name, pipeline_run=input_data.pipeline_run, url=input_data.url)
 
-    subject = TaskRunSubject(id=subject_id, source=subject_source, content=content)
+    subject = TaskRunSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = TaskRunStartedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
-
 
 # endregion TaskRunStartedEvent
 
@@ -147,26 +150,28 @@ def new_taskrun_finished_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> TaskRunFinishedEvent:
+    input_data = parsedEvent(context_id = context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    task_name = task_name,errors = errors, outcome = outcome, pipeline_run = pipeline_run, url = url, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new taskrun finished CDEvent."""
     context = Context(
         type=TaskRunFinishedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
     content = TaskRunFinishedSubjectContent(
-        task_name=task_name, pipeline_run=pipeline_run, url=url, outcome=outcome, errors=errors
+        task_name=input_data.task_name, pipeline_run=input_data.pipeline_run, url=input_data.url, outcome=input_data.outcome, errors=input_data.errors
     )
 
-    subject = TaskRunFinishedSubject(id=subject_id, source=subject_source, content=content)
+    subject = TaskRunFinishedSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = TaskRunFinishedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
