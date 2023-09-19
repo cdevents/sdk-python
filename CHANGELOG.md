@@ -1,6 +1,7 @@
 ## Changelog
 
-### 0.0.1-draft (2023-04-26)
+### 0.0.1-draft (2023-09-19)
+- [#28](https://github.com/cdevents/sdk-python/pull/28) Update LICENSE (#28) (@FourAndHalf)
 - [#23](https://github.com/cdevents/sdk-python/pull/23) updated github action release (#23) (@elmsdata)
 - [#21](https://github.com/cdevents/sdk-python/pull/21) Fidelity 20230404 141441 (#21) (@elmsdata)
 - [#19](https://github.com/cdevents/sdk-python/pull/19) Fidelity 20230328 091514 (#19) (@elmsdata)
