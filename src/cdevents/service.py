@@ -17,10 +17,12 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Union
+import datetime
 
 from cdevents.cdevent import SPEC_VERSION, CDEvent
 from cdevents.context import Context
 from cdevents.subject import Subject
+from pydanticEvent import parsedEvent
 
 
 @dataclass
@@ -81,23 +83,25 @@ def new_service_deployed_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ServiceDeployedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    artifact_id=artifact_id,environment=environment, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new service deployed CDEvent."""
     context = Context(
         type=ServiceDeployedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ServiceArtifactSubjectContent(artifact_id=artifact_id, environment=environment)
-    subject = ServiceArtifactSubject(id=subject_id, source=subject_source, content=content)
+    content = ServiceArtifactSubjectContent(artifact_id=input_data.artifact_id, environment=input_data.environment)
+    subject = ServiceArtifactSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ServiceDeployedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -129,23 +133,25 @@ def new_service_published_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ServicePublishedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    environment=environment, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new service published CDEvent."""
     context = Context(
         type=ServicePublishedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ServiceSubjectContent(environment=environment)
-    subject = ServiceSubject(id=subject_id, source=subject_source, content=content)
+    content = ServiceSubjectContent(environment=input_data.environment)
+    subject = ServiceSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ServicePublishedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -177,23 +183,25 @@ def new_service_removed_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ServiceRemovedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    environment=environment, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new service removed CDEvent."""
     context = Context(
         type=ServiceRemovedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ServiceSubjectContent(environment=environment)
-    subject = ServiceSubject(id=subject_id, source=subject_source, content=content)
+    content = ServiceSubjectContent(environment=input_data.environment)
+    subject = ServiceSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ServiceRemovedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -226,23 +234,25 @@ def new_service_rolledback_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ServiceRolledbackEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    artifact_id=artifact_id,environment=environment, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new service rolledback CDEvent."""
     context = Context(
         type=ServiceRolledbackEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ServiceArtifactSubjectContent(artifact_id=artifact_id, environment=environment)
-    subject = ServiceArtifactSubject(id=subject_id, source=subject_source, content=content)
+    content = ServiceArtifactSubjectContent(artifact_id=input_data.artifact_id, environment=input_data.environment)
+    subject = ServiceArtifactSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ServiceRolledbackEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -275,23 +285,25 @@ def new_service_upgraded_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ServiceUpgradedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    artifact_id=artifact_id,environment=environment, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new service upgraded CDEvent."""
     context = Context(
         type=ServiceUpgradedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ServiceArtifactSubjectContent(artifact_id=artifact_id, environment=environment)
-    subject = ServiceArtifactSubject(id=subject_id, source=subject_source, content=content)
+    content = ServiceArtifactSubjectContent(artifact_id=input_data.artifact_id, environment=input_data.environment)
+    subject = ServiceArtifactSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ServiceUpgradedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event

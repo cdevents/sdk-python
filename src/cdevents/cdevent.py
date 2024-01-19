@@ -15,10 +15,11 @@
 #  SPDX-License-Identifier: Apache-2.0
 """CDEvents base types."""
 from dataclasses import dataclass
-from typing import Dict, TypeVar, Union
+from typing import Dict, TypeVar, Union, Any
 
 from cdevents.context import Context
 from cdevents.subject import Subject
+
 
 SPEC_VERSION = "0.1.0"
 

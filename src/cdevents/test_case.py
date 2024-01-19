@@ -17,10 +17,12 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, Union
+import datetime
 
 from cdevents.cdevent import SPEC_VERSION, CDEvent
 from cdevents.context import Context
 from cdevents.subject import Subject
+from pydanticEvent import parsedEvent
 
 
 @dataclass
@@ -55,25 +57,27 @@ def new_testcase_queued_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> TestCaseQueuedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new testcase queued CDEvent."""
     context = Context(
         type=TestCaseQueuedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
     subject = TestCaseSubject(
-        id=subject_id,
-        source=subject_source,
+        id=input_data.subject_id,
+        source=input_data.subject_source,
     )
 
     event = TestCaseQueuedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -104,25 +108,27 @@ def new_testcase_started_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> TestCaseStartedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new testcase started CDEvent."""
     context = Context(
         type=TestCaseStartedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
     subject = TestCaseSubject(
-        id=subject_id,
-        source=subject_source,
+        id=input_data.subject_id,
+        source=input_data.subject_source,
     )
 
     event = TestCaseStartedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -152,25 +158,27 @@ def new_testcase_finished_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> TestCaseFinishedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new testcase finished CDEvent."""
     context = Context(
         type=TestCaseFinishedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
     subject = TestCaseSubject(
-        id=subject_id,
-        source=subject_source,
+        id=input_data.subject_id,
+        source=input_data.subject_source,
     )
 
     event = TestCaseFinishedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event

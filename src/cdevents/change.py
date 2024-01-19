@@ -16,11 +16,13 @@
 """Events under dev.cdevents.change."""
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, Optional, Union
+from typing import Dict, Union
+import datetime
 
 from cdevents.cdevent import SPEC_VERSION, CDEvent
 from cdevents.context import Context
 from cdevents.subject import Subject
+from pydanticEvent import parsedEvent
 
 
 @dataclass
@@ -64,23 +66,25 @@ def new_change_abandoned_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ChangeAbandonedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    repository=repository, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new change abandoned CDEvent."""
     context = Context(
         type=ChangeAbandonedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ChangeSubjectContent(repository=repository)
-    subject = ChangeSubject(id=subject_id, source=subject_source, content=content)
+    content = ChangeSubjectContent(repository=input_data.repository)
+    subject = ChangeSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ChangeAbandonedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -112,23 +116,25 @@ def new_change_created_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ChangeCreatedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    repository=repository, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new change created CDEvent."""
     context = Context(
         type=ChangeCreatedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ChangeSubjectContent(repository=repository)
-    subject = ChangeSubject(id=subject_id, source=subject_source, content=content)
+    content = ChangeSubjectContent(repository=input_data.repository)
+    subject = ChangeSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ChangeCreatedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -160,23 +166,25 @@ def new_change_merged_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ChangeMergedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    repository=repository, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new change merged CDEvent."""
     context = Context(
         type=ChangeMergedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ChangeSubjectContent(repository=repository)
-    subject = ChangeSubject(id=subject_id, source=subject_source, content=content)
+    content = ChangeSubjectContent(repository=input_data.repository)
+    subject = ChangeSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ChangeMergedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -208,23 +216,25 @@ def new_change_reviewed_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ChangeReviewedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    repository=repository, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new change reviewed CDEvent."""
     context = Context(
         type=ChangeReviewedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ChangeSubjectContent(repository=repository)
-    subject = ChangeSubject(id=subject_id, source=subject_source, content=content)
+    content = ChangeSubjectContent(repository=input_data.repository)
+    subject = ChangeSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ChangeReviewedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -256,23 +266,25 @@ def new_change_updated_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ChangeUpdatedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    repository=repository, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new change updated CDEvent."""
     context = Context(
         type=ChangeUpdatedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ChangeSubjectContent(repository=repository)
-    subject = ChangeSubject(id=subject_id, source=subject_source, content=content)
+    content = ChangeSubjectContent(repository=input_data.repository)
+    subject = ChangeSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ChangeUpdatedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event

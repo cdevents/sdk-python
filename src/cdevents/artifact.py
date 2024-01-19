@@ -16,11 +16,13 @@
 """Events under dev.cdevents.artifact."""
 from dataclasses import dataclass, field
 from datetime import datetime
+import datetime
 from typing import Dict, Union
 
 from cdevents.cdevent import SPEC_VERSION, CDEvent
 from cdevents.context import Context
 from cdevents.subject import Subject
+from pydanticEvent import parsedEvent
 
 
 @dataclass
@@ -85,28 +87,28 @@ def new_artifact_packaged_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ArtifactPackagedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    change=change, custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new artifact packaged CDEvent."""
     context = Context(
         type=ArtifactPackagedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = ArtifactPackagedSubjectContent(change=change)
-    subject = ArtifactPackagedSubject(id=subject_id, source=subject_source, content=content)
+    content = ArtifactPackagedSubjectContent(change=input_data.change)
+    subject = ArtifactPackagedSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = ArtifactPackagedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
-
-
 # endregion ArtifactPackagedEvent
 
 # region ArtifactPublishedEvent
@@ -131,25 +133,26 @@ def new_artifact_published_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> ArtifactPublishedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type)
     """Creates a new artifact published CDEvent."""
     context = Context(
         type=ArtifactPublishedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    subject = ArtifactPublishedSubject(id=subject_id, source=subject_source)
+    subject = ArtifactPublishedSubject(id=input_data.subject_id, source=input_data.subject_source)
 
     event = ArtifactPublishedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
-
 
 # endregion ArtifactPublishedEvent

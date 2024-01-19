@@ -37,6 +37,7 @@ event = cdevents.new_pipelinerun_queued_event(
     context_timestamp=datetime.datetime.now(),
     subject_id="myPipelineRun1",
     custom_data={"hello_message": "hi!"},
+    subject_source="subjectSource",
     custom_data_content_type="application/json",
     pipeline_name="myPipeline",
     url="https://example.com/myPipeline",

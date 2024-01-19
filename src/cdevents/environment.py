@@ -16,11 +16,13 @@
 """Events under dev.cdevents.environment."""
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, Optional, Union
+from typing import Dict,Union
+import datetime
 
 from cdevents.cdevent import SPEC_VERSION, CDEvent
 from cdevents.context import Context
 from cdevents.subject import Subject
+from pydanticEvent import parsedEvent
 
 
 @dataclass
@@ -83,23 +85,25 @@ def new_environment_created_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> EnvironmentCreatedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type, name = name, url = url)
     """Creates a new environment created CDEvent."""
     context = Context(
         type=EnvironmentCreatedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = EnvironmentSubjectContentWithUrl(name=name, url=url)
-    subject = EnvironmentSubjectWithUrl(id=subject_id, source=subject_source, content=content)
+    content = EnvironmentSubjectContentWithUrl(name=input_data.name, url=input_data.url)
+    subject = EnvironmentSubjectWithUrl(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = EnvironmentCreatedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -131,23 +135,25 @@ def new_environment_deleted_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> EnvironmentDeletedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type, name = name)
     """Creates a new environment deleted CDEvent."""
     context = Context(
         type=EnvironmentDeletedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = EnvironmentSubjectContent(name=name)
-    subject = EnvironmentSubject(id=subject_id, source=subject_source, content=content)
+    content = EnvironmentSubjectContent(name=input_data.name)
+    subject = EnvironmentSubject(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = EnvironmentDeletedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
@@ -180,23 +186,25 @@ def new_environment_modified_event(
     custom_data: Union[str, Dict, None],
     custom_data_content_type: str,
 ) -> EnvironmentModifiedEvent:
+    input_data = parsedEvent(context_id= context_id, context_source = context_source, context_timestamp = context_timestamp, subject_id = subject_id, subject_source = subject_source,
+    custom_data = custom_data, custom_data_content_type = custom_data_content_type, name = name, url = url)
     """Creates a new environment modified CDEvent."""
     context = Context(
         type=EnvironmentModifiedEvent.CDEVENT_TYPE,
         version=SPEC_VERSION,
-        id=context_id,
-        source=context_source,
-        timestamp=context_timestamp,
+        id=input_data.context_id,
+        source=input_data.context_source,
+        timestamp=input_data.context_timestamp,
     )
 
-    content = EnvironmentSubjectContentWithUrl(name=name, url=url)
-    subject = EnvironmentSubjectWithUrl(id=subject_id, source=subject_source, content=content)
+    content = EnvironmentSubjectContentWithUrl(name=input_data.name, url=input_data.url)
+    subject = EnvironmentSubjectWithUrl(id=input_data.subject_id, source=input_data.subject_source, content=content)
 
     event = EnvironmentModifiedEvent(
         context=context,
         subject=subject,
-        custom_data=custom_data,
-        custom_data_content_type=custom_data_content_type,
+        custom_data=input_data.custom_data,
+        custom_data_content_type=input_data.custom_data_content_type,
     )
 
     return event
